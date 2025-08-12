@@ -1,0 +1,5 @@
+{
+    "StartMenuView": {"src":"StartMenuView","group":"popNode","order":1},
+    "GameMainView": {"src":"GameMainView","group":"popNode","order":1},
+    "OverMenuView": {"src":"OverMenuView","group":"messageNode","order":1}
+  }

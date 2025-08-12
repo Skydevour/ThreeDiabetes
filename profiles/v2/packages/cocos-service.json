@@ -1,0 +1,54 @@
+{
+  "__version__": "3.0.9",
+  "builder": {
+    "options": {
+      "web-desktop": {
+        "configID": "ebdd74",
+        "services": []
+      },
+      "android": {
+        "configID": "ebdd74",
+        "services": []
+      },
+      "web-mobile": {
+        "configID": "ebdd74",
+        "services": []
+      },
+      "windows": {
+        "configID": "ebdd74",
+        "services": []
+      }
+    },
+    "taskOptionsMap": {
+      "1754926696150": {
+        "configID": "ebdd74",
+        "services": []
+      },
+      "1754927151708": {
+        "configID": "ebdd74",
+        "services": [],
+        "__version__": "3.0.9"
+      },
+      "1754930572642": {
+        "configID": "ebdd74",
+        "services": [],
+        "__version__": "3.0.9"
+      },
+      "1754930861949": {
+        "configID": "ebdd74",
+        "services": []
+      },
+      "1754932261108": {
+        "configID": "ebdd74",
+        "services": [],
+        "__version__": "3.0.9"
+      }
+    },
+    "__version__": "1.3.9"
+  },
+  "builder-options": {
+    "configID": "ebdd74",
+    "services": [],
+    "__version__": "3.0.9"
+  }
+}

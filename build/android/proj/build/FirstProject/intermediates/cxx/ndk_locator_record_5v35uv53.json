@@ -1,0 +1,11 @@
+{
+  "ndk": "E:\\software\\android-ndk-r22-windows-x86_64\\android-ndk-r22",
+  "revision": {
+    "mMajor": 22,
+    "mMinor": 0,
+    "mMicro": 7026061,
+    "mPreview": 0,
+    "mPrecision": "MICRO",
+    "mPreviewSeparator": " "
+  }
+}
