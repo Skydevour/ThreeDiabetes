@@ -13,7 +13,7 @@
 ### Task 1: Add the runtime game implementation
 
 **Files:**
-- Create: `Assets/Scripts/YarnMatch/YarnMatchGame.cs`
+- Create: `Assets/Scripts/YarnMatch/Core/YarnMatchGame.cs`
 
 **Step 1: Write the core state and data model**
 
@@ -34,7 +34,7 @@ Animate collected cells along a curved yarn trail into the rack entry, update pr
 ### Task 2: Add automatic scene bootstrap
 
 **Files:**
-- Create: `Assets/Scripts/YarnMatch/YarnMatchBootstrap.cs`
+- Create: `Assets/Scripts/YarnMatch/Infrastructure/YarnMatchBootstrap.cs`
 
 **Step 1: Spawn the game after scene load**
 
@@ -43,8 +43,8 @@ Use `RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)` an
 ### Task 3: Verify the Unity prototype
 
 **Files:**
-- Inspect: `Assets/Scripts/YarnMatch/YarnMatchGame.cs`
-- Inspect: `Assets/Scripts/YarnMatch/YarnMatchBootstrap.cs`
+- Inspect: `Assets/Scripts/YarnMatch/Core/YarnMatchGame.cs`
+- Inspect: `Assets/Scripts/YarnMatch/Infrastructure/YarnMatchBootstrap.cs`
 
 **Step 1: Run a static compile-oriented check**
 
@@ -57,3 +57,7 @@ Run the existing scene and verify the Canvas, board, spool grid, selection flow,
 **Step 3: Review the first playable pass**
 
 Check the layout at the portrait reference resolution and at a wide editor viewport. Fix only blockers to the requested basic loop before adding polish.
+
+## Follow-up Revision: 2026-08-22
+
+The next pass keeps the runtime bootstrap but changes the implementation details above: front cells are taken from the bottom of each column, board cells animate into lower rows, the lower pool is an eight-lane four-row tunnel layout, visible spool buttons are replenished from hidden per-lane queues, UI copy is Chinese, and the refresh tool preserves the multiset of unused spools. The collection animation now includes rack rotation and tightening rather than only a short flight.

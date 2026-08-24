@@ -1,0 +1,164 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+internal sealed class YarnMatchOverlayController
+{
+    private readonly MonoBehaviour _host;
+    private readonly YarnMatchUiReferences _ui;
+    private readonly YarnMatchAudio _audio;
+    private readonly Action<int> _onLevelSelected;
+    private Coroutine _toastRoutine;
+    private Coroutine _resultRoutine;
+    private int _chapterStartLevel = 1;
+
+    internal YarnMatchOverlayController(MonoBehaviour host, YarnMatchUiReferences ui, YarnMatchAudio audio, Action<int> onLevelSelected)
+    {
+        _host = host;
+        _ui = ui;
+        _audio = audio;
+        _onLevelSelected = onLevelSelected;
+    }
+
+    internal void ResetForGame()
+    {
+        _ui.ResultOverlay.SetActive(false);
+        _ui.MainMenuOverlay.SetActive(false);
+        _ui.LevelSelectOverlay.SetActive(false);
+    }
+
+    internal void ShowMainMenu()
+    {
+        _ui.ResultOverlay.SetActive(false);
+        _ui.LevelSelectOverlay.SetActive(false);
+        _ui.MainMenuOverlay.SetActive(true);
+    }
+
+    internal void ShowLevelSelect(int highestUnlockedLevel, bool dailyUnlockActive)
+    {
+        _ui.ResultOverlay.SetActive(false);
+        _ui.MainMenuOverlay.SetActive(false);
+        int safeHighestUnlockedLevel = Mathf.Max(1, highestUnlockedLevel);
+        int chapterIndex = YarnMatchLevelCatalog.GetChapterIndex(safeHighestUnlockedLevel);
+        _chapterStartLevel = YarnMatchLevelCatalog.GetChapterStartLevel(safeHighestUnlockedLevel);
+        IReadOnlyList<YarnMatchLevelConfig> levels = YarnMatchLevelCatalog.GetChapter(chapterIndex);
+        _ui.LevelSelectTitle.text = "选择关卡 · 第 " + (chapterIndex + 1) + " 章";
+        _ui.LevelSelectSubtitle.text = "完成本章 50 关后，将进入全新的线团图案";
+        for (int index = 0; index < _ui.LevelButtons.Count; index++)
+        {
+            int levelNumber = _chapterStartLevel + index;
+            bool unlocked = dailyUnlockActive || levelNumber <= safeHighestUnlockedLevel;
+            _ui.LevelButtons[index].interactable = unlocked;
+            _ui.LevelButtonLabels[index].text = unlocked ? "第 " + levelNumber + " 关" : "第 " + levelNumber + " 关  ·  锁定";
+            _ui.LevelButtonDetails[index].text = unlocked ? levels[index].Summary : "完成前一关后解锁";
+        }
+        _ui.UnlockAllLevelsButton.interactable = !dailyUnlockActive;
+        _ui.UnlockAllLevelsLabel.text = dailyUnlockActive ? "今日已全部解锁" : "今日全部解锁";
+        _ui.LevelSelectOverlay.SetActive(true);
+    }
+
+    internal void SelectLevelSlot(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= YarnMatchLevelCatalog.LevelsPerChapter)
+        {
+            return;
+        }
+
+        _onLevelSelected?.Invoke(_chapterStartLevel + slotIndex);
+    }
+    internal void SetStatus(string message)
+    {
+        _ui.StatusLabel.text = message;
+    }
+
+    internal void ShowToast(string message, float duration)
+    {
+        if (_toastRoutine != null)
+        {
+            _host.StopCoroutine(_toastRoutine);
+        }
+        _toastRoutine = _host.StartCoroutine(ToastRoutine(message, duration));
+    }
+
+    internal void ShowResult(bool won, string title, string detail, bool canAdvance)
+    {
+        _ui.ResultTitle.text = title;
+        _ui.ResultTitle.color = won ? new Color(0.08f, 0.60f, 0.32f) : new Color(0.90f, 0.15f, 0.25f);
+        _ui.ResultDetail.text = detail;
+        _ui.ResultNextButton.gameObject.SetActive(won && canAdvance);
+        _ui.ResultNextLabel.text = "下一关";
+        _ui.ResultReplayButton.gameObject.SetActive(!won);
+        _ui.ResultHomeButton.gameObject.SetActive(true);
+        _ui.ResultOverlay.SetActive(true);
+        if (_resultRoutine != null)
+        {
+            _host.StopCoroutine(_resultRoutine);
+        }
+        _resultRoutine = _host.StartCoroutine(ResultRoutine());
+        if (won)
+        {
+            _audio?.PlayWin();
+        }
+        else
+        {
+            _audio?.PlayFail();
+        }
+    }
+
+    internal void Stop()
+    {
+        if (_toastRoutine != null)
+        {
+            _host.StopCoroutine(_toastRoutine);
+            _toastRoutine = null;
+        }
+        if (_resultRoutine != null)
+        {
+            _host.StopCoroutine(_resultRoutine);
+            _resultRoutine = null;
+        }
+    }
+
+    private System.Collections.IEnumerator ToastRoutine(string message, float duration)
+    {
+        _ui.ToastLabel.text = message;
+        _ui.ToastLabel.gameObject.SetActive(true);
+        Color baseColor = _ui.ToastLabel.color;
+        _ui.ToastLabel.color = new Color(baseColor.r, baseColor.g, baseColor.b, 0f);
+        float elapsed = 0f;
+        while (elapsed < 0.16f)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            _ui.ToastLabel.color = new Color(baseColor.r, baseColor.g, baseColor.b, Mathf.Clamp01(elapsed / 0.16f));
+            yield return null;
+        }
+        yield return new WaitForSecondsRealtime(duration);
+        elapsed = 0f;
+        while (elapsed < 0.20f)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            _ui.ToastLabel.color = new Color(baseColor.r, baseColor.g, baseColor.b, 1f - Mathf.Clamp01(elapsed / 0.20f));
+            yield return null;
+        }
+        _ui.ToastLabel.gameObject.SetActive(false);
+        _toastRoutine = null;
+    }
+
+    private System.Collections.IEnumerator ResultRoutine()
+    {
+        _ui.ResultCanvasGroup.alpha = 0f;
+        _ui.ResultPanelRect.localScale = Vector3.one * 0.88f;
+        float elapsed = 0f;
+        while (elapsed < 0.28f)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float progress = YarnMatchUiTheme.EaseInOut(Mathf.Clamp01(elapsed / 0.28f));
+            _ui.ResultCanvasGroup.alpha = progress;
+            _ui.ResultPanelRect.localScale = Vector3.one * Mathf.Lerp(0.88f, 1f, progress);
+            yield return null;
+        }
+        _ui.ResultCanvasGroup.alpha = 1f;
+        _ui.ResultPanelRect.localScale = Vector3.one;
+        _resultRoutine = null;
+    }
+}

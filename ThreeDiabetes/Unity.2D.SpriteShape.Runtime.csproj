@@ -41,9 +41,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\log4netPlastic.dll" />
-    <Analyzer Include="E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\Unity.Plastic.Antlr3.Runtime.dll" />
-    <Analyzer Include="E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\Unity.Plastic.Newtonsoft.Json.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
@@ -428,6 +425,12 @@
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="TextMateSharpPlastic">
+      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\TextMateSharp\TextMateSharpPlastic.dll</HintPath>
+    </Reference>
+    <Reference Include="TextMateSharpPlastic.Grammars">
+      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\TextMateSharp\TextMateSharpPlastic.Grammars.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
       <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.visualscripting\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
     </Reference>
@@ -437,11 +440,14 @@
     <Reference Include="nunit.framework">
       <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.ext.nunit\net40\unity-custom\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Plastic.Antlr3.Runtime">
+      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="unityplastic">
       <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\unityplastic.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
+    <Reference Include="OnigwrapPlastic">
+      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\TextMateSharp\Onigwrap\OnigwrapPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -460,15 +466,6 @@
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.nuget.mono-cecil\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="TextMateSharpPlastic.Grammars">
-      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\TextMateSharp\TextMateSharpPlastic.Grammars.dll</HintPath>
-    </Reference>
-    <Reference Include="OnigwrapPlastic">
-      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\TextMateSharp\Onigwrap\OnigwrapPlastic.dll</HintPath>
-    </Reference>
-    <Reference Include="TextMateSharpPlastic">
-      <HintPath>E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\TextMateSharp\TextMateSharpPlastic.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Android.Types">
       <HintPath>D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>

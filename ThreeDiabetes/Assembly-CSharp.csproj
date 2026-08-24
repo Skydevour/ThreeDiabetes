@@ -41,26 +41,49 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\log4netPlastic.dll" />
-    <Analyzer Include="E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\Unity.Plastic.Antlr3.Runtime.dll" />
-    <Analyzer Include="E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\PackageCache\com.unity.collab-proxy\Lib\Editor\Unity.Plastic.Newtonsoft.Json.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\YarnMatch\YarnMatchBootstrap.cs" />
-    <Compile Include="Assets\Scripts\YarnMatch\YarnMatchGame.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchUiBuilder.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchButtonFeedback.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchPoolModel.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchUiPrimitives.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchTypes.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchBoardModel.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchPresentation.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchUiViews.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\Animation\YarnMatchAnimationController.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchUiTheme.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchOverlayController.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchBoardPatternGenerator.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Audio\YarnMatchAudio.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchLevelConfig.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchLevelCatalog.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchBoardCellHover.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchRackModel.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchCollectionJob.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Visuals\YarnMatchVisualFactory.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchGame.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\Effects\YarnMatchEffectPool.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchUiReferences.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Infrastructure\YarnMatchBootstrap.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchUiRenderer.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchReferencePatternGenerator.cs" />
     <None Include="Library\PackageCache\com.unity.modules.subsystems\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Library\PackageCache\com.unity.modules.jsonserialize\package.json" />
     <None Include="Library\PackageCache\com.unity.burst\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.screencapture\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.cloth\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Library\PackageCache\com.unity.test-framework.performance\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.unitywebrequesttexture\package.json" />
     <None Include="Library\PackageCache\com.unity.inputsystem\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.ai\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Library\PackageCache\com.unity.collections\Unity.Collections.LowLevel.ILSupport\README.txt" />
     <None Include="Library\PackageCache\com.unity.inputsystem\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.ugui\package.json" />
@@ -70,15 +93,18 @@
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal-config\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.assetbundle\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.core\Shaders\CoreCopy.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Library\PackageCache\com.unity.modules.imgui\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.tilemap\package.json" />
     <None Include="Library\PackageCache\com.unity.test-framework.performance\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.timeline\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.accessibility\package.json" />
     <None Include="Library\PackageCache\com.unity.ide.visualstudio\ValidationConfig.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Library\PackageCache\com.unity.modules.terrainphysics\package.json" />
     <None Include="Library\PackageCache\com.unity.mathematics\package.json" />
     <None Include="Library\PackageCache\com.unity.burst\ValidationExceptions.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Library\PackageCache\com.unity.visualscripting\package.json" />
     <None Include="Library\PackageCache\com.unity.collab-proxy\package.json" />
     <None Include="Library\PackageCache\com.unity.ugui\PackageConversionData.json" />
@@ -86,6 +112,7 @@
     <None Include="Library\PackageCache\com.unity.ide.visualstudio\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.core\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.core\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Library\PackageCache\com.unity.modules.imageconversion\package.json" />
     <None Include="Library\PackageCache\com.unity.rendering.light-transport\package.json" />
     <None Include="Library\PackageCache\com.unity.shadergraph\package.json" />
@@ -93,24 +120,34 @@
     <None Include="Library\PackageCache\com.unity.ide.rider\package.json" />
     <None Include="Library\PackageCache\com.unity.searcher\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.video\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
     <None Include="Library\PackageCache\com.unity.shadergraph\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.test-framework\package.json" />
     <None Include="Library\PackageCache\com.unity.nuget.mono-cecil\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.particlesystem\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.physics2d\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Library\PackageCache\com.unity.modules.vr\package.json" />
     <None Include="Library\PackageCache\com.unity.visualscripting\ValidationExceptions.json" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Library\PackageCache\com.unity.2d.common\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Library\PackageCache\com.unity.ide.visualstudio\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.modules.wind\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Library\PackageCache\com.unity.modules.umbra\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Library\PackageCache\com.unity.2d.tilemap.extras\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Library\PackageCache\com.unity.inputsystem\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.modules.audio\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.physics\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.modules.vehicles\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.unitywebrequestwww\package.json" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Library\PackageCache\com.unity.modules.unitywebrequestaudio\package.json" />
     <None Include="Library\PackageCache\com.unity.feature.2d\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.hierarchycore\package.json" />
@@ -120,6 +157,7 @@
     <None Include="Library\PackageCache\com.unity.modules.xr\package.json" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_Properties.cginc" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_SDF Internal Editor.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Library\PackageCache\com.unity.modules.director\package.json" />
     <None Include="Library\PackageCache\com.unity.2d.aseprite\package.json" />
     <None Include="Library\PackageCache\com.unity.visualscripting\ValidationConfig.json" />
@@ -127,18 +165,24 @@
     <None Include="Library\PackageCache\com.unity.2d.sprite\package.json" />
     <None Include="Library\PackageCache\com.unity.collections\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.androidjni\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Library\PackageCache\com.unity.ugui\PackageConversionData_Assets.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Library\PackageCache\com.unity.2d.spriteshape\package.json" />
     <None Include="Library\PackageCache\com.unity.mathematics\ValidationExceptions.json" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Library\PackageCache\com.unity.modules.animation\package.json" />
     <None Include="Library\PackageCache\com.unity.2d.animation\package.json" />
     <None Include="Library\PackageCache\com.unity.collections\ValidationExceptions.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Library\PackageCache\com.unity.burst\Unity.Burst.Unsafe.xml" />
     <None Include="Library\PackageCache\com.unity.2d.psdimporter\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.modules.unitywebrequest\package.json" />
     <None Include="Library\PackageCache\com.unity.modules.uielements\package.json" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne.json" />
     <None Include="Library\PackageCache\com.unity.modules.ui\package.json" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Library\PackageCache\com.unity.multiplayer.center\package.json" />
     <Reference Include="UnityEngine">
       <HintPath>D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -954,6 +998,10 @@
       <Project>{2b521de6-d522-8ab0-2197-4366147d9ac0}</Project>
       <Name>Unity.RenderPipelines.Core.ShaderLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
+      <Project>{15e917d1-4359-22cc-dc72-94464809a2aa}</Project>
+      <Name>Unity.PlasticSCM.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.2D.Aseprite.Editor.csproj">
       <Project>{716be0e1-a53a-e464-3720-9fc47537ffda}</Project>
       <Name>Unity.2D.Aseprite.Editor</Name>
@@ -961,10 +1009,6 @@
     <ProjectReference Include="Unity.Multiplayer.Center.Editor.csproj">
       <Project>{02c2de3c-1cc6-81a5-be42-009d27fba0c2}</Project>
       <Name>Unity.Multiplayer.Center.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="Unity.PlasticSCM.Editor.csproj">
-      <Project>{15e917d1-4359-22cc-dc72-94464809a2aa}</Project>
-      <Name>Unity.PlasticSCM.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Mathematics.Editor.csproj">
       <Project>{b88964e6-5c54-67e0-2835-a0cc0385a6fe}</Project>

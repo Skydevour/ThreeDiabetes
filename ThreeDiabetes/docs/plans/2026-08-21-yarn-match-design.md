@@ -23,8 +23,9 @@ Build a single-player Unity prototype inspired by the supplied yarn-spool puzzle
 
 ## Architecture
 
-- `YarnMatchGame` owns the play-state machine, board data, rack state, pool tokens, UI creation, and transition rules.
-- `YarnVisualFactory` creates cached procedural sprites and common UI textures at startup.
+- `YarnMatchGame` owns the play-state machine, model orchestration, and transition rules; board, pool, and rack data live in their dedicated models.
+- `YarnMatchPresentation` delegates static UI construction, dynamic rendering, overlays, animation, and effects to focused presentation services.
+- `YarnMatchVisualFactory` creates cached procedural sprites and common UI textures at startup.
 - `YarnMatchBootstrap` starts the game after any loaded scene, so the existing template scene needs no fragile serialized references.
 - Runtime-only visual objects are reused where practical; animation objects are short-lived and bounded by the three-cell collection limit.
 
@@ -40,3 +41,11 @@ Build a single-player Unity prototype inspired by the supplied yarn-spool puzzle
 - Move level data into ScriptableObjects once the first playable loop is approved.
 - Add multiple board masks, color palettes, and spool queues without changing the rack rules.
 - Add audio, haptic feedback, and richer yarn physics after the core interaction is stable.
+
+## 2026-08-22 Polish Revision
+
+- Collection direction is bottom-to-top: index `0` in each column is the exposed front cell; removing it reindexes the remaining cells and animates them downward.
+- The lower control area is a four-row by eight-lane layout. Each lane has a non-clickable tunnel marker, one visible spool, and a hidden spool queue. Removing the visible spool leaves its slot empty until the next spool slides out of the tunnel.
+- All player-facing copy is Chinese and uses a desktop Chinese dynamic font when available.
+- A once-per-round refresh rearranges only unused spools and preserves the remaining spool count.
+- Collection feedback now combines a curved yarn trail, a rotating rack spool impact, gradual progress tightening, and a completion pulse.
