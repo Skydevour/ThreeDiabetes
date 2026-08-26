@@ -41,6 +41,25 @@ public sealed class YarnMatchPoolModel
         Build(seed, columns, rows, colorCount, tunnelCount, tunnelQueueDepth, 0, targetSpoolsByColor);
     }
 
+    public void Build(
+        int seed,
+        int columnsMin,
+        int columnsMax,
+        int rowsMin,
+        int rowsMax,
+        int colorCount,
+        int tunnelCountMin,
+        int tunnelCountMax,
+        int tunnelQueueMin,
+        int tunnelQueueMax,
+        IReadOnlyList<int> targetSpoolsByColor)
+    {
+        int columns = SelectRandomInclusive(seed + 11, columnsMin, columnsMax);
+        int rows = SelectRandomInclusive(seed + 23, rowsMin, rowsMax);
+        int tunnelCount = SelectRandomInclusive(seed + 37, tunnelCountMin, tunnelCountMax);
+        Build(seed, columns, rows, colorCount, tunnelCount, tunnelQueueMin, tunnelQueueMax, 0, targetSpoolsByColor);
+    }
+
     private void Build(
         int seed,
         int columns,
@@ -48,6 +67,20 @@ public sealed class YarnMatchPoolModel
         int colorCount,
         int tunnelCount,
         int tunnelQueueDepth,
+        int targetTokenCount,
+        IReadOnlyList<int> targetSpoolsByColor)
+    {
+        Build(seed, columns, rows, colorCount, tunnelCount, tunnelQueueDepth, tunnelQueueDepth, targetTokenCount, targetSpoolsByColor);
+    }
+
+    private void Build(
+        int seed,
+        int columns,
+        int rows,
+        int colorCount,
+        int tunnelCount,
+        int tunnelQueueMin,
+        int tunnelQueueMax,
         int targetTokenCount,
         IReadOnlyList<int> targetSpoolsByColor)
     {
@@ -78,32 +111,24 @@ public sealed class YarnMatchPoolModel
             : targetTokenCount > 0 ? targetTokenCount : _cells.Count;
         desiredTokenCount = Math.Max(0, desiredTokenCount);
 
-        int maximumTunnelCount = Math.Max(0, (_rows - 1) * _columns);
-        int configuredTunnelCount = Math.Min(
-            Math.Max(0, tunnelCount),
-            Math.Min(maximumTunnelCount, Math.Max(0, desiredTokenCount - 1)));
+        int maximumTunnelCount = Math.Max(0, Math.Min(
+            _cells.Count / 2,
+            Math.Min((_rows - 1) * _columns, desiredTokenCount / 2)));
+        int configuredTunnelCount = Math.Min(Math.Max(0, tunnelCount), maximumTunnelCount);
         int visibleTokenCount = Math.Min(
             Math.Max(0, desiredTokenCount - configuredTunnelCount),
             Math.Max(0, _cells.Count - configuredTunnelCount));
-        List<YarnMatchPoolCell> visibleCells = ChooseReachableCells(visibleTokenCount, seed + 300);
-        List<TunnelPlacement> tunnelPlacements = ChooseTunnelPlacements(
-            visibleCells,
-            configuredTunnelCount,
-            seed + 511);
-        while (configuredTunnelCount > 0 && tunnelPlacements.Count == 0)
-        {
-            configuredTunnelCount--;
-            visibleTokenCount = Math.Min(
-                Math.Max(0, desiredTokenCount - configuredTunnelCount),
-                Math.Max(0, _cells.Count - configuredTunnelCount));
-            visibleCells = ChooseReachableCells(visibleTokenCount, seed + 300 + configuredTunnelCount);
-            tunnelPlacements = ChooseTunnelPlacements(visibleCells, configuredTunnelCount, seed + 511);
-        }
+        TunnelLayout layout = ChooseTunnelLayout(visibleTokenCount, configuredTunnelCount, seed + 511);
+        List<YarnMatchPoolCell> visibleCells = layout.VisibleCells;
+        List<TunnelPlacement> tunnelPlacements = layout.Placements;
+        configuredTunnelCount = tunnelPlacements.Count;
+        int requestedQueueMin = Math.Max(1, tunnelQueueMin);
+        int requestedQueueMax = Math.Max(requestedQueueMin, tunnelQueueMax);
 
         int hiddenBudget = Math.Max(0, desiredTokenCount - visibleCells.Count);
-        List<int> queueCounts = BuildQueueCounts(hiddenBudget, tunnelPlacements.Count, tunnelQueueDepth);
+        List<int> queueCounts = BuildQueueCounts(hiddenBudget, tunnelPlacements.Count, requestedQueueMin, requestedQueueMax, seed + 733);
         int tokenCount = visibleCells.Count + hiddenBudget;
-        List<YarnMatchColor> colors = BuildColors(tokenCount, safeColorCount, targetSpoolsByColor, seed);
+        List<YarnMatchColor> colors = BuildColors(tokenCount, visibleCells.Count, safeColorCount, targetSpoolsByColor, seed);
         for (int index = 0; index < tokenCount; index++)
         {
             _tokens.Add(new YarnMatchSpoolToken
@@ -129,6 +154,8 @@ public sealed class YarnMatchPoolModel
                 Direction = placement.Direction
             };
             placement.PipeCell.Tunnel = tunnel;
+            placement.PipeCell.Unlocked = true;
+            UnlockNeighbors(placement.PipeCell);
             placement.OutputCell.SourceTunnel = tunnel;
             int queueStart = visibleCells.Count + queueOffset;
             int queueCount = queueCounts[index];
@@ -142,7 +169,31 @@ public sealed class YarnMatchPoolModel
     }
     public bool IsSelectable(YarnMatchSpoolToken token)
     {
-        return token != null && !token.Used && token.Cell != null && token.Cell.Unlocked;
+        return token != null
+            && !token.Used
+            && token.Cell != null
+            && token.Cell.Tunnel == null
+            && IsCellUnlocked(token.Cell);
+    }
+
+    private bool IsCellUnlocked(YarnMatchPoolCell cell)
+    {
+        if (cell.Unlocked)
+        {
+            return true;
+        }
+
+        int[,] directions = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
+        for (int index = 0; index < directions.GetLength(0); index++)
+        {
+            YarnMatchPoolCell neighbor = FindCell(cell.Column + directions[index, 0], cell.Row + directions[index, 1]);
+            if (neighbor != null && neighbor.Unlocked)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public YarnMatchPoolSelection Consume(YarnMatchSpoolToken token)
@@ -242,6 +293,7 @@ public sealed class YarnMatchPoolModel
 
     private List<YarnMatchColor> BuildColors(
         int tokenCount,
+        int visibleTokenCount,
         int safeColorCount,
         IReadOnlyList<int> targetSpoolsByColor,
         int seed)
@@ -275,10 +327,102 @@ public sealed class YarnMatchPoolModel
         {
             colors.RemoveRange(tokenCount, colors.Count - tokenCount);
         }
-        YarnMatchRandom.Shuffle(colors, seed);
+
+        if (requestedTokenCount <= 0)
+        {
+            YarnMatchRandom.Shuffle(colors, seed);
+            return colors;
+        }
+
+        EnsureEveryColorCanBeSeen(colors, visibleTokenCount, targetSpoolsByColor, seed);
         return colors;
     }
 
+    private static void EnsureEveryColorCanBeSeen(
+        List<YarnMatchColor> colors,
+        int visibleTokenCount,
+        IReadOnlyList<int> targetSpoolsByColor,
+        int seed)
+    {
+        int safeVisibleCount = Math.Min(Math.Max(0, visibleTokenCount), colors.Count);
+        if (safeVisibleCount <= 0)
+        {
+            return;
+        }
+
+        List<YarnMatchColor> visible = new List<YarnMatchColor>(safeVisibleCount);
+        List<YarnMatchColor> hidden = new List<YarnMatchColor>(Math.Max(0, colors.Count - safeVisibleCount));
+        for (int index = 0; index < colors.Count; index++)
+        {
+            if (index < safeVisibleCount)
+            {
+                visible.Add(colors[index]);
+            }
+            else
+            {
+                hidden.Add(colors[index]);
+            }
+        }
+
+        List<YarnMatchColor> requiredVisibleColors = new List<YarnMatchColor>();
+        for (int color = 0; color < targetSpoolsByColor.Count; color++)
+        {
+            if (targetSpoolsByColor[color] > 0)
+            {
+                requiredVisibleColors.Add((YarnMatchColor)color);
+            }
+        }
+
+        if (requiredVisibleColors.Count > safeVisibleCount)
+        {
+            YarnMatchRandom.Shuffle(colors, seed);
+            return;
+        }
+
+        HashSet<int> lockedVisibleIndices = new HashSet<int>();
+        for (int colorIndex = 0; colorIndex < requiredVisibleColors.Count; colorIndex++)
+        {
+            YarnMatchColor requiredColor = requiredVisibleColors[colorIndex];
+            int existingIndex = visible.IndexOf(requiredColor);
+            if (existingIndex >= 0)
+            {
+                lockedVisibleIndices.Add(existingIndex);
+                continue;
+            }
+
+            int hiddenIndex = hidden.IndexOf(requiredColor);
+            if (hiddenIndex < 0)
+            {
+                continue;
+            }
+
+            int replacementIndex = -1;
+            for (int visibleIndex = 0; visibleIndex < visible.Count; visibleIndex++)
+            {
+                if (!lockedVisibleIndices.Contains(visibleIndex))
+                {
+                    replacementIndex = visibleIndex;
+                    break;
+                }
+            }
+
+            if (replacementIndex < 0)
+            {
+                break;
+            }
+
+            YarnMatchColor displaced = visible[replacementIndex];
+            visible[replacementIndex] = requiredColor;
+            hidden[hiddenIndex] = displaced;
+            lockedVisibleIndices.Add(replacementIndex);
+        }
+
+        YarnMatchRandom.Shuffle(visible, seed + 1);
+        YarnMatchRandom.Shuffle(hidden, seed + 2);
+        colors.Clear();
+        colors.AddRange(visible);
+        colors.AddRange(hidden);
+    }
     private void AttachToken(YarnMatchPoolCell cell, YarnMatchSpoolToken token)
     {
         cell.Token = token;
@@ -300,7 +444,7 @@ public sealed class YarnMatchPoolModel
         return total;
     }
 
-    private static List<int> BuildQueueCounts(int hiddenBudget, int tunnelCount, int configuredDepth)
+    private static List<int> BuildQueueCounts(int hiddenBudget, int tunnelCount, int requestedMin, int requestedMax, int seed)
     {
         List<int> queueCounts = new List<int>(tunnelCount);
         if (tunnelCount <= 0)
@@ -308,20 +452,83 @@ public sealed class YarnMatchPoolModel
             return queueCounts;
         }
 
-        int remaining = Math.Max(0, hiddenBudget);
-        int depthHint = Math.Max(0, configuredDepth);
+        int total = Math.Max(0, hiddenBudget);
+        int safeMin = Math.Max(1, requestedMin);
+        if ((long)safeMin * tunnelCount > total)
+        {
+            safeMin = Math.Max(0, total / tunnelCount);
+        }
+
+        int safeMax = Math.Max(safeMin, Math.Max(requestedMax, (total + tunnelCount - 1) / tunnelCount));
+        safeMax = Math.Min(safeMax, total);
         for (int index = 0; index < tunnelCount; index++)
         {
-            int remainingTunnels = tunnelCount - index;
-            int queueCount = (remaining + remainingTunnels - 1) / remainingTunnels;
-            if (depthHint > queueCount && remaining >= depthHint * remainingTunnels)
+            queueCounts.Add(safeMin);
+        }
+
+        int remaining = total - safeMin * tunnelCount;
+        System.Random random = new System.Random(seed);
+        int round = 0;
+        while (remaining > 0)
+        {
+            List<int> candidates = new List<int>();
+            for (int index = 0; index < queueCounts.Count; index++)
             {
-                queueCount = depthHint;
+                if (queueCounts[index] < safeMax)
+                {
+                    candidates.Add(index);
+                }
             }
-            queueCounts.Add(queueCount);
-            remaining -= queueCount;
+            if (candidates.Count == 0)
+            {
+                break;
+            }
+
+            YarnMatchRandom.Shuffle(candidates, seed + round * 37);
+            int targetIndex = candidates[random.Next(candidates.Count)];
+            int capacity = Math.Min(remaining, safeMax - queueCounts[targetIndex]);
+            int increase = capacity <= 1 ? capacity : random.Next(1, capacity + 1);
+            queueCounts[targetIndex] += increase;
+            remaining -= increase;
+            round++;
+        }
+
+        if (remaining > 0)
+        {
+            for (int index = 0; index < queueCounts.Count && remaining > 0; index++)
+            {
+                int capacity = safeMax - queueCounts[index];
+                int increase = Math.Min(capacity, remaining);
+                queueCounts[index] += increase;
+                remaining -= increase;
+            }
+        }
+
+        if (queueCounts.Count > 1 && safeMax > safeMin && AreQueueCountsEqual(queueCounts))
+        {
+            if (queueCounts[0] > safeMin)
+            {
+                queueCounts[0]--;
+                queueCounts[1]++;
+            }
+            else if (queueCounts[0] < safeMax)
+            {
+                queueCounts[0]++;
+                queueCounts[1]--;
+            }
         }
         return queueCounts;
+    }
+    private static bool AreQueueCountsEqual(IReadOnlyList<int> queueCounts)
+    {
+        for (int index = 1; index < queueCounts.Count; index++)
+        {
+            if (queueCounts[index] != queueCounts[0])
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void UnlockNeighbors(YarnMatchPoolCell source)
@@ -331,7 +538,7 @@ public sealed class YarnMatchPoolModel
         for (int index = 0; index < directions.GetLength(0); index++)
         {
             YarnMatchPoolCell neighbor = FindCell(source.Column + directions[index, 0], source.Row + directions[index, 1]);
-            if (neighbor != null && neighbor.Token != null)
+            if (neighbor != null)
             {
                 neighbor.Unlocked = true;
             }
@@ -384,6 +591,95 @@ public sealed class YarnMatchPoolModel
         return result;
     }
 
+    private List<YarnMatchPoolCell> ChooseReachableCells(
+        IReadOnlyList<YarnMatchPoolCell> allowed,
+        int count,
+        int seed,
+        IReadOnlyList<TunnelPlacement> placements)
+    {
+        List<YarnMatchPoolCell> result = new List<YarnMatchPoolCell>(Math.Max(0, count));
+        if (count <= 0)
+        {
+            return result;
+        }
+
+        HashSet<YarnMatchPoolCell> allowedSet = new HashSet<YarnMatchPoolCell>(allowed);
+        HashSet<YarnMatchPoolCell> requiredSet = new HashSet<YarnMatchPoolCell>();
+        if (placements != null)
+        {
+            for (int index = 0; index < placements.Count; index++)
+            {
+                if (placements[index].OutputCell != null)
+                {
+                    requiredSet.Add(placements[index].OutputCell);
+                }
+            }
+        }
+        List<YarnMatchPoolCell> roots = new List<YarnMatchPoolCell>();
+        for (int index = 0; index < allowed.Count; index++)
+        {
+            if (allowed[index].Row == 0)
+            {
+                roots.Add(allowed[index]);
+            }
+        }
+        YarnMatchRandom.Shuffle(roots, seed);
+        for (int index = 0; index < roots.Count && result.Count < count; index++)
+        {
+            result.Add(roots[index]);
+        }
+
+        int[,] directions = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 } };
+        while (result.Count < count)
+        {
+            List<YarnMatchPoolCell> frontier = new List<YarnMatchPoolCell>();
+            for (int index = 0; index < result.Count; index++)
+            {
+                YarnMatchPoolCell current = result[index];
+                for (int direction = 0; direction < directions.GetLength(0); direction++)
+                {
+                    YarnMatchPoolCell neighbor = FindCell(current.Column + directions[direction, 0], current.Row + directions[direction, 1]);
+                    if (neighbor != null && allowedSet.Contains(neighbor) && !result.Contains(neighbor) && !frontier.Contains(neighbor))
+                    {
+                        frontier.Add(neighbor);
+                    }
+                }
+            }
+            if (frontier.Count == 0)
+            {
+                break;
+            }
+            YarnMatchRandom.Shuffle(frontier, seed + result.Count * 17);
+            result.Add(frontier[0]);
+        }
+
+        if (placements != null)
+        {
+            for (int index = 0; index < placements.Count; index++)
+            {
+                YarnMatchPoolCell required = placements[index].OutputCell;
+                if (required == null || !allowedSet.Contains(required) || result.Contains(required))
+                {
+                    continue;
+                }
+                if (result.Count < count)
+                {
+                    result.Add(required);
+                    continue;
+                }
+                for (int replaceIndex = result.Count - 1; replaceIndex >= 0; replaceIndex--)
+                {
+                    if (requiredSet.Contains(result[replaceIndex]))
+                    {
+                        continue;
+                    }
+                    result[replaceIndex] = required;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
     private static int CountLowerCells(IReadOnlyList<YarnMatchPoolCell> cells)
     {
         int count = 0;
@@ -404,27 +700,111 @@ public sealed class YarnMatchPoolModel
         internal YarnMatchTunnelDirection Direction;
     }
 
-    private List<TunnelPlacement> ChooseTunnelPlacements(
-        IReadOnlyList<YarnMatchPoolCell> visibleCells,
-        int count,
-        int seed)
+    private sealed class TunnelLayout
+    {
+        internal readonly List<YarnMatchPoolCell> VisibleCells = new List<YarnMatchPoolCell>();
+        internal readonly List<TunnelPlacement> Placements = new List<TunnelPlacement>();
+    }
+
+    private TunnelLayout ChooseTunnelLayout(int visibleTokenCount, int tunnelCount, int seed)
+    {
+        TunnelLayout best = null;
+        int attempts = tunnelCount > 0 ? 64 : 1;
+        for (int attempt = 0; attempt < attempts; attempt++)
+        {
+            List<TunnelPlacement> placements = ChooseTunnelPlacements(tunnelCount, seed + attempt * 31);
+            if (placements.Count < tunnelCount && best != null)
+            {
+                continue;
+            }
+
+            HashSet<YarnMatchPoolCell> pipeCells = new HashSet<YarnMatchPoolCell>();
+            for (int index = 0; index < placements.Count; index++)
+            {
+                pipeCells.Add(placements[index].PipeCell);
+            }
+
+            List<YarnMatchPoolCell> available = new List<YarnMatchPoolCell>();
+            for (int index = 0; index < _cells.Count; index++)
+            {
+                if (!pipeCells.Contains(_cells[index]))
+                {
+                    available.Add(_cells[index]);
+                }
+            }
+
+            List<YarnMatchPoolCell> visible = ChooseReachableCells(
+                available,
+                Math.Min(visibleTokenCount, available.Count),
+                seed + attempt * 47,
+                placements);
+            if (!AreTunnelOutputsVisible(visible, placements))
+            {
+                continue;
+            }
+
+            TunnelLayout layout = new TunnelLayout();
+            layout.VisibleCells.AddRange(visible);
+            layout.Placements.AddRange(placements);
+            if (best == null
+                || layout.Placements.Count > best.Placements.Count
+                || layout.VisibleCells.Count > best.VisibleCells.Count)
+            {
+                best = layout;
+            }
+            if (placements.Count >= tunnelCount)
+            {
+                return layout;
+            }
+        }
+
+        if (best != null)
+        {
+            return best;
+        }
+
+        TunnelLayout fallback = new TunnelLayout();
+        fallback.VisibleCells.AddRange(ChooseReachableCells(visibleTokenCount, seed));
+        return fallback;
+    }
+
+    private static bool AreTunnelOutputsVisible(
+        IReadOnlyList<YarnMatchPoolCell> visible,
+        IReadOnlyList<TunnelPlacement> placements)
+    {
+        if (visible.Count <= 0 && placements.Count > 0)
+        {
+            return false;
+        }
+        for (int index = 0; index < placements.Count; index++)
+        {
+            if (!ContainsCell(visible, placements[index].OutputCell))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    private List<TunnelPlacement> ChooseTunnelPlacements(int count, int seed)
     {
         List<TunnelPlacement> candidates = new List<TunnelPlacement>();
-
         int[,] offsets = { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
-        for (int outputIndex = 0; outputIndex < visibleCells.Count; outputIndex++)
+        for (int pipeIndex = 0; pipeIndex < _cells.Count; pipeIndex++)
         {
-            YarnMatchPoolCell output = visibleCells[outputIndex];
+            YarnMatchPoolCell pipe = _cells[pipeIndex];
+            if (pipe.Row == 0)
+            {
+                continue;
+            }
             for (int directionIndex = 0; directionIndex < 4; directionIndex++)
             {
-                YarnMatchPoolCell pipe = FindCell(
-                    output.Column - offsets[directionIndex, 0],
-                    output.Row - offsets[directionIndex, 1]);
-                if (pipe == null || ContainsCell(visibleCells, pipe))
+                YarnMatchPoolCell output = FindCell(
+                    pipe.Column + offsets[directionIndex, 0],
+                    pipe.Row + offsets[directionIndex, 1]);
+                if (output == null)
                 {
                     continue;
                 }
-
                 candidates.Add(new TunnelPlacement
                 {
                     PipeCell = pipe,
@@ -441,15 +821,17 @@ public sealed class YarnMatchPoolModel
         for (int index = 0; index < candidates.Count && result.Count < count; index++)
         {
             TunnelPlacement candidate = candidates[index];
-            if (!usedPipes.Add(candidate.PipeCell) || !usedOutputs.Add(candidate.OutputCell))
+            if (usedPipes.Contains(candidate.OutputCell)
+                || usedOutputs.Contains(candidate.PipeCell)
+                || !usedPipes.Add(candidate.PipeCell)
+                || !usedOutputs.Add(candidate.OutputCell))
             {
                 continue;
             }
             result.Add(candidate);
         }
         return result;
-    }
-    private static bool ContainsCell(IReadOnlyList<YarnMatchPoolCell> cells, YarnMatchPoolCell candidate)
+    }    private static bool ContainsCell(IReadOnlyList<YarnMatchPoolCell> cells, YarnMatchPoolCell candidate)
     {
         for (int index = 0; index < cells.Count; index++)
         {
@@ -460,6 +842,13 @@ public sealed class YarnMatchPoolModel
         }
         return false;
     }
+    private static int SelectRandomInclusive(int seed, int min, int max)
+    {
+        int safeMin = Math.Min(min, max);
+        int safeMax = Math.Max(min, max);
+        return safeMin == safeMax ? safeMin : new System.Random(seed).Next(safeMin, safeMax + 1);
+    }
+
     private YarnMatchPoolCell FindCell(int column, int row)
     {
         if (column < 0 || column >= _columns || row < 0 || row >= _rows)

@@ -101,8 +101,8 @@ internal sealed class YarnMatchUiBuilder
     {
         GameObject poolAreaObject = YarnMatchUiPrimitives.CreateChild("Pool Area", parent);
         ui.PoolArea = poolAreaObject.GetComponent<RectTransform>();
-        ui.PoolArea.sizeDelta = new Vector2(700f, 400f);
-        ui.PoolArea.anchoredPosition = new Vector2(0f, -385f);
+        ui.PoolArea.sizeDelta = new Vector2(700f, 430f);
+        ui.PoolArea.anchoredPosition = new Vector2(0f, -365f);
         YarnMatchUiPrimitives.CreateText("Pool Caption", ui.PoolArea, "选择滚筒  ·  先选第一排，再向四周解锁", 15, new Color(0.22f, 0.25f, 0.38f), TextAlignmentOptions.Center, new Vector2(0f, 178f), new Vector2(680f, 28f), FontStyles.Bold);
         ui.PoolRoot = YarnMatchUiPrimitives.CreateChild("Spool Pool", ui.PoolArea).transform;
     }
@@ -128,14 +128,14 @@ internal sealed class YarnMatchUiBuilder
         dim.raycastTarget = true;
         Image panel = YarnMatchUiPrimitives.CreateImage("Result Panel", ui.ResultOverlay.transform, YarnMatchVisualFactory.GetPanelSprite(), Color.white, new Vector2(610f, 350f), new Vector2(0f, 10f), true);
         ui.ResultPanelRect = panel.rectTransform;
-        ui.ResultTitle = YarnMatchUiPrimitives.CreateText("Result Title", panel.transform, "完成啦！", 40, new Color(0.08f, 0.60f, 0.32f), TextAlignmentOptions.Center, new Vector2(0f, 94f), new Vector2(540f, 62f), FontStyles.Bold);
-        ui.ResultDetail = YarnMatchUiPrimitives.CreateText("Result Detail", panel.transform, "每一根毛线都回到收线台了", 17, new Color(0.31f, 0.36f, 0.49f), TextAlignmentOptions.Center, new Vector2(0f, 34f), new Vector2(540f, 42f), FontStyles.Normal);
-        ui.ResultNextButton = YarnMatchUiPrimitives.CreateButton("Next Level", panel.transform, "下一关", new Vector2(0f, -82f), new Vector2(270f, 60f), Color.white, new Color(0.10f, 0.62f, 0.88f));
+        ui.ResultTitle = YarnMatchUiPrimitives.CreateText("Result Title", panel.transform, "完成啦！", 40, new Color(0.08f, 0.60f, 0.32f), TextAlignmentOptions.Center, new Vector2(0f, 86f), new Vector2(540f, 62f), FontStyles.Bold);
+        ui.ResultDetail = YarnMatchUiPrimitives.CreateText("Result Detail", panel.transform, "每一根毛线都回到收线台了", 17, new Color(0.31f, 0.36f, 0.49f), TextAlignmentOptions.Center, new Vector2(0f, 36f), new Vector2(540f, 42f), FontStyles.Normal);
+        ui.ResultNextButton = YarnMatchUiPrimitives.CreateButton("Next Level", panel.transform, "下一关", new Vector2(0f, -58f), new Vector2(270f, 60f), Color.white, new Color(0.10f, 0.62f, 0.88f));
         ui.ResultNextLabel = ui.ResultNextButton.GetComponentInChildren<TMP_Text>();
         ui.ResultNextButton.onClick.AddListener(() => { _audio?.PlayClick(); onNextLevel?.Invoke(); });
-        ui.ResultReplayButton = YarnMatchUiPrimitives.CreateButton("Replay Level", panel.transform, "重玩本关", new Vector2(0f, -82f), new Vector2(270f, 60f), Color.white, new Color(0.91f, 0.34f, 0.42f));
+        ui.ResultReplayButton = YarnMatchUiPrimitives.CreateButton("Replay Level", panel.transform, "重玩本关", new Vector2(0f, -58f), new Vector2(270f, 60f), Color.white, new Color(0.91f, 0.34f, 0.42f));
         ui.ResultReplayButton.onClick.AddListener(() => { _audio?.PlayClick(); onRestart?.Invoke(); });
-        ui.ResultHomeButton = YarnMatchUiPrimitives.CreateButton("Back To Home", panel.transform, "返回首页", new Vector2(0f, -150f), new Vector2(270f, 52f), new Color(0.20f, 0.32f, 0.52f), new Color(0.90f, 0.94f, 1f));
+        ui.ResultHomeButton = YarnMatchUiPrimitives.CreateButton("Back To Home", panel.transform, "返回首页", new Vector2(0f, -124f), new Vector2(270f, 52f), new Color(0.20f, 0.32f, 0.52f), new Color(0.90f, 0.94f, 1f));
         ui.ResultHomeButton.onClick.AddListener(() => { _audio?.PlayClick(); onBackToMainMenu?.Invoke(); });
         ui.ResultOverlay.SetActive(false);
     }

@@ -13,6 +13,14 @@ public sealed class YarnMatchLevelConfig
     public int PoolRows { get; }
     public int TunnelCount { get; }
     public int TunnelQueueDepth { get; }
+    public int PoolColumnsMin { get; }
+    public int PoolColumnsMax { get; }
+    public int PoolRowsMin { get; }
+    public int PoolRowsMax { get; }
+    public int TunnelCountMin { get; }
+    public int TunnelCountMax { get; }
+    public int TunnelQueueMin { get; }
+    public int TunnelQueueMax { get; }
     public int BoardColumns { get; }
     public int BoardRows { get; }
     public bool UsesGraphicPattern { get; }
@@ -27,6 +35,14 @@ public sealed class YarnMatchLevelConfig
         int poolRows,
         int tunnelCount,
         int tunnelQueueDepth,
+        int poolColumnsMin,
+        int poolColumnsMax,
+        int poolRowsMin,
+        int poolRowsMax,
+        int tunnelCountMin,
+        int tunnelCountMax,
+        int tunnelQueueMin,
+        int tunnelQueueMax,
         bool usesGraphicPattern,
         bool usesReferencePattern,
         int seed,
@@ -38,6 +54,14 @@ public sealed class YarnMatchLevelConfig
         PoolRows = poolRows;
         TunnelCount = tunnelCount;
         TunnelQueueDepth = tunnelQueueDepth;
+        PoolColumnsMin = Math.Max(1, Math.Min(poolColumnsMin, poolColumnsMax));
+        PoolColumnsMax = Math.Max(PoolColumnsMin, poolColumnsMax);
+        PoolRowsMin = Math.Max(2, Math.Min(poolRowsMin, poolRowsMax));
+        PoolRowsMax = Math.Max(PoolRowsMin, poolRowsMax);
+        TunnelCountMin = Math.Max(0, Math.Min(tunnelCountMin, tunnelCountMax));
+        TunnelCountMax = Math.Max(TunnelCountMin, tunnelCountMax);
+        TunnelQueueMin = Math.Max(0, Math.Min(tunnelQueueMin, tunnelQueueMax));
+        TunnelQueueMax = Math.Max(TunnelQueueMin, tunnelQueueMax);
         UsesGraphicPattern = usesGraphicPattern;
         UsesReferencePattern = usesReferencePattern;
         Seed = seed;

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      YarnMatchTunnel_Right_0: 1998370017065265422
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

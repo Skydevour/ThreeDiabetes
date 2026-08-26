@@ -19,6 +19,7 @@ internal sealed class YarnMatchStrandView
 
 internal sealed class YarnMatchPoolCellView
 {
+    internal Image ShadowImage;
     internal Image SlotImage;
     internal Button Button;
     internal Image SpoolImage;

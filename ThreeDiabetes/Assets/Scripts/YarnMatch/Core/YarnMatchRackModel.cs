@@ -56,7 +56,9 @@ public sealed class YarnMatchRackModel
         {
             if (_entries[index].Color == color)
             {
-                reservedCapacity += _entries[index].Capacity;
+                // A full spool may still be playing its exit animation. It no longer
+                // reserves board cells, while its unfinished progress still does.
+                reservedCapacity += Math.Max(0, _entries[index].Capacity - _entries[index].Progress);
             }
         }
 

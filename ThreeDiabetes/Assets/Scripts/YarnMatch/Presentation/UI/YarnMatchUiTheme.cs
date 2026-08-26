@@ -43,10 +43,10 @@ internal static class YarnMatchUiTheme
     internal const float BoardViewportWidth = 700f;
     internal const float BoardViewportHeight = 500f;
     internal const float PoolViewportWidth = 700f;
-    internal const float PoolViewportHeight = 350f;
-    internal const float PoolViewportCenterY = -25f;
-    internal const float PoolSlotGap = 5f;
-    internal const float PoolMaxCellSize = 68f;
+    internal const float PoolViewportHeight = 390f;
+    internal const float PoolViewportCenterY = -34f;
+    internal const float PoolSlotGap = 4f;
+    internal const float PoolMaxCellSize = 72f;
     internal static int BoardStrandCountForSize(float cellSize)
     {
         if (cellSize < 14f)

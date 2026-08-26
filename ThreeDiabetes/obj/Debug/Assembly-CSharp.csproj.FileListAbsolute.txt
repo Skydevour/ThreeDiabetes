@@ -523,3 +523,5 @@ E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\obj\Debug\Assembly-CSh
 E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\obj\Debug\Assembly.44154EF1.Up2Date
 E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\obj\Debug\Assembly-CSharp.dll
 E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\obj\Debug\Assembly-CSharp.pdb
+E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Temp\Bin\Debug\Assembly-CSharp\UnityEditor.Android.Extensions.dll
+E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Temp\Bin\Debug\Assembly-CSharp\AndroidPlayerBuildProgram.Data.dll

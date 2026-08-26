@@ -105,7 +105,18 @@ public sealed class YarnMatchGame : MonoBehaviour
             _levelConfig.UsesGraphicPattern,
             _levelConfig.UsesReferencePattern);
         _pool = new YarnMatchPoolModel();
-        _pool.Build(_levelConfig.Seed + 500 + _roundId, _levelConfig.PoolColumns, _levelConfig.PoolRows, _levelConfig.ColorCount, _levelConfig.TunnelCount, _levelConfig.TunnelQueueDepth, _board.RequiredSpoolsByColor);
+        _pool.Build(
+            _levelConfig.Seed + 500 + _roundId,
+            _levelConfig.PoolColumnsMin,
+            _levelConfig.PoolColumnsMax,
+            _levelConfig.PoolRowsMin,
+            _levelConfig.PoolRowsMax,
+            _levelConfig.ColorCount,
+            _levelConfig.TunnelCountMin,
+            _levelConfig.TunnelCountMax,
+            _levelConfig.TunnelQueueMin,
+            _levelConfig.TunnelQueueMax,
+            _board.RequiredSpoolsByColor);
         _rack = new YarnMatchRackModel();
         _presentation.SetLevel(_levelConfig.Number);
         _presentation.ResetGame(_board, _pool, _rack);

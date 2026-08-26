@@ -189,11 +189,11 @@ internal sealed class YarnMatchUiRenderer
 
     private static void UpdatePoolSlotBackground(YarnMatchPoolCell cell, YarnMatchPoolCellView cellView)
     {
-        cellView.SlotImage.color = cell.Token == null
-            ? new Color(0.96f, 0.98f, 1f)
-            : cell.Unlocked
-                ? new Color(0.90f, 0.86f, 0.96f)
-                : new Color(0.52f, 0.45f, 0.64f, 0.90f);
+        bool lockedToken = cell.Token != null && !cell.Unlocked;
+        cellView.ShadowImage.enabled = lockedToken;
+        cellView.SlotImage.color = lockedToken
+            ? new Color(0.52f, 0.45f, 0.64f, 0.90f)
+            : new Color(0.96f, 0.98f, 1f);
     }
 
     private void RemovePoolTokenViewsForButton(Button button, YarnMatchSpoolToken keep)
@@ -274,7 +274,7 @@ internal sealed class YarnMatchUiRenderer
             YarnMatchPoolCell cell = pool.Cells[index];
             if (_poolCellViews.TryGetValue(cell, out YarnMatchPoolCellView cellView))
             {
-                UpdatePoolSlotBackground(cell, cellView);
+                UpdatePoolCellView(cell, state);
             }
             if (cell.Token != null && _poolTokenViews.TryGetValue(cell.Token, out YarnMatchPoolTokenView view))
             {
@@ -295,7 +295,7 @@ internal sealed class YarnMatchUiRenderer
             YarnMatchPoolCell cell = pool.Cells[index];
             if (_poolCellViews.TryGetValue(cell, out YarnMatchPoolCellView cellView))
             {
-                UpdatePoolSlotBackground(cell, cellView);
+                UpdatePoolCellView(cell, state);
             }
             if (cell.Token != null && _poolTokenViews.TryGetValue(cell.Token, out YarnMatchPoolTokenView view))
             {
@@ -559,7 +559,7 @@ internal sealed class YarnMatchUiRenderer
         {
             YarnMatchPoolCell cell = pool.Cells[index];
             Vector2 position = PoolSlotPosition(cell.Column, cell.Row);
-            YarnMatchUiPrimitives.CreateImage("Pool Tile Shadow", _ui.PoolSlotsRoot, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.28f, 0.36f, 0.52f, 0.16f), new Vector2(cellSize + 4f, cellSize + 4f), position + new Vector2(cellSize * 0.05f, -cellSize * 0.07f), true);
+            Image shadowImage = YarnMatchUiPrimitives.CreateImage("Pool Tile Shadow", _ui.PoolSlotsRoot, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.28f, 0.36f, 0.52f, 0.16f), new Vector2(cellSize + 4f, cellSize + 4f), position + new Vector2(cellSize * 0.05f, -cellSize * 0.07f), true);
             Image slotImage = YarnMatchUiPrimitives.CreateImage("Pool Tile", _ui.PoolSlotsRoot, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.96f, 0.98f, 1f), new Vector2(cellSize, cellSize), position, true);
 
             Button button = YarnMatchUiPrimitives.CreateButton("Pool Spool", _ui.PoolButtonsRoot, string.Empty, position, new Vector2(cellSize + 8f, cellSize + 8f), Color.white, new Color(1f, 1f, 1f, 0f));
@@ -574,7 +574,7 @@ internal sealed class YarnMatchUiRenderer
                 _audio?.PlayClick();
                 _onSpoolSelected?.Invoke(token);
             });
-            Image spoolImage = YarnMatchUiPrimitives.CreateImage("Spool", button.transform, YarnMatchVisualFactory.GetSpoolSprite(YarnMatchUiTheme.Palette[(int)YarnMatchColor.Coral]), Color.white, new Vector2(cellSize * 0.84f, cellSize * 0.94f), new Vector2(0f, cellSize * 0.03f), false);
+            Image spoolImage = YarnMatchUiPrimitives.CreateImage("Spool", button.transform, YarnMatchVisualFactory.GetSpoolSprite(YarnMatchUiTheme.Palette[(int)YarnMatchColor.Coral]), Color.white, new Vector2(cellSize * 0.90f, cellSize * 0.98f), new Vector2(0f, cellSize * 0.03f), false);
             spoolImage.raycastTarget = false;
             Outline spoolOutline = spoolImage.gameObject.AddComponent<Outline>();
             spoolOutline.effectColor = new Color(0.10f, 0.18f, 0.34f, 0.95f);
@@ -585,6 +585,7 @@ internal sealed class YarnMatchUiRenderer
             button.gameObject.SetActive(false);
             _poolCellViews.Add(cell, new YarnMatchPoolCellView
             {
+                ShadowImage = shadowImage,
                 SlotImage = slotImage,
                 Button = button,
                 SpoolImage = spoolImage,
@@ -594,9 +595,9 @@ internal sealed class YarnMatchUiRenderer
             });
         }
 
-        float badgeSize = Mathf.Clamp(cellSize * 0.38f, 14f, 24f);
+        float badgeSize = Mathf.Clamp(cellSize * 0.48f, 18f, 30f);
         Vector2 badgePosition = new Vector2(cellSize * 0.31f, cellSize * 0.31f);
-        int badgeFontSize = Mathf.Clamp(Mathf.RoundToInt(cellSize * 0.24f), 9, 15);
+        int badgeFontSize = Mathf.Clamp(Mathf.RoundToInt(cellSize * 0.34f), 12, 20);
         for (int index = 0; index < pool.Tunnels.Count; index++)
         {
             YarnMatchTunnel tunnel = pool.Tunnels[index];
