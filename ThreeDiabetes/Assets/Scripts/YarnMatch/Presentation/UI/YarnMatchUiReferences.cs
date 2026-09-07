@@ -35,6 +35,7 @@ internal sealed class YarnMatchUiReferences
     internal TMP_Text ResultNextLabel;
     internal Button ResultNextButton;
     internal Button ResultReplayButton;
+    internal Button ResultPreviewButton;
     internal Button ResultHomeButton;
     internal GameObject MainMenuOverlay;
     internal GameObject LevelSelectOverlay;
@@ -43,7 +44,5 @@ internal sealed class YarnMatchUiReferences
     internal Button UnlockAllLevelsButton;
     internal TMP_Text UnlockAllLevelsLabel;
     internal Button SpecialChallengeButton;
-    internal readonly List<Button> LevelButtons = new List<Button>();
-    internal readonly List<TMP_Text> LevelButtonLabels = new List<TMP_Text>();
-    internal readonly List<TMP_Text> LevelButtonDetails = new List<TMP_Text>();
+    internal YarnMatchLevelList LevelList;
 }

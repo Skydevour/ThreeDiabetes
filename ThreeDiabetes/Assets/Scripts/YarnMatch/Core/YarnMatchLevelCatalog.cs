@@ -1,245 +1,88 @@
 using System;
-using System.Collections.Generic;
 
 public static class YarnMatchLevelCatalog
 {
-    private const int InitialPoolCellCount = 48;
-    private const int InitialPoolColumns = 8;
-    private const int ExpandedPoolColumns = 10;
-    private const int PoolCellsAddedPerMilestone = 10;
-    private const int FirstBoardSize = 5;
-    private const int MinimumNormalColorCount = 4;
-    private const int MaximumNormalColorCount = 9;
-    public const int ReferencePatternLevel = 110;
-    private const int ReferencePatternColumns = 48;
-    private const int ReferencePatternRows = 40;
-    private const int ReferencePoolColumns = 12;
-    private const int ReferencePoolRows = 7;
-    private const int ReferenceTunnelCountMin = 20;
-    private const int ReferenceTunnelCountMax = 30;
-    private const int ReferenceTunnelQueueMin = 10;
-    private const int ReferenceTunnelQueueMax = 40;
     public const int LevelsPerChapter = 50;
-    private static readonly Dictionary<int, IReadOnlyList<YarnMatchLevelConfig>> ChapterCache = new Dictionary<int, IReadOnlyList<YarnMatchLevelConfig>>();
+    public const int ReferencePatternLevel = 110;
+    private const int MaximumBoardSize = 50;
+    private const int MaximumPoolColumns = 12;
+    private const int MaximumPoolRows = 8;
+    private const int InitialPoolCells = 48;
+    private const int PoolCellsPerMilestone = 10;
+    private static readonly Random RoundSeeds = new Random();
 
-    public static IReadOnlyList<YarnMatchLevelConfig> All => GetChapter(0);
+    // List metadata never allocates or caches playable layouts.
+    public static YarnMatchLevelConfig Get(int level) => BuildLevel(Math.Max(1, level), 0);
+    public static YarnMatchLevelConfig CreateRound(int level) => BuildLevel(Math.Max(1, level), RoundSeeds.Next());
+    public static int GetChapterIndex(int level) => (Math.Max(1, level) - 1) / LevelsPerChapter;
+    public static int GetChapterStartLevel(int level) => GetChapterIndex(level) * LevelsPerChapter + 1;
+    public static int GetChapterEndLevel(int level) => GetChapterStartLevel(level) + LevelsPerChapter - 1;
+    public static int GetColorCount(int level) => Math.Min(9, 4 + (Math.Max(1, level) - 1) / 3);
 
-    public static YarnMatchLevelConfig Get(int level)
+    private static YarnMatchLevelConfig BuildLevel(int level, int seed)
     {
-        return BuildLevel(Math.Max(1, level));
+        int size = Math.Max(5, Math.Min(MaximumBoardSize, level));
+        int rows = size;
+        if (level >= 15 && new Random(seed).Next(4) == 0) rows *= 2;
+        GetPoolShape(level, out int poolColumns, out int poolRows);
+        int colorCount = GetColorCount(level);
+        GetTunnelRanges(level, out int countMin, out int countMax, out int queueMax);
+        GetGeneratedMechanicCounts(level, seed, out int freezes, out int chains);
+        return new YarnMatchLevelConfig(level, colorCount, poolColumns, poolRows,
+            countMin, countMax, countMin > 0 ? 5 : 0, queueMax,
+            freezes, chains, seed, false, Rectangle(size, rows));
     }
 
-    public static IReadOnlyList<YarnMatchLevelConfig> GetChapter(int chapterIndex)
+    private static void GetPoolShape(int level, out int columns, out int rows)
     {
-        int safeChapterIndex = Math.Max(0, chapterIndex);
-        if (ChapterCache.TryGetValue(safeChapterIndex, out IReadOnlyList<YarnMatchLevelConfig> cached))
-        {
-            return cached;
-        }
-
-        List<YarnMatchLevelConfig> levels = new List<YarnMatchLevelConfig>(LevelsPerChapter);
-        int firstLevel = safeChapterIndex * LevelsPerChapter + 1;
-        for (int chapterLevel = 1; chapterLevel <= LevelsPerChapter; chapterLevel++)
-        {
-            levels.Add(BuildLevel(firstLevel + chapterLevel - 1));
-        }
-        ChapterCache.Add(safeChapterIndex, levels);
-        return levels;
+        int maximumCells = MaximumPoolColumns * MaximumPoolRows;
+        int maximumMilestone = (maximumCells - InitialPoolCells + PoolCellsPerMilestone - 1)
+            / PoolCellsPerMilestone;
+        int milestone = Math.Min(maximumMilestone, (level - 1) / 10);
+        int targetCells = Math.Min(maximumCells, InitialPoolCells + milestone * PoolCellsPerMilestone);
+        int columnsForRowLimit = (targetCells + MaximumPoolRows - 1) / MaximumPoolRows;
+        columns = Math.Min(MaximumPoolColumns, Math.Max(level <= 10 ? 8 : 10, columnsForRowLimit));
+        rows = (targetCells + columns - 1) / columns;
     }
 
-    public static int GetChapterIndex(int level)
+    public static YarnMatchLevelConfig CreateSpecialRound()
     {
-        return Math.Max(0, (Math.Max(1, level) - 1) / LevelsPerChapter);
+        int seed = RoundSeeds.Next();
+        Random random = new Random(seed);
+        return new YarnMatchLevelConfig(ReferencePatternLevel, 14,
+            random.Next(11, 14), random.Next(7, 9), 20, 30, 10, 40,
+            0, 0, seed, true, Rectangle(48, 40));
     }
 
-    public static int GetChapterStartLevel(int level)
+    internal static void GetGeneratedMechanicCounts(int level, int seed, out int freezes, out int chains)
     {
-        return GetChapterIndex(level) * LevelsPerChapter + 1;
+        freezes = 0;
+        chains = 0;
+        if (level < 10) return;
+        int milestone = Math.Min(3, (level - 10) / 5);
+        int target = 2 + milestone * 7;
+        Random random = new Random(seed ^ 1401);
+        int total = random.Next(Math.Max(2, target - 3), Math.Min(23, target + 3) + 1);
+        chains = random.Next(Math.Max(1, total - 15), Math.Min(8, Math.Max(1, total / 2)) + 1);
+        freezes = Math.Min(15, total - chains);
     }
 
-    private static YarnMatchLevelConfig BuildLevel(int level)
+    private static void GetTunnelRanges(int level, out int min, out int max, out int queueMax)
     {
-        if (level == ReferencePatternLevel)
-        {
-            return BuildReferencePatternLevel(level);
-        }
-
-        int chapterIndex = GetChapterIndex(level);
-        int chapterLevel = (level - 1) % LevelsPerChapter + 1;
-        GetBoardShape(chapterLevel, out int boardColumns, out int boardRows);
-        GetPoolShape(chapterLevel, out int poolColumns, out int poolRows);
-        int totalCells = boardColumns * boardRows;
-        int colorCount = GetColorCount(chapterLevel);
-        GetTunnelRanges(chapterLevel, out int tunnelCountMin, out int tunnelCountMax, out int tunnelQueueMin, out int tunnelQueueMax);
-        int tunnelCount = tunnelCountMin;
-        int tunnelQueueDepth = tunnelQueueMin;
-        int seed = CreateSeed(chapterIndex, chapterLevel);
-        return new YarnMatchLevelConfig(
-            level,
-            colorCount,
-            poolColumns,
-            poolRows,
-            tunnelCount,
-            tunnelQueueDepth,
-            poolColumns,
-            poolColumns,
-            poolRows,
-            poolRows,
-            tunnelCountMin,
-            tunnelCountMax,
-            tunnelQueueMin,
-            tunnelQueueMax,
-            chapterLevel >= 10,
-            false,
-            seed,
-            CreateRectangle(boardColumns, boardRows));
+        min = 0;
+        max = 0;
+        queueMax = 0;
+        if (level < 10) return;
+        int stage = Math.Max(0, Math.Min(level, LevelsPerChapter) / 10 - 1);
+        min = 5 + stage * 5;
+        max = 15 + stage * 5;
+        queueMax = 15 + stage * 5;
     }
 
-    private static void GetBoardShape(int chapterLevel, out int columns, out int rows)
+    private static int[] Rectangle(int columns, int rows)
     {
-        int size = Math.Max(FirstBoardSize, chapterLevel);
-        columns = Math.Max(FirstBoardSize, size);
-        rows = columns;
-
-        // A few long boards teach the player that the lower part is revealed by falling.
-        // Milestone levels keep the requested scale; the final row may grow slightly so every color is made of complete three-cell groups.
-        if (chapterLevel >= 15 && chapterLevel % 10 == 5)
-        {
-            rows = columns * 2;
-        }
-
-        EnsureSpoolGroupCompatibleArea(columns, ref rows);
-    }
-
-    private static void EnsureSpoolGroupCompatibleArea(int columns, ref int rows)
-    {
-        int safeColumns = Math.Max(1, columns);
-        int safeRows = Math.Max(1, rows);
-        while ((safeColumns * safeRows) % YarnMatchRackModel.CellsPerSpool != 0)
-        {
-            safeRows++;
-        }
-
-        rows = safeRows;
-    }
-
-    private static void GetPoolShape(int chapterLevel, out int columns, out int rows)
-    {
-        int milestone = Math.Max(0, chapterLevel - 1) / 10;
-        int targetCellCount = InitialPoolCellCount + milestone * PoolCellsAddedPerMilestone;
-        columns = chapterLevel <= 10 ? InitialPoolColumns : ExpandedPoolColumns;
-        rows = Math.Max(1, (targetCellCount + columns - 1) / columns);
-    }
-
-    private static int GetColorCount(int chapterLevel)
-    {
-        int progressiveCount = MinimumNormalColorCount
-            + Math.Max(0, chapterLevel - 1) / 3;
-        return Math.Min(MaximumNormalColorCount, progressiveCount);
-    }
-
-    private static void GetTunnelRanges(
-        int chapterLevel,
-        out int tunnelCountMin,
-        out int tunnelCountMax,
-        out int tunnelQueueMin,
-        out int tunnelQueueMax)
-    {
-        if (chapterLevel < 5)
-        {
-            tunnelCountMin = 0;
-            tunnelCountMax = 0;
-            tunnelQueueMin = 0;
-            tunnelQueueMax = 0;
-            return;
-        }
-
-        if (chapterLevel < 20)
-        {
-            tunnelCountMin = 5;
-            tunnelCountMax = 15;
-            tunnelQueueMin = 5;
-            tunnelQueueMax = 15;
-            return;
-        }
-
-        if (chapterLevel < 30)
-        {
-            tunnelCountMin = 10;
-            tunnelCountMax = 20;
-            tunnelQueueMin = 5;
-            tunnelQueueMax = 20;
-            return;
-        }
-
-        if (chapterLevel <= 40)
-        {
-            tunnelCountMin = 15;
-            tunnelCountMax = 25;
-            tunnelQueueMin = 5;
-            tunnelQueueMax = 25;
-            return;
-        }
-
-        int stage = (chapterLevel - 30) / 10;
-        tunnelCountMin = 15 + stage * 5;
-        tunnelCountMax = 25 + stage * 5;
-        tunnelQueueMin = 5;
-        tunnelQueueMax = 25 + stage * 5;
-    }
-
-    private static YarnMatchLevelConfig BuildReferencePatternLevel(int level)
-    {
-        int chapterIndex = GetChapterIndex(level);
-        int chapterLevel = (level - 1) % LevelsPerChapter + 1;
-        int poolColumns = ReferencePoolColumns;
-        int poolRows = ReferencePoolRows;
-        int seed = CreateSeed(chapterIndex, chapterLevel);
-        return new YarnMatchLevelConfig(
-            level,
-            Enum.GetValues(typeof(YarnMatchColor)).Length,
-            poolColumns,
-            poolRows,
-            ReferenceTunnelCountMin,
-            ReferenceTunnelQueueMin,
-            11,
-            13,
-            7,
-            8,
-            ReferenceTunnelCountMin,
-            ReferenceTunnelCountMax,
-            ReferenceTunnelQueueMin,
-            ReferenceTunnelQueueMax,
-            false,
-            true,
-            seed,
-            CreateRectangle(ReferencePatternColumns, ReferencePatternRows));
-    }
-
-    private static int[] CreateRectangle(int columns, int rows)
-    {
-        int[] heights = new int[Math.Max(1, columns)];
-        for (int index = 0; index < heights.Length; index++)
-        {
-            heights[index] = Math.Max(1, rows);
-        }
-        return heights;
-    }
-
-    private static int GetRequiredSpoolCount(int totalCells)
-    {
-        return (Math.Max(0, totalCells) + YarnMatchRackModel.CellsPerSpool - 1) / YarnMatchRackModel.CellsPerSpool;
-    }
-
-    private static int CreateSeed(int chapterIndex, int chapterLevel)
-    {
-        unchecked
-        {
-            int hash = 17;
-            hash = hash * 31 + chapterIndex * 1000003;
-            hash = hash * 31 + chapterLevel * 7919;
-            hash ^= 0x5F3759DF;
-            return hash & int.MaxValue;
-        }
+        int[] result = new int[columns];
+        for (int i = 0; i < result.Length; i++) result[i] = rows;
+        return result;
     }
 }

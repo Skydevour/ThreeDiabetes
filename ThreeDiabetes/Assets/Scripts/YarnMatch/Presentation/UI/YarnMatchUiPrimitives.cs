@@ -108,24 +108,24 @@ internal static class YarnMatchUiPrimitives
             return _uiFontAsset;
         }
 
-        // Dynamic OS fonts are useful for Chinese glyph coverage, but TMP asset creation
-        // requires the project's TMP Settings resource to be initialized first.
-        if (TMP_Settings.GetSettings() != null)
+        // Prefer the imported project font. This avoids touching TMP_Settings before
+        // the package has created its optional settings asset.
+        Font font = Resources.Load<Font>(ProjectFontResourcePath);
+        if (font == null)
         {
-            Font font = Resources.Load<Font>(ProjectFontResourcePath);
-            if (font == null)
-            {
-                font = Font.CreateDynamicFontFromOSFont(new[] { "SimHei", "Microsoft YaHei", "Deng", "Arial" }, 64);
-            }
-            if (font != null)
+            font = Font.CreateDynamicFontFromOSFont(new[] { "SimHei", "Microsoft YaHei", "Deng", "Arial" }, 64);
+        }
+
+        if (font != null)
+        {
+            try
             {
                 _uiFontAsset = TMP_FontAsset.CreateFontAsset(font, 64, 9, GlyphRenderMode.SDFAA, 1024, 1024, AtlasPopulationMode.Dynamic, true);
             }
-        }
-
-        if (_uiFontAsset == null)
-        {
-            _uiFontAsset = TMP_Settings.GetFontAsset();
+            catch (Exception exception)
+            {
+                Debug.LogError("YarnMatch UI font asset creation failed: " + exception.Message);
+            }
         }
 
         if (_uiFontAsset == null)

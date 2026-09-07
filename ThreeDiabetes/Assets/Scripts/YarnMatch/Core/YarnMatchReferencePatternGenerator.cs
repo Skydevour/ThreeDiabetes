@@ -76,7 +76,6 @@ internal static class YarnMatchReferencePatternGenerator
             }
         }
 
-        BalanceSpoolCounts(pattern);
         return pattern;
     }
 
@@ -102,31 +101,4 @@ internal static class YarnMatchReferencePatternGenerator
         }
     }
 
-    private static void BalanceSpoolCounts(List<YarnMatchColor> pattern)
-    {
-        int[] counts = new int[Enum.GetValues(typeof(YarnMatchColor)).Length];
-        for (int index = 0; index < pattern.Count; index++)
-        {
-            counts[(int)pattern[index]]++;
-        }
-
-        int baseColor = (int)YarnMatchColor.Butter;
-        for (int color = 0; color < counts.Length; color++)
-        {
-            if (color == baseColor)
-            {
-                continue;
-            }
-
-            int remainder = counts[color] % YarnMatchRackModel.CellsPerSpool;
-            for (int index = pattern.Count - 1; index >= 0 && remainder > 0; index--)
-            {
-                if ((int)pattern[index] == color)
-                {
-                    pattern[index] = (YarnMatchColor)baseColor;
-                    remainder--;
-                }
-            }
-        }
-    }
 }

@@ -37,12 +37,26 @@ public sealed class YarnMatchPresentation : MonoBehaviour
         }
 
         _uiBuilder = new YarnMatchUiBuilder(_audio);
-        _ui = _uiBuilder.Build(onSpoolSelected, onRestart, onNextLevel, onHint, onRefresh, onOpenLevelSelect, levelIndex => _overlays.SelectLevelSlot(levelIndex), onUnlockAllLevels, onStartSpecialChallenge, onBackToMainMenu);
+        _ui = _uiBuilder.Build(
+            onSpoolSelected,
+            onRestart,
+            onNextLevel,
+            onHint,
+            onRefresh,
+            onOpenLevelSelect,
+            onLevelSelected,
+            onUnlockAllLevels,
+            onStartSpecialChallenge,
+            () => _overlays.ShowFailurePreview(),
+            onBackToMainMenu);
+        YarnMatchMusic music = GetComponent<YarnMatchMusic>();
+        if (music == null) music = gameObject.AddComponent<YarnMatchMusic>();
+        YarnMatchMusicControls.Build(_ui.MainMenuOverlay.transform, music);
         _renderer = new YarnMatchUiRenderer(_ui, _audio, onSpoolSelected);
         _effects = new YarnMatchEffectPool(_ui.EffectsRoot);
         _effects.Build();
         _animations = new YarnMatchAnimationController(_renderer, _effects, _audio);
-        _overlays = new YarnMatchOverlayController(this, _ui, _audio, onLevelSelected);
+        _overlays = new YarnMatchOverlayController(this, _ui, _audio);
         _initialized = true;
     }
 

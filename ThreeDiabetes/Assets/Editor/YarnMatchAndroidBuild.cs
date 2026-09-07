@@ -30,6 +30,7 @@ public static class YarnMatchAndroidBuild
         PlayerSettings.productName = "Yarn Match";
         PlayerSettings.SetApplicationIdentifier(UnityEditor.Build.NamedBuildTarget.Android, ApplicationIdentifier);
         PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
+        YarnMatchAndroidIcons.Apply();
         EditorUserBuildSettings.buildAppBundle = false;
 
         BuildReport report = BuildPipeline.BuildPlayer(new BuildPlayerOptions

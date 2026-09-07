@@ -32,6 +32,13 @@ internal sealed class YarnMatchAnimationController
             yield break;
         }
 
+        if (!_renderer.TryGetRackEntryView(entry, out YarnMatchRackEntryView rackView))
+        {
+            yield break;
+        }
+
+        rackView.SpoolGroup.alpha = 0f;
+
         Vector2 start = _renderer.WorldToCanvas(tokenView.Button.transform.position);
         Image flying = _effects.GetFlyingImage();
         flying.sprite = YarnMatchVisualFactory.GetSpoolSprite(YarnMatchUiTheme.Palette[(int)token.Color]);
@@ -52,6 +59,7 @@ internal sealed class YarnMatchAnimationController
         {
             flying.rectTransform.anchoredPosition = target;
             _effects.ReleaseFlyingImage(flying);
+            rackView.SpoolGroup.alpha = 1f;
         }
     }
     internal IEnumerator PlayCellIntoRack(YarnMatchBoardCell cell, YarnMatchRackEntry entry)

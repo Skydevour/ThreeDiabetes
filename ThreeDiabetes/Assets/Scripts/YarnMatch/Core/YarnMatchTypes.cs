@@ -53,6 +53,7 @@ public sealed class YarnMatchSpoolToken
 {
     public YarnMatchColor Color;
     public int Id;
+    public int Capacity = YarnMatchRackModel.CellsPerSpool;
     public bool Used;
     public YarnMatchPoolCell Cell;
 }
@@ -62,6 +63,8 @@ public sealed class YarnMatchPoolCell
     public int Column;
     public int Row;
     public bool Unlocked;
+    public int FreezeHitsRemaining;
+    public int ChainId = -1;
     public YarnMatchSpoolToken Token;
     public YarnMatchTunnel Tunnel;
     public YarnMatchTunnel SourceTunnel;
@@ -75,11 +78,21 @@ public sealed class YarnMatchTunnel
     public readonly List<YarnMatchSpoolToken> Queue = new List<YarnMatchSpoolToken>();
 }
 
+public sealed class YarnMatchChain
+{
+    public int Id;
+    public YarnMatchPoolCell First;
+    public YarnMatchPoolCell Second;
+}
+
 public sealed class YarnMatchPoolSelection
 {
     public YarnMatchSpoolToken Token;
     public YarnMatchPoolCell SourceCell;
     public YarnMatchTunnel Tunnel;
+    public readonly List<YarnMatchSpoolToken> Tokens = new List<YarnMatchSpoolToken>();
+    public readonly List<YarnMatchPoolCell> SourceCells = new List<YarnMatchPoolCell>();
+    public readonly List<YarnMatchPoolCell> FreezeChangedCells = new List<YarnMatchPoolCell>();
 }
 
 public sealed class YarnMatchRackEntry

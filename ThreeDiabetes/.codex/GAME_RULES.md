@@ -1,103 +1,103 @@
 # YarnMatch Game Rules
 
-## Board Resolution
+## Runtime Levels
 
-The upper board is represented as eight independent vertical columns. Each column stores its front cell at index `0`; the early levels start with twelve cells per column and later chapter levels use up to eighteen cells per column.
+- Normal rounds are generated on entry and restart using a fresh seed.
+- The level number selects a difficulty profile, not a saved layout.
+- Normal colors: levels 1-3 use 4, 4-6 use 5, 7-9 use 6,
+  10-12 use 7, 13-15 use 8, and later levels use 9.
+- Normal board dimensions grow from 5 x 5 using min(50, max(5, global level)).
+  From level 15, each entry has a 25% chance of a double-height rectangle.
+  Square boards fit fully; rectangular boards descend through the viewport.
+- Normal square boards cap at 50 x 50 (2,500 cells); double-height boards cap at
+  50 x 100 (5,000 cells). Normal lower pools cap at 12 x 8 (96 total slots,
+  including pipes). High-tier difficulty does not reset at level 51.
+- Lower pool sizes by ten-level stage: 8 x 6, 10 x 6, 10 x 7, 10 x 8,
+  11 x 8, then 12 x 8 from level 51 onward.
+- Normal pipe ranges stop increasing after the first 50-level difficulty curve:
+  later levels request 25-35 pipes, subject to feasible distinct pipe/output pairs.
+  Queue allocation still consumes the exact remaining spool budget.
+- Static art lives in Patterns/PatternTemplates.json and 50 matching PNGs.
+  Runtime samples one template, maps it to the configured palette size, and
+  preserves the subject. It does not generate images online or save layouts.
+- Special challenge is independent of normal level 110: its upper board retains
+  the Excel-derived 48-column, 40-row matrix, while its lower pool is randomized.
 
-```text
-front / exposed -> [0] [1] [2] ... [n]
-```
+## Quantity Conservation
 
-Only index `0` can be collected. Removing it must:
+The board's actual per-color counts are authoritative. For each color:
 
-1. Mark the removed cell inactive.
-2. Remove it from the column.
-3. Reindex the remaining cells from `0`.
-4. Animate the remaining cells toward the front position.
-5. Re-scan all columns for newly exposed cells before resolving the next matching cell.
+    spool count = ceil(cell count / 3)
+    sum(spool capacities) = cell count
 
-A selected spool owns an independent collection job and may collect up to three exposed cells of its color. Multiple jobs may run at the same time. Reserve a cell before starting its animation so two jobs cannot collect the same cell, then commit removal and schedule another scan when the animation completes.
+The last spool of a color can have capacity 1 or 2. All other spools have capacity 3.
+Collection, refresh, tunnel replenishment, progress bars and completion must use
+the actual capacity. A token exists either in one pool cell, one tunnel queue,
+or as a consumed token. Never copy a token to create assistance.
 
-## Lower Selection Pool
+## Selection Access
 
-The selection area contains 8 columns and 6 rows. Cells are indexed by `(column, row)` and source positions are stable after a token is removed.
+- Row 0's existing spools start unlocked.
+- Pipe cells are unlocked and unlock their four immediate neighbors.
+- Selecting a spool clears its source immediately and permanently unlocks four
+  orthogonal neighbors. Empty cells do not propagate access.
+- Generation grows occupied positions from legal entrances, so holes never
+  isolate a locked group. Runtime never unlocks everything to repair a layout.
+- A pipe occupies its own cell and feeds only its adjacent directional output.
+  Removing its output spool dequeues at most one token after the presentation delay.
+- Visible slots are populated from the real spool budget; remaining tokens are
+  allocated to pipes. Pipe count and queue lengths vary within feasible budgets.
+  Exact total quantities take precedence when an early board cannot supply a
+  configured minimum, or a large board exceeds nominal queue ranges.
 
-- Row `0` is initially unlocked.
-- Selecting a valid token consumes that token and clears its source cell immediately.
-- The empty source cell remains empty. Never compact the whole grid or shift unrelated tokens into it.
-- Unlocking is persistent for the round and spreads to the four orthogonal neighbors of a selected source: up, right, down, and left.
-- Diagonal cells do not unlock from this rule.
-- Unlocking all reachable neighbors is a set expansion, not a single linear path. Any unlocked token may be selected.
-- A tunnel marker is not a selectable token. It describes a directional queue attached to one target cell.
+## Frozen and Chained Cells
 
-## Tunnels
+- Mechanics begin at level 10. The requested total increases by about 7 every
+  5 levels, with random variation. Caps: 15 freezes and 8 two-spool chains.
+- Selecting any of a frozen cell's eight neighbors deals one thaw hit.
+  Three hits thaw it and make it accessible.
+- Each generated freeze has at least four distinct neighboring attack sources
+  reachable without thawing any freeze. Its chained partner cannot count as
+  an independent source. Adjacent freezes are not generated.
+- Chain selection requires both endpoints unlocked and thawed, plus two rack
+  slots. Both tokens are consumed atomically and fly concurrently.
+- Generation simulates this access rule when choosing chains and freezes.
+  Impossible candidates are omitted; actual mechanic counts may be below target.
+- A chain ends when its pair is consumed. Pipe refills are ordinary spools.
+- The generation planner proves access and thaw dependencies, not that every
+  player choice wins under limited rack space.
 
-Each tunnel has:
+## Collection and Results
 
-- One target pool cell.
-- One direction used by the emergence animation and visual marker.
-- An ordered queue of hidden tokens. Each level calculates a queue depth that can contain the exact unconsumed spool budget derived from the board.
+- Each upper column exposes row 0 only. Reserve a cell before its animation.
+- Every selected spool owns a separate rack entry and collection job.
+- Concurrent jobs collect matching exposed cells and rescan after settling.
+- Rack completion uses actual capacity and frees the slot after its animation.
+- Seven rack slots start open; the eighth unlocks at half board progress.
+- Defer terminal evaluation while arrivals, collections, settling, completion
+  or pipe replenishments are in progress.
+- Win requires no remaining board cells, selection tokens or rack entries.
+- Fail only when the settled rack is full and cannot make further progress.
+- Failure provides replay, board preview and home; normal success provides
+  next level and home. Special success does not change normal progression.
 
-When a target cell is consumed:
+## Assistance and Progress
 
-1. Keep the target empty while the selected token flies away.
-2. After the configured delay, dequeue at most one token.
-3. Attach that token to the same target cell.
-4. Play an emergence animation from the tunnel direction.
-5. Update the displayed remaining count.
+- Refresh has no usage limit. It arranges an available target color without
+  changing capacities or removing occupied locked/frozen source positions.
+  Visible rearrangement swaps tokens; queue exchanges preserve token identity.
+- Hint considers selectable spools with an exposed match and enough rack slots.
+- One scrolling list contains all revealed chapters; old chapters remain visible.
+  Completing level 50 unlocks 51 and reveals 51-100, and so on.
+- Only highest unlocked progression and today's temporary unlock state are saved.
+  Music enabled/volume preferences are also local.
+- Daily unlock applies to all revealed chapter levels, expires on local date change,
+  and does not unlock infinitely many future chapters.
 
-Do not let tunnel markers receive pointer input. Do not generate bonus tokens during replenishment. A refresh may reorder tunnel queues, but it must preserve the multiset and total count of unconsumed tokens.
+## Presentation
 
-## Collection Rack
-
-The rack stores entries by selected spool. Every selected spool needs a free unlocked slot, even when another entry has the same color. Each entry has progress from `0` to `3`.
-
-- Same-color entries never merge. Partial progress remains in the rack and blocks its own slot.
-- At progress `3`, play completion feedback, remove the entry, and free the slot.
-- Begin with seven unlocked slots and unlock the final slot at half board progress, rounded up.
-- Check the win condition before the loss condition after every completed resolution.
-- A loss requires both no free usable rack slot and no selectable token that either matches an existing entry or can enter a free slot.
-
-## Refresh and Hint
-
-Refresh is optional assistance, not a second source of tokens. It can be used once per round and must:
-
-- Reorder unused visible tokens.
-- Reorder hidden tunnel queues.
-- Preserve every token identity and color count.
-- Preserve consumed board cells, rack entries, progress, unlocks, and empty source positions.
-
-Hint evaluates currently selectable tokens only. Prefer an existing rack color, then the color with the greatest number of currently exposed board cells. Hint feedback must not mutate state.
-
-## State Machine
-
-```text
-MainMenu -> Playing -> Resolving -> Playing
-                         |             |
-                         +-> Won       +-> Lost
-Playing --restart------> Resolving -> Playing
-```
-
-## Level Selection and Progression
-
-- The main menu opens a level-selection overlay before any round is created.
-- Level configurations are centralized in `YarnMatchLevelCatalog`; the game controller does not contain per-level layout literals.
-- A level increases difficulty through a larger upper-board silhouette, more colors, more lower-pool rows, more tunnel targets, and deeper tunnel queues.
-- The color curve starts at one color for levels 1-3, adds one color every three levels, and caps at the available palette size.
-- Tunnels start at level 10 with one target and add one target every four levels, capped by reachable lower-pool capacity.
-- Levels 1-9 use seeded balanced random color mixing; from level 10 onward, the board uses a seeded 8-column pixel-art template with contiguous color blocks.
-- Board size grows in four stages: 3, 4, 5, then 6 spool groups per column, while every group still contains exactly three cells.
-- The upper board is generated as a seeded, complete color-block pattern. The seed changes on each restart while preserving the configured silhouette and color count.
-- Levels are generated without a global cap in chapters of 50. Only the next level is unlocked after a win, and the highest unlocked level is persisted with PlayerPrefs for this offline prototype.
-- The pool owns exactly the per-color spool budget derived from the board: each color gets `ceil(colorCells / 3)` spools. A level must never be mathematically unwinnable because it ran out of a specific color, and clearing the board must not leave spare selection spools.
-
-Input is accepted in `Playing`, including while other spool and collection jobs are animating. Each source token is consumed immediately to prevent duplicate selection. `Resolving` is reserved for the one-frame restart transition and terminal cleanup. Restart must invalidate old jobs and safely rebuild the models and UI.
-
-
-
-## Presentation and Access Invariants
-
-- Render each upper-board cell as a stable square. The visual grid must use one shared cell size and one shared horizontal/vertical step for both backplates and live cells; never use a larger background tile that overlaps the live cell.
-- A collecting cell remains visible while its inner strands retract from bottom to top. Keep the cell width unchanged, reduce only its height, and anchor the top edge while the lower rows disappear. Build the strand count from one shared theme constant.
-- A hint is valid only when a currently selectable lower token has a currently exposed, unclaimed board cell of the same color and the rack has capacity. Highlight both the source token and the first matching board cell; otherwise report no collectible move.
-- Daily full-level access is temporary convenience state. Store its local date and enabled flag separately from the persistent highest-completed progression. Reset only the daily flag when the local date changes.
+750 x 1334 portrait UI, Chinese TextMeshPro text, bright opaque cells.
+Continuous bottom-to-top strand collection preserves cell width and top edge.
+Flights and collection are concurrent. Completed spools pulse before leaving.
+Local instrumental BGM uses an independent looping source and continues across
+menu, level selection, gameplay and result transitions.

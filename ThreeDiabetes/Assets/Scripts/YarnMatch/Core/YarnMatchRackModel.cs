@@ -10,7 +10,8 @@ public sealed class YarnMatchRackModel
 
     public IReadOnlyList<YarnMatchRackEntry> Entries => _entries;
     public int UnlockedSlots { get; private set; } = 7;
-    public bool IsFull => _entries.Count >= UnlockedSlots;
+    public int FreeSlots => Math.Max(0, UnlockedSlots - _entries.Count);
+    public bool IsFull => FreeSlots == 0;
 
     public YarnMatchRackEntry Find(YarnMatchColor color)
     {
@@ -22,6 +23,11 @@ public sealed class YarnMatchRackModel
             }
         }
         return null;
+    }
+
+    public bool CanCreate(int count)
+    {
+        return count > 0 && count <= FreeSlots;
     }
 
     public YarnMatchRackEntry TryCreate(YarnMatchColor color)
@@ -56,8 +62,6 @@ public sealed class YarnMatchRackModel
         {
             if (_entries[index].Color == color)
             {
-                // A full spool may still be playing its exit animation. It no longer
-                // reserves board cells, while its unfinished progress still does.
                 reservedCapacity += Math.Max(0, _entries[index].Capacity - _entries[index].Progress);
             }
         }

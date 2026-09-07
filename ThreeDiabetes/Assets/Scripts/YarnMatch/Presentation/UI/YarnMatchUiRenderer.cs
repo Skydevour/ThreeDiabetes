@@ -14,6 +14,7 @@ internal sealed class YarnMatchUiRenderer
     private readonly Dictionary<YarnMatchPoolCell, YarnMatchPoolCellView> _poolCellViews = new Dictionary<YarnMatchPoolCell, YarnMatchPoolCellView>();
     private readonly Dictionary<YarnMatchSpoolToken, YarnMatchPoolTokenView> _poolTokenViews = new Dictionary<YarnMatchSpoolToken, YarnMatchPoolTokenView>();
     private readonly Dictionary<YarnMatchTunnel, YarnMatchTunnelView> _tunnelViews = new Dictionary<YarnMatchTunnel, YarnMatchTunnelView>();
+    private readonly Dictionary<YarnMatchChain, YarnMatchChainView> _chainViews = new Dictionary<YarnMatchChain, YarnMatchChainView>();
     private readonly Dictionary<YarnMatchRackEntry, YarnMatchRackEntryView> _rackViews = new Dictionary<YarnMatchRackEntry, YarnMatchRackEntryView>();
     private readonly HashSet<YarnMatchRackEntry> _visibleRackEntries = new HashSet<YarnMatchRackEntry>();
     private readonly List<GameObject> _rackSlots = new List<GameObject>();
@@ -59,6 +60,7 @@ internal sealed class YarnMatchUiRenderer
         _poolCellViews.Clear();
         _poolTokenViews.Clear();
         _tunnelViews.Clear();
+        _chainViews.Clear();
         _rackSlots.Clear();
         _rackSlotImages.Clear();
         _rackSlotLabels.Clear();
@@ -123,6 +125,10 @@ internal sealed class YarnMatchUiRenderer
         {
             UpdateTunnelView(pool.Tunnels[index]);
         }
+        for (int index = 0; index < pool.Chains.Count; index++)
+        {
+            UpdateChainView(pool.Chains[index]);
+        }
 
         ApplyColorPreview();
     }
@@ -147,6 +153,17 @@ internal sealed class YarnMatchUiRenderer
         {
             UpdateTunnelView(cell.SourceTunnel);
         }
+        if (cell.ChainId >= 0)
+        {
+            for (int index = 0; index < pool.Chains.Count; index++)
+            {
+                if (pool.Chains[index].Id == cell.ChainId)
+                {
+                    UpdateChainView(pool.Chains[index]);
+                    break;
+                }
+            }
+        }
         ApplyColorPreview();
     }
 
@@ -158,6 +175,7 @@ internal sealed class YarnMatchUiRenderer
         }
 
         UpdatePoolSlotBackground(cell, cellView);
+        UpdateFreezeView(cell, cellView);
         RemovePoolTokenViewsForButton(cellView.Button, cell.Token);
 
         YarnMatchSpoolToken token = cell.Token;
@@ -280,6 +298,11 @@ internal sealed class YarnMatchUiRenderer
             {
                 view.Button.interactable = state == YarnMatchGameState.Playing && pool.IsSelectable(cell.Token);
             }
+        }
+
+        for (int index = 0; index < pool.Chains.Count; index++)
+        {
+            UpdateChainView(pool.Chains[index]);
         }
 
         ApplyColorPreview();
@@ -576,6 +599,16 @@ internal sealed class YarnMatchUiRenderer
             });
             Image spoolImage = YarnMatchUiPrimitives.CreateImage("Spool", button.transform, YarnMatchVisualFactory.GetSpoolSprite(YarnMatchUiTheme.Palette[(int)YarnMatchColor.Coral]), Color.white, new Vector2(cellSize * 0.90f, cellSize * 0.98f), new Vector2(0f, cellSize * 0.03f), false);
             spoolImage.raycastTarget = false;
+            Image freezeImage = YarnMatchUiPrimitives.CreateImage(
+                "Freeze Overlay",
+                button.transform,
+                YarnMatchVisualFactory.GetFreezeSprite(0),
+                Color.white,
+                new Vector2(cellSize * 0.98f, cellSize * 0.98f),
+                Vector2.zero,
+                false);
+            freezeImage.preserveAspect = true;
+            freezeImage.raycastTarget = false;
             Outline spoolOutline = spoolImage.gameObject.AddComponent<Outline>();
             spoolOutline.effectColor = new Color(0.10f, 0.18f, 0.34f, 0.95f);
             spoolOutline.effectDistance = new Vector2(3f, 3f);
@@ -589,6 +622,7 @@ internal sealed class YarnMatchUiRenderer
                 SlotImage = slotImage,
                 Button = button,
                 SpoolImage = spoolImage,
+                FreezeImage = freezeImage,
                 Group = spoolGroup,
                 Outline = spoolOutline,
                 BaseAlpha = 1f
@@ -637,6 +671,28 @@ internal sealed class YarnMatchUiRenderer
                 FontStyles.Bold);
             _tunnelViews.Add(tunnel, new YarnMatchTunnelView { CountLabel = count, CountBadge = countBadge });
             UpdateTunnelView(tunnel);
+        }
+
+        for (int index = 0; index < pool.Chains.Count; index++)
+        {
+            YarnMatchChain chain = pool.Chains[index];
+            GameObject chainObject = YarnMatchUiPrimitives.CreateChild("Chain Overlay", _ui.PoolButtonsRoot);
+            Image chainImage = YarnMatchUiPrimitives.CreateImage(
+                "Chain",
+                chainObject.transform,
+                YarnMatchVisualFactory.GetChainSprite(true),
+                Color.white,
+                new Vector2(cellSize * 2f + YarnMatchUiTheme.PoolSlotGap, cellSize),
+                Vector2.zero,
+                false);
+            chainImage.preserveAspect = true;
+            chainImage.raycastTarget = false;
+            _chainViews.Add(chain, new YarnMatchChainView
+            {
+                Rect = chainImage.rectTransform,
+                Image = chainImage
+            });
+            UpdateChainView(chain);
         }
     }
     private YarnMatchRackEntryView CreateRackEntryView(YarnMatchRackEntry entry)
@@ -694,6 +750,63 @@ internal sealed class YarnMatchUiRenderer
         view.CountBadge.color = hasQueuedSpool
             ? new Color(0.25f, 0.46f, 0.73f, 0.96f)
             : new Color(0.36f, 0.48f, 0.63f, 0.70f);
+    }
+
+    private static void UpdateFreezeView(YarnMatchPoolCell cell, YarnMatchPoolCellView cellView)
+    {
+        if (cellView.FreezeImage == null)
+        {
+            return;
+        }
+
+        bool frozen = cell != null
+            && cell.Token != null
+            && !cell.Token.Used
+            && cell.FreezeHitsRemaining > 0;
+        cellView.FreezeImage.enabled = frozen;
+        if (frozen)
+        {
+            cellView.FreezeImage.sprite = YarnMatchVisualFactory.GetFreezeSprite(cell.FreezeHitsRemaining);
+            cellView.FreezeImage.color = Color.white;
+            cellView.FreezeImage.rectTransform.SetAsLastSibling();
+        }
+    }
+
+    private void UpdateChainView(YarnMatchChain chain)
+    {
+        if (chain == null || !_chainViews.TryGetValue(chain, out YarnMatchChainView view) || view.Image == null)
+        {
+            return;
+        }
+
+        YarnMatchPoolCell first = chain.First;
+        YarnMatchPoolCell second = chain.Second;
+        bool visible = first != null
+            && second != null
+            && first.ChainId == chain.Id
+            && second.ChainId == chain.Id
+            && (first.Token != null || second.Token != null);
+        view.Image.enabled = visible;
+        if (!visible)
+        {
+            return;
+        }
+
+        Vector2 firstPosition = PoolSlotPosition(first.Column, first.Row);
+        Vector2 secondPosition = PoolSlotPosition(second.Column, second.Row);
+        Vector2 delta = secondPosition - firstPosition;
+        float cellSize = YarnMatchUiTheme.PoolCellSize(_poolColumns, _poolRows);
+        bool horizontal = Mathf.Abs(delta.x) >= Mathf.Abs(delta.y);
+        float width = Mathf.Abs(delta.x) + cellSize;
+        float height = Mathf.Abs(delta.y) + cellSize;
+        view.Rect.sizeDelta = new Vector2(Mathf.Max(cellSize, width), Mathf.Max(cellSize, height));
+        view.Rect.anchoredPosition = (firstPosition + secondPosition) * 0.5f;
+        view.Image.sprite = YarnMatchVisualFactory.GetChainSprite(
+            horizontal,
+            horizontal && (first.FreezeHitsRemaining > 0 || second.FreezeHitsRemaining > 0));
+        view.Image.preserveAspect = true;
+        view.Image.raycastTarget = false;
+        view.Rect.SetAsLastSibling();
     }
 
 }

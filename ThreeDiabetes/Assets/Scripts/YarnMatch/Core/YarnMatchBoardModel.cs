@@ -10,10 +10,30 @@ public sealed class YarnMatchBoardModel
 
     public IReadOnlyList<List<YarnMatchBoardCell>> Columns => _columns;
     public IReadOnlyList<YarnMatchBoardCell> AllCells => _allCells;
+    public IReadOnlyList<int> ColorCounts => _colorCounts;
     public IReadOnlyList<int> RequiredSpoolsByColor => _requiredSpoolsByColor;
     public int TotalCells { get; private set; }
     public int CollectedCells { get; private set; }
     public int RequiredSpoolCount { get; private set; }
+
+    public void Build(YarnMatchLevelConfig config)
+    {
+        if (config != null)
+        {
+            IReadOnlyList<YarnMatchColor> colors = config.UsesReferencePattern
+                ? YarnMatchReferencePatternGenerator.Generate(config.ColumnHeights)
+                : YarnMatchTemplateSampler.Generate(config.ColumnHeights, config.ColorCount, config.Seed);
+            Build(config.ColumnHeights, colors);
+            return;
+        }
+
+        Build(
+            config == null ? new[] { 1 } : config.ColumnHeights,
+            config == null ? 1 : config.ColorCount,
+            config == null ? 0 : config.Seed,
+            false,
+            config != null && config.UsesReferencePattern);
+    }
 
     public void Build(IReadOnlyList<int> columnHeights, int colorCount, int cellsPerColor, int seed)
     {
@@ -73,6 +93,46 @@ public sealed class YarnMatchBoardModel
         for (int color = 0; color < _colorCounts.Length; color++)
         {
             _requiredSpoolsByColor[color] = (_colorCounts[color] + 2) / 3;
+            RequiredSpoolCount += _requiredSpoolsByColor[color];
+        }
+    }
+
+    public void Build(IReadOnlyList<int> columnHeights, IReadOnlyList<YarnMatchColor> colors)
+    {
+        _columns.Clear();
+        _allCells.Clear();
+        TotalCells = 0;
+        CollectedCells = 0;
+        Array.Clear(_colorCounts, 0, _colorCounts.Length);
+        Array.Clear(_requiredSpoolsByColor, 0, _requiredSpoolsByColor.Length);
+        RequiredSpoolCount = 0;
+
+        int cursor = 0;
+        for (int column = 0; column < columnHeights.Count; column++)
+        {
+            List<YarnMatchBoardCell> stack = new List<YarnMatchBoardCell>();
+            int height = Math.Max(0, columnHeights[column]);
+            for (int row = 0; row < height; row++)
+            {
+                YarnMatchBoardCell cell = new YarnMatchBoardCell
+                {
+                    Color = colors[cursor],
+                    Column = column,
+                    Row = row
+                };
+                cursor++;
+                stack.Add(cell);
+                _allCells.Add(cell);
+                _colorCounts[(int)cell.Color]++;
+            }
+            _columns.Add(stack);
+        }
+
+        TotalCells = cursor;
+        for (int color = 0; color < _colorCounts.Length; color++)
+        {
+            _requiredSpoolsByColor[color] = (_colorCounts[color] + YarnMatchRackModel.CellsPerSpool - 1)
+                / YarnMatchRackModel.CellsPerSpool;
             RequiredSpoolCount += _requiredSpoolsByColor[color];
         }
     }

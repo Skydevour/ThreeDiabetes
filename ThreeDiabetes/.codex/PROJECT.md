@@ -40,20 +40,30 @@ Presentation ownership is kept behind `YarnMatchPresentation`, which delegates t
 - TMP Essential Resources are present under `Assets/Text Mesh Pro` and must remain available to runtime UI creation.
 - Font lookup must tolerate missing TMP settings and provide a useful error rather than dereferencing an uninitialized global setting.
 - New Chinese UI copy must be stored as UTF-8 and checked for glyph coverage in the actual TMP font asset.
+- Android launcher artwork lives in Assets/Art/YarnMatch/AppIcon. YarnMatchAndroidIcons
+  exports the game's existing tile/spool sprites and configures legacy, round and
+  adaptive icons. The APK builder applies these settings before every build.
 
 ## Current Gameplay Contract
 
-The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). The short version is:
+The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implementation:
 
-- The upper board has eight columns and up to eighteen cells per column. Each level provides a complete seeded color pattern and a column-height silhouette. Index `0` in each column is the exposed front cell; collecting it causes remaining cells to reindex and fall toward the front.
-- Every selected lower spool gets its own rack slot, even when another spool has the same color. Each slot collects exposed board cells of its own color, up to three cells for that spool. Multiple spools and multiple cells may resolve concurrently.
-- The lower pool scales from a smaller early-level layout to the final `8 x 6` layout. The first row is initially selectable. Selecting a spool permanently leaves its source position empty, unlocks its four orthogonal neighbors, and does not force the player into a single path.
-- A tunnel is attached to a target pool cell. It is a visual, non-clickable directional source with a level-configured queue. When its target becomes empty, the next queued token may replenish that exact cell after the presentation delay. The pipe shape, direction, and remaining queue count are visible.
-- A rack entry occupies one slot until it reaches three collected cells. Full entries play a completion pulse and leave the rack. Same-color entries remain separate and never merge.
-- Seven rack slots begin unlocked. The eighth slot unlocks after at least half of the board has been collected.
-- The player wins when all board cells are collected. The player loses when the rack has no usable capacity and no selectable color can make progress.
-- Refresh is a once-per-round utility. It rearranges unused visible tokens and hidden tunnel queues without creating or destroying tokens or changing consumed progress.
-- The main menu opens level selection. Levels are generated without a global cap in 50-level chapters. Only the next level is unlocked after a win; the highest unlocked level is persisted with PlayerPrefs for this offline prototype.
+- Every normal entry/restart creates a fresh seed and runtime layout from a difficulty
+  profile. No fixed per-level board, pool or mechanic configuration is loaded.
+- Fifty static pixel-art templates supply normal board subjects. The special challenge
+  keeps its Excel-derived 48 x 40 image and independently randomizes its lower pool.
+- Actual per-color board counts determine spool counts and capacities, including
+  capacity-1/2 tails. Each spool owns a separate concurrent rack job.
+- Visible lower positions grow from legal entrances. Four-direction selection access
+  and eight-neighbor thaw damage are separate rules.
+- Generation plans chains and freezes against reachable attack sources; consumed
+  chains do not persist on pipe refills, and refresh retains occupied source topology.
+- Chapters append 50 items to a reusable scrolling list. Previous chapters remain
+  accessible. Special challenge does not consume normal level 110 or normal progress.
+- Independent local music loops through menus and rounds; toggle/volume are persisted.
+- Approved normal geometry caps: 50 x 50 square boards, 50 x 100 long boards,
+  and 12 x 8 lower pools (including pipes). Later chapters retain high-tier
+  difficulty and fresh layouts within these limits.
 
 ## Presentation Contract
 

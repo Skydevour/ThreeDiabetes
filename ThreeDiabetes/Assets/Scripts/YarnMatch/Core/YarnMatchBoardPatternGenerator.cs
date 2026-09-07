@@ -24,13 +24,12 @@ internal static class YarnMatchBoardPatternGenerator
             ? BuildGraphicGroupPattern(columnHeights, safeColorCount, groupCount, seed)
             : BuildRandomGroupPattern(safeColorCount, groupCount, seed);
         List<YarnMatchColor> pattern = ExpandGroups(groupColors, totalCells);
-
-        if (!useGraphicPattern)
-        {
-            YarnMatchRandom.Shuffle(pattern, seed + 97);
-        }
-
-        return pattern;
+        return YarnMatchStrategicPatternWeaver.Weave(
+            pattern,
+            columnHeights,
+            safeColorCount,
+            seed + 97,
+            useGraphicPattern);
     }
 
     private static List<YarnMatchColor> ExpandGroups(int[] groupColors, int totalCells)

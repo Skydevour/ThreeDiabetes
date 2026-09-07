@@ -7,6 +7,8 @@ public static class YarnMatchVisualFactory
     private static readonly Dictionary<int, Sprite> SpoolSprites = new Dictionary<int, Sprite>();
     private static readonly Dictionary<int, Sprite> ThreadSprites = new Dictionary<int, Sprite>();
     private static readonly Dictionary<YarnMatchTunnelDirection, Sprite> TunnelSprites = new Dictionary<YarnMatchTunnelDirection, Sprite>();
+    private static readonly Dictionary<int, Sprite> FreezeSprites = new Dictionary<int, Sprite>();
+    private static readonly Dictionary<int, Sprite> ChainSprites = new Dictionary<int, Sprite>();
     private static Sprite _solidSprite;
     private static Sprite _panelSprite;
 
@@ -45,6 +47,45 @@ public static class YarnMatchVisualFactory
                 sprite = GetPanelSprite();
             }
             TunnelSprites.Add(direction, sprite);
+        }
+        return sprite;
+    }
+
+    public static Sprite GetFreezeSprite(int hitsRemaining)
+    {
+        int state = Mathf.Clamp(3 - hitsRemaining, 0, 3);
+        if (!FreezeSprites.TryGetValue(state, out Sprite sprite))
+        {
+            string resourcePath = "YarnMatch/Mechanics/mechanic_freeze_state_" + state;
+            sprite = Resources.Load<Sprite>(resourcePath);
+            if (sprite == null)
+            {
+                sprite = GetSolidSprite();
+            }
+            FreezeSprites.Add(state, sprite);
+        }
+        return sprite;
+    }
+
+    public static Sprite GetChainSprite(bool horizontal)
+    {
+        return GetChainSprite(horizontal, false);
+    }
+
+    public static Sprite GetChainSprite(bool horizontal, bool freezeCombo)
+    {
+        int key = (horizontal ? 1 : 0) | (freezeCombo ? 2 : 0);
+        if (!ChainSprites.TryGetValue(key, out Sprite sprite))
+        {
+            string resourcePath = freezeCombo && horizontal
+                ? "YarnMatch/Mechanics/mechanic_chain_freeze_combo"
+                : "YarnMatch/Mechanics/mechanic_chain_" + (horizontal ? "horizontal" : "vertical");
+            sprite = Resources.Load<Sprite>(resourcePath);
+            if (sprite == null)
+            {
+                sprite = GetSolidSprite();
+            }
+            ChainSprites.Add(key, sprite);
         }
         return sprite;
     }

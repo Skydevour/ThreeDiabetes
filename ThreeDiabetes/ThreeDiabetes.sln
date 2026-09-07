@@ -135,9 +135,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.CollabProxy.Editor", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RenderPipeline.Universal.ShaderLibrary", "Unity.RenderPipeline.Universal.ShaderLibrary.csproj", "{efdbf49e-3bc9-416a-8dc5-e8e7a908f124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2D.Common.Runtime", "Unity.2D.Common.Runtime.csproj", "{f65bc9d0-6ce7-92fb-0d6a-17a4acb5c16c}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{42d24e95-f98e-2c80-c8c2-d0a617bc9daf}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2D.Common.Runtime", "Unity.2D.Common.Runtime.csproj", "{f65bc9d0-6ce7-92fb-0d6a-17a4acb5c16c}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.2D.PixelPerfect", "Unity.2D.PixelPerfect.csproj", "{aeb34f03-ccc8-2c0d-7079-1092b1748e67}"
 EndProject
@@ -432,10 +432,10 @@ Global
 		{bdc14387-85e2-313e-7045-8d697b8876e9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{efdbf49e-3bc9-416a-8dc5-e8e7a908f124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{efdbf49e-3bc9-416a-8dc5-e8e7a908f124}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{f65bc9d0-6ce7-92fb-0d6a-17a4acb5c16c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{f65bc9d0-6ce7-92fb-0d6a-17a4acb5c16c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42d24e95-f98e-2c80-c8c2-d0a617bc9daf}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42d24e95-f98e-2c80-c8c2-d0a617bc9daf}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{f65bc9d0-6ce7-92fb-0d6a-17a4acb5c16c}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{f65bc9d0-6ce7-92fb-0d6a-17a4acb5c16c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{aeb34f03-ccc8-2c0d-7079-1092b1748e67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{aeb34f03-ccc8-2c0d-7079-1092b1748e67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{e65b1b7f-4da4-08ed-02f6-f1d8e6963dcd}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

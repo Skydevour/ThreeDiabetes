@@ -23,6 +23,7 @@ internal sealed class YarnMatchPoolCellView
     internal Image SlotImage;
     internal Button Button;
     internal Image SpoolImage;
+    internal Image FreezeImage;
     internal CanvasGroup Group;
     internal Outline Outline;
     internal float BaseAlpha;
@@ -41,6 +42,12 @@ internal sealed class YarnMatchTunnelView
 {
     internal TMP_Text CountLabel;
     internal Image CountBadge;
+}
+
+internal sealed class YarnMatchChainView
+{
+    internal RectTransform Rect;
+    internal Image Image;
 }
 
 internal sealed class YarnMatchRackEntryView

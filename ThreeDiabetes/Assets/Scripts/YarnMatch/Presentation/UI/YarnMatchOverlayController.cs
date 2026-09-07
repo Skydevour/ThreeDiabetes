@@ -7,17 +7,14 @@ internal sealed class YarnMatchOverlayController
     private readonly MonoBehaviour _host;
     private readonly YarnMatchUiReferences _ui;
     private readonly YarnMatchAudio _audio;
-    private readonly Action<int> _onLevelSelected;
     private Coroutine _toastRoutine;
     private Coroutine _resultRoutine;
-    private int _chapterStartLevel = 1;
 
-    internal YarnMatchOverlayController(MonoBehaviour host, YarnMatchUiReferences ui, YarnMatchAudio audio, Action<int> onLevelSelected)
+    internal YarnMatchOverlayController(MonoBehaviour host, YarnMatchUiReferences ui, YarnMatchAudio audio)
     {
         _host = host;
         _ui = ui;
         _audio = audio;
-        _onLevelSelected = onLevelSelected;
     }
 
     internal void ResetForGame()
@@ -39,33 +36,15 @@ internal sealed class YarnMatchOverlayController
         _ui.ResultOverlay.SetActive(false);
         _ui.MainMenuOverlay.SetActive(false);
         int safeHighestUnlockedLevel = Mathf.Max(1, highestUnlockedLevel);
-        int chapterIndex = YarnMatchLevelCatalog.GetChapterIndex(safeHighestUnlockedLevel);
-        _chapterStartLevel = YarnMatchLevelCatalog.GetChapterStartLevel(safeHighestUnlockedLevel);
-        IReadOnlyList<YarnMatchLevelConfig> levels = YarnMatchLevelCatalog.GetChapter(chapterIndex);
-        _ui.LevelSelectTitle.text = "选择关卡 · 第 " + (chapterIndex + 1) + " 章";
-        _ui.LevelSelectSubtitle.text = "完成本章 50 关后，将进入全新的线团图案";
-        for (int index = 0; index < _ui.LevelButtons.Count; index++)
-        {
-            int levelNumber = _chapterStartLevel + index;
-            bool unlocked = dailyUnlockActive || levelNumber <= safeHighestUnlockedLevel;
-            _ui.LevelButtons[index].interactable = unlocked;
-            _ui.LevelButtonLabels[index].text = unlocked ? "第 " + levelNumber + " 关" : "第 " + levelNumber + " 关  ·  锁定";
-            _ui.LevelButtonDetails[index].text = unlocked ? levels[index].Summary : "完成前一关后解锁";
-        }
+        _ui.LevelSelectTitle.text = "选择关卡";
+        _ui.LevelSelectSubtitle.text = "第 1 - "
+            + YarnMatchLevelCatalog.GetChapterEndLevel(safeHighestUnlockedLevel) + " 关";
+        _ui.LevelList.Show(safeHighestUnlockedLevel);
         _ui.UnlockAllLevelsButton.interactable = !dailyUnlockActive;
         _ui.UnlockAllLevelsLabel.text = dailyUnlockActive ? "今日已全部解锁" : "今日全部解锁";
         _ui.LevelSelectOverlay.SetActive(true);
     }
 
-    internal void SelectLevelSlot(int slotIndex)
-    {
-        if (slotIndex < 0 || slotIndex >= YarnMatchLevelCatalog.LevelsPerChapter)
-        {
-            return;
-        }
-
-        _onLevelSelected?.Invoke(_chapterStartLevel + slotIndex);
-    }
     internal void SetStatus(string message)
     {
         _ui.StatusLabel.text = message;
@@ -88,6 +67,7 @@ internal sealed class YarnMatchOverlayController
         _ui.ResultNextButton.gameObject.SetActive(won && canAdvance);
         _ui.ResultNextLabel.text = "下一关";
         _ui.ResultReplayButton.gameObject.SetActive(!won);
+        _ui.ResultPreviewButton.gameObject.SetActive(!won);
         _ui.ResultHomeButton.gameObject.SetActive(true);
         _ui.ResultOverlay.SetActive(true);
         if (_resultRoutine != null)
@@ -103,6 +83,21 @@ internal sealed class YarnMatchOverlayController
         {
             _audio?.PlayFail();
         }
+    }
+
+    internal void ShowFailurePreview()
+    {
+        if (_resultRoutine != null)
+        {
+            _host.StopCoroutine(_resultRoutine);
+            _resultRoutine = null;
+        }
+
+        _ui.ResultCanvasGroup.alpha = 1f;
+        _ui.ResultPanelRect.localScale = Vector3.one;
+        _ui.ResultOverlay.SetActive(false);
+        SetStatus("残局预览：当前关卡已结束，可检查剩余线团与收线台");
+        ShowToast("正在查看失败残局", 1.2f);
     }
 
     internal void Stop()

@@ -1,231 +1,44 @@
-# YarnMatch 关卡制作流程
+# YarnMatch Level Production
 
-这份文档是当前项目新增普通关卡、章节关卡和特殊图案关卡的统一流程。新增关卡必须先完成数据设计和可玩性校验，再接入 `YarnMatchLevelCatalog`、图案生成器和池子模型。不要在 UI 脚本里临时拼关卡数据。
+1. Read GAME_RULES.md before changing rules. Runtime layouts are not authored or
+   stored per level; the catalog computes a profile and creates a new round seed.
+2. Author or update a meaningful pixel template in
+   Assets/Resources/YarnMatch/Patterns/PatternTemplates.json. Each template has
+   an id, title, minimum usable board size, RGB palette and equal-length rows.
+   Symbols index the local palette. Keep readable silhouettes and a real background.
+3. Export a matching PNG for the level-list artwork. The bitmap is a static asset;
+   gameplay samples the palette matrix so it does not need readable textures.
+   The current pack contains 50 templates. The existing special image stays separate.
+4. Sample the selected template at the configured board size. Map to the allowed
+   number of normal colors, preserve large subject regions, then count real cells.
+5. Create spools from those counts, including a capacity-1/2 tail where needed.
+   Never derive board colors from independently randomized lower spools.
+6. Allocate pipe/output pairs and visible positions from the real token budget.
+   Grow all visible positions from row 0 or pipe-neighbor entrances using four
+   directions. Do not use empty cells as access bridges.
+7. Allocate every remaining token into the actual pipe queues. Keep queues varied,
+   with total capacities matching the board exactly.
+8. Plan chains and freezes against access simulation: chains need both endpoints;
+   freezes require four independent nearby source cells, and thaw after three hits.
+   Reject an individual impossible placement rather than relaxing live rules.
+9. Keep presentation independent: reusable scrolling chapter rows, local art,
+   independent audio, and separate animation ownership.
+10. Compile the Player assembly and check Unity asset import. The user requested
+    manual gameplay testing, no added test scripts, and no APK or commit unless asked.
 
-## 一、先定义关卡规格
+## Current Verification
 
-每关先填写一份规格，至少包含：
+- Player compilation is the basic engineering check.
+- Quantity and reachability are enforced by construction and the generation planner.
+- Do not claim a complete puzzle solver, exhaustive verification, or mobile playtest
+  based on compilation.
+- Normal board caps are 50 x 50 (square) and 50 x 100 (long image).
+  Normal lower pools cap at 12 x 8, including pipe cells. The level list grows
+  indefinitely while high-tier rules and fresh layouts continue within these caps.
 
-| 字段 | 说明 |
-| --- | --- |
-| 关卡号 | 全局唯一编号；无限章节使用 `1-50`、`51-100` 的章节范围 |
-| 章节内编号 | 用于颜色、棋盘尺寸和管道难度曲线 |
-| 棋盘列数 | 上部图案的宽度 |
-| 每列高度 | 每列真实格子数；矩形关卡可使用相同高度，也可使用轮廓数组 |
-| 颜色数 | 普通关卡最多 8 种；特殊图案按图案颜色表配置 |
-| 管道数 | 只表示有隐藏滚筒时实际可显示的管道数量 |
-| 随机种子 | 同一章节和关卡号必须可重复生成 |
-| 图案类型 | 随机混合、规则图形、外部颜色矩阵或特殊挑战 |
+## Local Resource Production
 
-推荐先记录这些验收目标：
-
-```text
-关卡：15
-棋盘：15 x 30
-颜色：5 种
-棋盘格：450
-预计滚筒：每种颜色数量分别向上取整后求和
-下方可见容量：8 x 6 = 48 格
-隐藏滚筒：预计滚筒 - 可见滚筒
-管道：只为隐藏滚筒创建，并记录每条队列数量
-```
-
-## 二、确定棋盘形状
-
-### 1. 坐标和消除方向
-
-- `column` 表示横向列。
-- 每列的 `row = 0` 是当前最前、最先暴露的格子。
-- 消除一个格子后，该列剩余格子重新编号并向前下落。
-- 不要用“从数组末尾弹出”替代这个规则，表现和逻辑都会反过来。
-
-### 2. 尺寸曲线
-
-普通章节建议使用以下锚点：
-
-| 章节内关卡 | 推荐棋盘 |
-| --- | --- |
-| 1 | 5 x 5 |
-| 10 | 10 x 10 |
-| 15 | 15 x 30，作为长图教学 |
-| 20 | 20 x 20 |
-| 40 | 40 x 40 |
-| 50 | 50 x 50 或章节终局图案 |
-
-方形棋盘必须在上部正方形视口内完整展示。长方形棋盘使用底边锚定，超过视口的部分只能在前方格子消除后随下落逐步出现。
-
-### 3. 生成前检查
-
-- 列数和每列高度都必须大于 0。
-- 真实格子数必须与颜色矩阵长度一致。
-- 规则图形必须保持四方向连通，不能产生无法从前方消除的孤岛。
-- 过大的关卡必须使用轻量化表现策略，不能为每个小格无条件创建大量装饰对象。
-
-## 三、分配颜色和滚筒
-
-### 1. 先生成棋盘颜色
-
-颜色分配顺序固定为：
-
-1. 生成完整棋盘颜色矩阵。
-2. 统计每种颜色的棋盘格数量。
-3. 根据每种颜色单独计算滚筒数量：
-
-```text
-该颜色滚筒数 = ceil(该颜色格子数 / 3)
-```
-
-4. 所有颜色滚筒数相加，得到关卡真实滚筒总数。
-5. 再把这些滚筒分配到下方可见区和管道队列。
-
-不能先随机生成滚筒，再让上部格子去适配滚筒。这样会造成上方线团收完后下方线轴仍有剩余，或反过来数量不足。
-
-### 2. 非 3 整除颜色
-
-颜色格子数不是 3 的倍数时，最后一个同色滚筒允许使用 `1` 或 `2` 的实际容量。实现上：
-
-- `YarnMatchRackEntry.Capacity` 记录该滚筒真正需要收取的格子数。
-- `Progress`、进度条、收线动画、完成判定都使用 `Capacity`。
-- 普通情况下 `Capacity = 3`，不要在 UI 或动画里写死 `/3`。
-
-### 3. 普通关卡与特殊颜色隔离
-
-- 普通关卡颜色数量按玩法颜色表递增，当前上限为 8 种。
-- Excel 或特殊图案使用独立颜色索引，不得因为扩展特殊颜色枚举而让普通关卡混入特殊色。
-- 特殊颜色必须有稳定的调色板、颜色名称和资源映射。
-
-## 四、生成下方选择区
-
-下方选择区的分配顺序必须固定：
-
-1. 计算真实滚筒总数。
-2. 先填充可见选择区，最多填满配置的池子容量。
-3. 如果仍有剩余滚筒，再把剩余滚筒随机分配到管道队列。
-4. 可见区空槽保持为空，不创建假的滚筒，也不参与解锁。
-5. 只有实际存在滚筒的相邻格才会在四方向解锁逻辑中生效。
-
-当前完整池子为 `8 x 6 = 48` 个位置。早期关卡滚筒不足 48 个时，可以只使用部分格子；中后期关卡才会出现隐藏队列。
-
-### 可见位置规则
-
-- 第一排真实存在的滚筒初始可点击。
-- 选择后源位置立即空出。
-- 只解锁上、下、左、右四个方向的相邻实际滚筒。
-- 对角线不解锁。
-- 已取走的位置永久保持空缺，除非该位置连接了管道并且队列中仍有滚筒。
-- 选择不是单一路径，所有已解锁的四方向邻居都可以继续选择。
-
-## 五、配置管道
-
-管道是隐藏滚筒的可视化入口，不是可点击对象。
-
-- 管道目标必须绑定到一个已经存在于可见选择区的下方格。
-- 管道方向是上、右、下、左之一，并紧贴目标格表现。
-- 管道上显示当前队列数量。
-- 目标格被取走且队列非空时，延迟补入一个滚筒，并把数量减 1。
-- 队列为空后保留或隐藏管道，必须与当前 UI 规范一致，但不能显示错误的正数。
-- 如果没有隐藏滚筒，不创建数量为 0 的空管道。
-
-数量守恒必须满足：
-
-```text
-棋盘所需滚筒总数
-= 可见区当前滚筒数
-  + 所有管道队列中的滚筒数
-  + 已经被取走或正在收线的滚筒数
-```
-
-刷新、重开、补位和结算都不能创建或销毁额外滚筒。
-
-## 六、安排难度曲线
-
-每次调整难度只改变一个主要变量，避免玩家无法判断失败原因。
-
-推荐顺序：
-
-| 阶段 | 主要变化 |
-| --- | --- |
-| 1-3 | 单色或极少颜色，熟悉前排和收线 |
-| 4-9 | 每 3 关增加一种颜色，增加棋盘尺寸 |
-| 10-13 | 引入第一条有实际队列的管道 |
-| 14-29 | 每 4 关增加管道或队列压力，穿插长图 |
-| 30-49 | 颜色达到上限，图案更密集，管道位置更分散 |
-| 50 | 章节终局，使用完整图形或高密度矩形 |
-
-每关至少改变一个内容维度，不能只换随机种子：棋盘尺寸、颜色数、图案形状、可见滚筒排列、管道数量、队列深度和空槽比例都可以作为变量。
-
-## 七、制作特殊图案关卡
-
-外部图片、表格或策划图不能在 APK 运行时直接读取。制作步骤：
-
-1. 读取外部文件，确认工作表、有效区域和行列数。
-2. 只读取有效颜色填充，不把标题、坐标轴、图例和底部说明带进棋盘。
-3. 将每种源颜色映射到项目颜色索引。
-4. 生成项目内 C#、JSON、CSV 或 ScriptableObject 数据。
-5. 校验矩阵行数、列数和有效颜色总数。
-6. 对每种颜色按 3 格规则平衡数量；必要时只将少量尾部颜色转移到指定底色，不能破坏主体图案。
-7. 运行数量守恒检查，再接入 `YarnMatchReferencePatternGenerator` 或独立的图案生成器。
-
-特殊关卡必须记录：源文件名、有效区域、颜色映射、是否保留底色、平衡策略和关卡入口编号。
-
-## 八、按职责接入代码
-
-按以下顺序修改，避免职责混杂：
-
-1. `YarnMatchLevelConfig`：增加或确认关卡数据字段。
-2. `YarnMatchLevelCatalog`：只负责难度曲线和确定性配置。
-3. `YarnMatchBoardPatternGenerator`：只负责普通图案颜色矩阵。
-4. `YarnMatchReferencePatternGenerator`：只负责特殊图案颜色矩阵。
-5. `YarnMatchBoardModel`：只负责列、暴露格、移除和统计。
-6. `YarnMatchPoolModel`：只负责可见池、解锁、管道队列和补位。
-7. `YarnMatchRackModel`：只负责收线台、容量和进度。
-8. `YarnMatchGame`：只负责命令编排、并行收线作业和胜负状态。
-9. `Presentation/UI`：只负责布局和渲染模型状态。
-10. `Presentation/Animation`、`Effects`、`Audio`：只负责表现反馈。
-
-新增关卡不应把随机分配、颜色平衡或管道补位代码直接写进 UI 或动画脚本。
-
-## 九、制作完成后的自动校验
-
-每个新关卡至少检查：
-
-```text
-[ ] 棋盘矩阵长度 = 所有列高度之和
-[ ] 棋盘列数和行数符合规格
-[ ] 每种颜色滚筒数 = ceil(颜色格子数 / 3)
-[ ] 可见滚筒 + 管道队列 = 真实滚筒总数
-[ ] 不存在无队列的空管道
-[ ] 所有可见滚筒都能通过四方向规则逐步解锁
-[ ] 对角线不会被错误解锁
-[ ] 选中源位置立即为空
-[ ] 管道补位只发生在正确目标格
-[ ] 收线进度使用实际 Capacity
-[ ] 胜利后没有剩余棋盘格或滚筒
-[ ] 失败只在没有可用槽位且没有可继续收线动作时触发
-[ ] 刷新不改变滚筒总数和已收集进度
-[ ] 同一种子可重现配置，不同轮次可产生合法变化
-```
-
-建议至少比较第 1 关、引入管道的关卡、长图关卡、40 关和特殊关卡，不能只验证一个小关卡。
-
-## 十、单关输出模板
-
-新增关卡时按下面格式记录，便于审查和后续调参：
-
-```text
-关卡编号：
-章节编号：
-图案类型：随机 / 规则图形 / 特殊矩阵
-棋盘宽度：
-列高数组或棋盘高度：
-有效格子总数：
-颜色列表与格子数量：
-各颜色滚筒数量：
-可见池尺寸：
-可见滚筒数量：
-管道数量：
-各管道队列数量：
-随机种子：
-本关新增难度点：
-可玩性校验结果：
-```
+The 50-template review sheet is .codex/previews/patterns-50.png.
+Background music is Assets/Resources/YarnMatch/Audio/QuietStitches.wav.
+Its deterministic offline source is .codex/tools/BakeBackgroundMusic.cs; it is not
+compiled into the game. Music is a 53.33-second, 72-BPM original instrumental loop.

@@ -23,6 +23,7 @@ internal sealed class YarnMatchUiBuilder
         Action<int> onLevelSelected,
         Action onUnlockAllLevels,
         Action onStartSpecialChallenge,
+        Action onPreviewFailure,
         Action onBackToMainMenu)
     {
         YarnMatchUiPrimitives.CreateEventSystemIfNeeded();
@@ -49,7 +50,7 @@ internal sealed class YarnMatchUiBuilder
         BuildRackArea(ui, canvasObject.transform);
         BuildPoolArea(ui, canvasObject.transform);
         BuildFooter(ui, canvasObject.transform, onRestart, onHint, onRefresh);
-        BuildResultOverlay(ui, canvasObject.transform, onRestart, onNextLevel, onBackToMainMenu);
+        BuildResultOverlay(ui, canvasObject.transform, onRestart, onNextLevel, onPreviewFailure, onBackToMainMenu);
         BuildMainMenu(ui, canvasObject.transform, onOpenLevelSelect);
         BuildLevelSelect(ui, canvasObject.transform, onLevelSelected, onUnlockAllLevels, onStartSpecialChallenge, onBackToMainMenu);
         ui.EffectsRoot = YarnMatchUiPrimitives.CreateChild("Effects", canvasObject.transform).transform;
@@ -120,7 +121,13 @@ internal sealed class YarnMatchUiBuilder
         ui.ToastLabel.gameObject.SetActive(false);
     }
 
-    private void BuildResultOverlay(YarnMatchUiReferences ui, Transform parent, Action onRestart, Action onNextLevel, Action onBackToMainMenu)
+    private void BuildResultOverlay(
+        YarnMatchUiReferences ui,
+        Transform parent,
+        Action onRestart,
+        Action onNextLevel,
+        Action onPreviewFailure,
+        Action onBackToMainMenu)
     {
         ui.ResultOverlay = YarnMatchUiPrimitives.CreateChild("Result Overlay", parent);
         ui.ResultCanvasGroup = ui.ResultOverlay.AddComponent<CanvasGroup>();
@@ -133,8 +140,10 @@ internal sealed class YarnMatchUiBuilder
         ui.ResultNextButton = YarnMatchUiPrimitives.CreateButton("Next Level", panel.transform, "下一关", new Vector2(0f, -58f), new Vector2(270f, 60f), Color.white, new Color(0.10f, 0.62f, 0.88f));
         ui.ResultNextLabel = ui.ResultNextButton.GetComponentInChildren<TMP_Text>();
         ui.ResultNextButton.onClick.AddListener(() => { _audio?.PlayClick(); onNextLevel?.Invoke(); });
-        ui.ResultReplayButton = YarnMatchUiPrimitives.CreateButton("Replay Level", panel.transform, "重玩本关", new Vector2(0f, -58f), new Vector2(270f, 60f), Color.white, new Color(0.91f, 0.34f, 0.42f));
+        ui.ResultReplayButton = YarnMatchUiPrimitives.CreateButton("Replay Level", panel.transform, "重玩本关", new Vector2(115f, -58f), new Vector2(210f, 60f), Color.white, new Color(0.91f, 0.34f, 0.42f));
         ui.ResultReplayButton.onClick.AddListener(() => { _audio?.PlayClick(); onRestart?.Invoke(); });
+        ui.ResultPreviewButton = YarnMatchUiPrimitives.CreateButton("Preview Failure", panel.transform, "查看残局", new Vector2(-115f, -58f), new Vector2(210f, 60f), new Color(0.12f, 0.34f, 0.52f), new Color(0.72f, 0.91f, 1f));
+        ui.ResultPreviewButton.onClick.AddListener(() => { _audio?.PlayClick(); onPreviewFailure?.Invoke(); });
         ui.ResultHomeButton = YarnMatchUiPrimitives.CreateButton("Back To Home", panel.transform, "返回首页", new Vector2(0f, -124f), new Vector2(270f, 52f), new Color(0.20f, 0.32f, 0.52f), new Color(0.90f, 0.94f, 1f));
         ui.ResultHomeButton.onClick.AddListener(() => { _audio?.PlayClick(); onBackToMainMenu?.Invoke(); });
         ui.ResultOverlay.SetActive(false);
@@ -155,45 +164,35 @@ internal sealed class YarnMatchUiBuilder
         startButton.onClick.AddListener(() => { _audio?.PlayStart(); onOpenLevelSelect?.Invoke(); });
         ui.MainMenuOverlay.SetActive(true);
     }
-    private void BuildLevelSelect(YarnMatchUiReferences ui, Transform parent, Action<int> onLevelSelected, Action onUnlockAllLevels, Action onStartSpecialChallenge, Action onBackToMainMenu)
+    private void BuildLevelSelect(YarnMatchUiReferences ui, Transform parent,
+        Action<int> onLevelSelected, Action onUnlockAllLevels,
+        Action onStartSpecialChallenge, Action onBackToMainMenu)
     {
         ui.LevelSelectOverlay = YarnMatchUiPrimitives.CreateChild("Level Select", parent);
-        Image dim = YarnMatchUiPrimitives.CreateImage("Level Select Background", ui.LevelSelectOverlay.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.985f, 0.99f, 1f, 1f), new Vector2(750f, 1334f), Vector2.zero, false);
-        dim.raycastTarget = true;
-        Image panel = YarnMatchUiPrimitives.CreateImage("Level Select Panel", ui.LevelSelectOverlay.transform, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.96f, 0.98f, 1f), new Vector2(680f, 830f), new Vector2(0f, 8f), true);
-        ui.LevelSelectTitle = YarnMatchUiPrimitives.CreateText("Level Select Title", panel.transform, "选择关卡 · 第 1 章", 34, new Color(0.12f, 0.20f, 0.38f), TextAlignmentOptions.Center, new Vector2(0f, 344f), new Vector2(580f, 54f), FontStyles.Bold);
-        ui.LevelSelectSubtitle = YarnMatchUiPrimitives.CreateText("Level Select Subtitle", panel.transform, "每章 50 关，完成后进入全新的线团图案", 15, new Color(0.36f, 0.45f, 0.61f), TextAlignmentOptions.Center, new Vector2(0f, 302f), new Vector2(600f, 30f), FontStyles.Normal);
-
-        IReadOnlyList<YarnMatchLevelConfig> levels = YarnMatchLevelCatalog.All;
-        const int columns = 5;
-        const float horizontalStep = 132f;
-        const float verticalStep = 60f;
-        for (int index = 0; index < levels.Count; index++)
-        {
-            YarnMatchLevelConfig level = levels[index];
-            int levelNumber = level.Number;
-            int row = index / columns;
-            int column = index % columns;
-            Vector2 position = new Vector2((column - 2f) * horizontalStep, 220f - row * verticalStep);
-            Button button = YarnMatchUiPrimitives.CreateButton("Level " + levelNumber, panel.transform, "第 " + levelNumber + " 关", position, new Vector2(124f, 56f), new Color(0.12f, 0.27f, 0.48f), new Color(0.86f, 0.93f, 1f));
-            int slotIndex = index;
-            button.onClick.AddListener(() => { _audio?.PlayClick(); onLevelSelected?.Invoke(slotIndex); });
-            TMP_Text label = button.GetComponentInChildren<TMP_Text>();
-            label.rectTransform.sizeDelta = new Vector2(112f, 22f);
-            label.rectTransform.anchoredPosition = new Vector2(0f, 12f);
-            TMP_Text detail = YarnMatchUiPrimitives.CreateText("Level Detail", button.transform, level.Summary, 10, new Color(0.35f, 0.46f, 0.62f), TextAlignmentOptions.Center, new Vector2(0f, -15f), new Vector2(112f, 16f), FontStyles.Normal);
-            ui.LevelButtons.Add(button);
-            ui.LevelButtonLabels.Add(label);
-            ui.LevelButtonDetails.Add(detail);
-        }
-        Button special = YarnMatchUiPrimitives.CreateButton("Special Challenge", panel.transform, "\u7279\u6B8A\u6311\u6218  48 x 40", new Vector2(-220f, -380f), new Vector2(190f, 44f), new Color(0.62f, 0.24f, 0.48f), new Color(1f, 0.84f, 0.94f));
-        ui.SpecialChallengeButton = special;
-        special.onClick.AddListener(() => { _audio?.PlayClick(); onStartSpecialChallenge?.Invoke(); });
-        Button unlock = YarnMatchUiPrimitives.CreateButton("Unlock All Levels", panel.transform, "\u4ECA\u65E5\u5168\u90E8\u89E3\u9501", new Vector2(0f, -380f), new Vector2(190f, 44f), new Color(0.16f, 0.42f, 0.58f), new Color(0.78f, 0.94f, 1f));
-        ui.UnlockAllLevelsButton = unlock;
-        ui.UnlockAllLevelsLabel = unlock.GetComponentInChildren<TMP_Text>();
-        unlock.onClick.AddListener(() => { _audio?.PlayClick(); onUnlockAllLevels?.Invoke(); });
-        Button back = YarnMatchUiPrimitives.CreateButton("Back To Menu", panel.transform, "\u8FD4\u56DE\u9996\u9875", new Vector2(220f, -380f), new Vector2(160f, 44f), new Color(0.25f, 0.34f, 0.50f), new Color(0.88f, 0.92f, 0.98f));
+        Transform root = ui.LevelSelectOverlay.transform;
+        Image background = YarnMatchUiPrimitives.CreateImage("Level Background", root,
+            YarnMatchVisualFactory.GetSolidSprite(), Color.white,
+            new Vector2(750f, 1334f), Vector2.zero, false);
+        background.raycastTarget = true;
+        ui.LevelSelectTitle = YarnMatchUiPrimitives.CreateText("Level Title", root,
+            "选择关卡", 34, new Color(0.12f, 0.20f, 0.30f), TextAlignmentOptions.Center,
+            new Vector2(0f, 599f), new Vector2(650f, 54f), FontStyles.Bold);
+        ui.LevelSelectSubtitle = YarnMatchUiPrimitives.CreateText("Chapter Range", root,
+            "", 18, new Color(0.36f, 0.44f, 0.49f), TextAlignmentOptions.Center,
+            new Vector2(0f, 548f), new Vector2(650f, 32f), FontStyles.Normal);
+        ui.LevelList = new YarnMatchLevelList(root, onLevelSelected, _audio);
+        ui.SpecialChallengeButton = YarnMatchUiPrimitives.CreateButton("Special Challenge", root,
+            "特殊挑战", new Vector2(-170f, -523f), new Vector2(310f, 58f),
+            new Color(0.58f, 0.20f, 0.38f), new Color(1f, 0.87f, 0.92f));
+        ui.SpecialChallengeButton.onClick.AddListener(() => { _audio?.PlayClick(); onStartSpecialChallenge?.Invoke(); });
+        ui.UnlockAllLevelsButton = YarnMatchUiPrimitives.CreateButton("Unlock Today", root,
+            "今日全部解锁", new Vector2(170f, -523f), new Vector2(310f, 58f),
+            new Color(0.15f, 0.38f, 0.45f), new Color(0.79f, 0.95f, 0.92f));
+        ui.UnlockAllLevelsLabel = ui.UnlockAllLevelsButton.GetComponentInChildren<TMP_Text>();
+        ui.UnlockAllLevelsButton.onClick.AddListener(() => { _audio?.PlayClick(); onUnlockAllLevels?.Invoke(); });
+        Button back = YarnMatchUiPrimitives.CreateButton("Back To Menu", root,
+            "返回首页", new Vector2(0f, -610f), new Vector2(310f, 56f),
+            new Color(0.25f, 0.34f, 0.40f), new Color(0.90f, 0.94f, 0.96f));
         back.onClick.AddListener(() => { _audio?.PlayClick(); onBackToMainMenu?.Invoke(); });
         ui.LevelSelectOverlay.SetActive(false);
     }
