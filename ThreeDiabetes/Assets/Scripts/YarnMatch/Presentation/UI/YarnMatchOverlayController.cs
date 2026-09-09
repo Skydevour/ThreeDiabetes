@@ -37,8 +37,7 @@ internal sealed class YarnMatchOverlayController
         _ui.MainMenuOverlay.SetActive(false);
         int safeHighestUnlockedLevel = Mathf.Max(1, highestUnlockedLevel);
         _ui.LevelSelectTitle.text = "选择关卡";
-        _ui.LevelSelectSubtitle.text = "第 1 - "
-            + YarnMatchLevelCatalog.GetChapterEndLevel(safeHighestUnlockedLevel) + " 关";
+        _ui.LevelSelectSubtitle.text = "图案挑战";
         _ui.LevelList.Show(safeHighestUnlockedLevel);
         _ui.UnlockAllLevelsButton.interactable = !dailyUnlockActive;
         _ui.UnlockAllLevelsLabel.text = dailyUnlockActive ? "今日已全部解锁" : "今日全部解锁";

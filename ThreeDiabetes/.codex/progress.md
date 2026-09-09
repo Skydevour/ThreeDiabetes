@@ -1,5 +1,109 @@
 # Implementation Progress
 
+## 2026-09-09 Board CanvasRenderer Fix
+
+- User paused the feature follow-up and reported MissingComponentException on entry.
+- Editor.log first fails in YarnMatchBoardSurface.Configure, then repeatedly in
+  Unity clipping/raycast code. CreateChild supplies only RectTransform; UGUI Graphic
+  requires RectTransform, but unlike Image it does not require CanvasRenderer.
+- Added RequireComponent(CanvasRenderer) to both custom MaskableGraphic subclasses:
+  YarnMatchBoardSurface and YarnMatchBoardColumnGraphic. No null guards, gameplay
+  changes, test scripts or APK. Restart Play Mode to rebuild the runtime hierarchy;
+  changing RequireComponent does not repair already-created component instances.
+
+## 2026-09-09 Difficulty and Loading Follow-Up
+
+- User approved the four follow-up items. Preserved the existing dirty worktree,
+  special Excel picture, mechanics, source PNGs, and APK.
+- Final-dimension eligibility replaces selecting at nominal width and then scaling
+  below an asset's readable minimum. The early 96-spool cap includes color tails.
+- Added 6,637 offline per-detail profiles to the 200-template pack. Local ranking
+  uses occupied count, actual colors, natural interruptions, category variation,
+  recent history and seeded score jitter. JSON is now 3,389,828 bytes.
+- Added a generation-time opening planner: when the intact subject has a partial
+  opening/support opportunity, exchange existing tokens into plain selectable or
+  adjacent source positions. No color, capacity, mechanic or occupancy mutation.
+- Resource loading is asynchronous; JSON/template metadata and cell sampling run
+  in workers. Preview and entry share a round task. UI thumbnail uploads run in a
+  3 ms queue; stale task references are dropped on rebinding. Lower UI keeps 4 ms slicing.
+- Player compilation passed with zero warnings/errors using existing package outputs
+  and isolated Temp intermediate files. An initial attempt to override all output
+  paths failed because it redirected package reference lookup; no package edits.
+- Refresh implementation is not changed yet. Asked the user whether inherently
+  partial-only states should retain the upper board and offer explicit partial help,
+  or allow upper-cell swaps to guarantee a fill. Await that design decision.
+- No test scripts, gameplay tests, mobile profiling, APK, commits or cleanup scripts.
+
+## 2026-09-09 Local Artwork Publication
+
+- User clarified local offline image creation; this supersedes the API-key blocker
+  in the earlier preflight below. No credentials, image API or runtime artwork calls.
+- Authored and published 200 distinct native 64 x 64 PNGs: 40 food, 50 nature,
+  50 animals, 50 objects and 10 Chinese idioms. Replaced all old 50 subjects with
+  newly authored detail, retaining existing resource IDs and Unity metadata.
+- Separated shared shapes, themed subject definitions, sampling proofs and export
+  responsibilities in .codex/tools/pattern-art. This directory is outside Assets.
+- PNGs and JSON palette-index rows / occupancy masks come from the same RGBA data.
+  Fully opaque occupied pixels; genuine transparency outside subjects and in holes.
+- Inspected all five source sheets and minimum-density proof sheets. Corrected
+  overflowing pineapple/candy texture, crescent silhouette and lock keyhole.
+  Raised minimum detail for faces, leaf veins, instrument detail and Chinese text.
+- Resource inventory: 200 templates, 200 PNGs, 200 unique IDs, matching 64 x 64
+  masks, no missing referenced PNG/metas and no unreferenced old PNGs. JSON is
+  2,022,471 bytes; the 200 source PNGs total 108,910 bytes.
+- Current compact review: .codex/previews/local-patterns/review-sheet.png.
+  Existing shared preview/entry sampling consumes the pack without runtime C# edits.
+  Special Excel art, mechanics and prior gameplay work remain unchanged.
+- No gameplay tests, device profiling, repeat compilation, APK or commit in this
+  artwork phase. APK remains 38,149,003 bytes, dated 2026-09-07 22:32:32.
+
+## 2026-09-09 Artwork Continuation Preflight
+
+- User requested continuation of the remaining artwork phase.
+- Read imagegen fallback instructions and checked available tools. No built-in image
+  generator is exposed; OPENAI_API_KEY and OPENAI_BASE_URL are unset in Process,
+  User and Machine environment scopes. Checked presence only, never secret values.
+- At that preflight no API requests, new images, gameplay edits, tests, builds or
+  commits occurred. The later local-authoring decision above removed this blocker;
+  do not request key configuration to continue artwork production.
+- Preserved existing worktree changes, including the newly observed solution-file change.
+
+## 2026-09-09 Subject Boards and Performance
+
+- Preserved existing dirty work, capacity badges, backgrounds, special image, and APK.
+- Added occupancy masks, cropped sampling, shared pattern layouts and no-repeat reservations.
+- Added a separate fair collection scheduler and independent busy-column/drop ownership.
+- Replaced per-cell board hierarchies with pooled column meshes and active collection tiles.
+- Split board animation from spool animation. Collection runs continuously for 1.2 seconds,
+  with fixed tile width/top edge and additive spool thickening/progress.
+- Added async plain-data round preparation and 4 ms sliced lower UI construction.
+- Accounted for increased no-pipe spool budgets, preserved same-color background/subject
+  regions explicitly, and included refill animation lifetimes in terminal deferral.
+- Removed obsolete per-cell hover code and the competing rack-impact animation.
+- Final Player compilation passed with zero warnings/errors. Editor incremental build
+  initially reused the Player UGUI dependency (DefaultControls.factory lacked its
+  editor-only setter). Non-incremental Editor compilation passed with zero errors and
+  16 Unity package warnings; no package source edits. Scoped diff whitespace check passed.
+- Static ownership review: reserve before animation, keep each column busy until drop
+  completes, commit each cell once, preserve tails, defer completion during refills.
+- No runtime gameplay or device profiling was performed. Restored only our generated
+  tracked obj binaries; existing APK, scene/editor state and previous edits preserved.
+- At the end of this earlier gameplay phase, artwork was still pending. It has since
+  been completed by local authoring in the publication phase above, without an API.
+
+## 2026-09-08 Pattern and Selection Fix
+
+- Read current generation/rendering owners and preserved earlier background/badge edits.
+- Located independent preview/runtime template selection and lossy palette merging.
+- Added memory-only pending seeds consumed on entry; replay prepares a fresh seed.
+- Board and preview share BoardModel.GeneratePattern. Source symbols remain distinct
+  until palette selection; area sampling handles small grids and border accents avoid subjects.
+- Added four-column virtual rows and exact-cell thumbnail textures, removing level numbers
+  and old full-width descriptions. Scrolling one row rebinds four thumbnail textures.
+- Player compilation passed with zero warnings/errors; focused diff checks passed.
+- Current Unity editor was left open. No runtime/mobile visual verification was performed.
+- User owns gameplay testing; no test scripts, APK or commit requested.
+
 ## 2026-09-07
 
 - Resumed approved work and read current models and UI integration.

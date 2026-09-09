@@ -1,15 +1,15 @@
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-admin" at "2026-09-07T14:06:46.9623371Z"
-[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 1812, path: "D:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-admin" at "2026-09-09T02:02:21.1582845Z"
+[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 36092, path: "D:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
 [Licensing::Module] Error: LicensingClient has failed validation; ignoring
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.16.1+e780b2e
-  Session Id:              39e606c541f9455aa03537387f411af5
-  Correlation Id:          043b1ed3446db538041e295a9882d6f1
-  External correlation Id: 5222346709809966942
+  Session Id:              34234a70ab0242df81cd698a16b7de60
+  Correlation Id:          2635a8e8a1e919187b9dde9484adda90
+  External correlation Id: 4239653448949448691
   Machine Id:              lHjMRQhilFGXGFYO/g8U2v5+XBc=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-admin" (connect: 0.00s, validation: 0.01s, handshake: 0.03s)
-[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-admin-notifications" at "2026-09-07T14:06:47.0073373Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-admin" (connect: 0.00s, validation: 0.01s, handshake: 0.15s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-admin-notifications" at "2026-09-09T02:02:21.3238051Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully updated license
 Built from '6000.0/china_unity/23f1' branch; Version is '6000.0.23f1c1 (d40c2aeae294) revision 13896746'; Using compiler version '193933523'; Build Type 'Release'
@@ -22,12 +22,11 @@ BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, I
 COMMAND LINE ARGUMENTS:
 D:\Unity\Editor\6000.0.23f1c1\Editor\Unity.exe
 -batchmode
--nographics
 -quit
--buildTarget
-Android
 -projectPath
 E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+-buildTarget
+Android
 -executeMethod
 YarnMatchAndroidBuild.BuildAndroidApkFromCommandLine
 -logFile
@@ -69,17 +68,19 @@ E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [22028]  Target information:
+Player connection [32952]  Target information:
 
-Player connection [22028]  * "[IP] 192.168.1.5 [Port] 55504 [Flags] 2 [Guid] 3692216119 [EditorId] 3692216119 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N57VUJT) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [32952]  * "[IP] 192.168.1.5 [Port] 55504 [Flags] 2 [Guid] 2652405841 [EditorId] 2652405841 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N57VUJT) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [22028]  * "[IP] 26.179.140.201 [Port] 55504 [Flags] 2 [Guid] 3692216119 [EditorId] 3692216119 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N57VUJT) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [32952]  * "[IP] 26.179.140.201 [Port] 55504 [Flags] 2 [Guid] 2652405841 [EditorId] 2652405841 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N57VUJT) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [22028] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [22028] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [32952]  * "[IP] 172.22.112.1 [Port] 55504 [Flags] 2 [Guid] 2652405841 [EditorId] 2652405841 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-N57VUJT) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [32952] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [32952] Host joined alternative multi-casting on [225.0.0.222:34997]...
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-23532" after 0.2 seconds.
+[Package Manager] Connected to IPC stream "Upm-36764" after 0.2 seconds.
 Library Redirect Path: Library/
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
@@ -159,27 +160,27 @@ Library Redirect Path: Library/
 [Physics::Module] Threading Mode: Multi-Threaded
 [Subsystems] No new subsystems found in resolved package list.
 Package Manager log level set to [2]
-[Package Manager] Done registering packages in 0.08 seconds
+[Package Manager] Done registering packages in 0.07 seconds
 [Licensing::Client] Successfully resolved entitlement details
 Targeting platform: Android
-Refreshing native plugins compatible for Editor in 3.44 ms, found 5 plugins.
+Refreshing native plugins compatible for Editor in 3.30 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 6000.0.23f1c1 (d40c2aeae294)
 [Subsystems] Discovering subsystems at path D:/Unity/Editor/6000.0.23f1c1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes/Assets
-Forcing GfxDevice: Null
 GfxDevice: creating device client; kGfxThreadingModeNonThreaded
-NullGfxDevice:
-    Version:  NULL 1.0 [1.0]
-    Renderer: Null Device
-    Vendor:   Unity Technologies
-Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4070 Ti SUPER (ID=0x2689)
+    Vendor:   NVIDIA
+    VRAM:     16063 MB
+    Driver:   32.0.15.6081
 [Licensing::Client] Successfully resolved entitlement details
 Initialize mono
 Mono path[0] = 'D:/Unity/Editor/6000.0.23f1c1/Editor/Data/Managed'
 Mono path[1] = 'D:/Unity/Editor/6000.0.23f1c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'D:/Unity/Editor/6000.0.23f1c1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56532
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56764
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
 ImportWorker Server TCP listen port: 0
@@ -188,42 +189,42 @@ Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
-Registered in 0.005933 seconds.
-- Loaded All Assemblies, in  0.320 seconds
+Registered in 0.004200 seconds.
+- Loaded All Assemblies, in  0.266 seconds
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 2309 ms
+Android Extension - Scanning For ADB Devices 2201 ms
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  2.637 seconds
-Domain Reload Profiling: 2953ms
-	BeginReloadAssembly (114ms)
+- Finished resetting the current domain, in  2.465 seconds
+Domain Reload Profiling: 2728ms
+	BeginReloadAssembly (97ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
 		CreateAndSetChildDomain (1ms)
-	RebuildCommonClasses (27ms)
-	RebuildNativeTypeToScriptingClass (8ms)
-	initialDomainReloadingComplete (45ms)
-	LoadAllAssembliesAndSetupDomain (121ms)
-		LoadAssemblies (111ms)
+	RebuildCommonClasses (23ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (38ms)
+	LoadAllAssembliesAndSetupDomain (98ms)
+		LoadAssemblies (94ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (118ms)
-			TypeCache.Refresh (117ms)
-				TypeCache.ScanAssembly (107ms)
+		AnalyzeDomain (96ms)
+			TypeCache.Refresh (95ms)
+				TypeCache.ScanAssembly (87ms)
 			BuildScriptInfoCaches (0ms)
 			ResolveRequiredComponents (0ms)
-	FinalizeReload (2637ms)
+	FinalizeReload (2465ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (2607ms)
+		SetupLoadedEditorAssemblies (2441ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (2405ms)
+			InitializePlatformSupportModulesInManaged (2299ms)
 			SetLoadedEditorAssemblies (3ms)
-			BeforeProcessingInitializeOnLoad (5ms)
-			ProcessInitializeOnLoadAttributes (108ms)
-			ProcessInitializeOnLoadMethodAttributes (67ms)
-			AfterProcessingInitializeOnLoad (18ms)
+			BeforeProcessingInitializeOnLoad (3ms)
+			ProcessInitializeOnLoadAttributes (84ms)
+			ProcessInitializeOnLoadMethodAttributes (49ms)
+			AfterProcessingInitializeOnLoad (2ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (0ms)
@@ -233,102 +234,147 @@ Application.AssetDatabase Initial Refresh Start
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aEDbg.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
 WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
 DisplayProgressbar: Compiling Scripts
-ExitCode: 0 Duration: 0s317ms
+ExitCode: 4 Duration: 0s278ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1300b0aEDbg-inputdata.json
 [773/996    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-*** Tundra build success (0.29 seconds), 1 items updated, 996 evaluated
-AssetDatabase: script compilation time: 0.826847s
+*** Tundra requires additional run (0.25 seconds), 1 items updated, 772 evaluated
+Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\netcorerun\netcorerun.exe "D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1300b0aEDbg.dag.json" "Library/Bee/1300b0aEDbg-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+ExitCode: 0 Duration: 0s743ms
+Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aEDbg.dag" --continue-on-failure --dagfilejson="Library\Bee\1300b0aEDbg.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+ExitCode: 0 Duration: 0s367ms
+Finished compiling graph: 1000 nodes, 17932 flattened edges (14486 ToBuild, 160 ToUse), maximum node priority 1150
+[773/996    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.35 seconds), 1 items updated, 996 evaluated
+AssetDatabase: script compilation time: 1.816448s
 Begin MonoManager ReloadAssembly
 Total cache size 265988266
-Total cache size after purge 265988266, took 00:00:00.1594428
-- Loaded All Assemblies, in  1.071 seconds
-Refreshing native plugins compatible for Editor in 2.62 ms, found 5 plugins.
+Total cache size after purge 265988266, took 00:00:00.1382947
+- Loaded All Assemblies, in  0.793 seconds
+Refreshing native plugins compatible for Editor in 2.28 ms, found 5 plugins.
 Native extension for Android target not found
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 5.30 ms, found 5 plugins.
+Refreshing native plugins compatible for Editor in 2.23 ms, found 5 plugins.
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  5.178 seconds
-Domain Reload Profiling: 6237ms
-	BeginReloadAssembly (296ms)
+- Finished resetting the current domain, in  3.508 seconds
+Domain Reload Profiling: 4295ms
+	BeginReloadAssembly (252ms)
 		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (9ms)
+		DisableScriptedObjects (8ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (27ms)
-	RebuildCommonClasses (36ms)
-	RebuildNativeTypeToScriptingClass (11ms)
-	initialDomainReloadingComplete (44ms)
-	LoadAllAssembliesAndSetupDomain (672ms)
-		LoadAssemblies (525ms)
+		CreateAndSetChildDomain (22ms)
+	RebuildCommonClasses (23ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (23ms)
+	LoadAllAssembliesAndSetupDomain (481ms)
+		LoadAssemblies (358ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (252ms)
-			TypeCache.Refresh (163ms)
-				TypeCache.ScanAssembly (151ms)
-			BuildScriptInfoCaches (75ms)
-			ResolveRequiredComponents (11ms)
-	FinalizeReload (5178ms)
+		AnalyzeDomain (202ms)
+			TypeCache.Refresh (133ms)
+				TypeCache.ScanAssembly (124ms)
+			BuildScriptInfoCaches (58ms)
+			ResolveRequiredComponents (8ms)
+	FinalizeReload (3508ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (4925ms)
+		SetupLoadedEditorAssemblies (3331ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (40ms)
-			SetLoadedEditorAssemblies (6ms)
-			BeforeProcessingInitializeOnLoad (206ms)
-			ProcessInitializeOnLoadAttributes (4561ms)
-			ProcessInitializeOnLoadMethodAttributes (97ms)
-			AfterProcessingInitializeOnLoad (14ms)
+			InitializePlatformSupportModulesInManaged (25ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (141ms)
+			ProcessInitializeOnLoadAttributes (3088ms)
+			ProcessInitializeOnLoadMethodAttributes (65ms)
+			AfterProcessingInitializeOnLoad (9ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (15ms)
-Asset Pipeline Refresh (id=765738dc51d8c614e8fb27d47731bd58): Total: 8.325 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Asset Pipeline Refresh (id=c5503a9426d1b4c4793fd585f842cd36): Total: 8.200 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
 	Summary:
 		Imports: total=0 (actual=0, local cache=0, cache server=0)
-		Asset DB Process Time: managed=0 ms, native=6160 ms
-		Asset DB Callback time: managed=30 ms, native=0 ms
-		Scripting: domain reloads=1, domain reload time=1183 ms, compile time=828 ms, other=119 ms
-		Project Asset Count: scripts=1516, non-scripts=3072
+		Asset DB Process Time: managed=0 ms, native=5360 ms
+		Asset DB Callback time: managed=21 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=899 ms, compile time=1817 ms, other=100 ms
+		Project Asset Count: scripts=1516, non-scripts=3222
 		Asset File Changes: new=0, changed=0, moved=0, deleted=0
 		Scan Filter Count: 0
 	InvokeCustomDependenciesCallbacks: 0.001ms
-	InvokePackagesCallback: 2.649ms
-	ApplyChangesToAssetFolders: 0.437ms
-	Scan: 531.040ms
+	InvokePackagesCallback: 2.059ms
+	ApplyChangesToAssetFolders: 0.323ms
+	Scan: 1529.549ms
 	OnSourceAssetsModified: 0.001ms
-	CategorizeAssetsWithTransientArtifact: 65.599ms
-	ProcessAssetsWithTransientArtifactChanges: 79.860ms
-	CategorizeAssets: 51.047ms
-	ImportOutOfDateAssets: 5193.727ms (4362.704ms without children)
-		CompileScripts: 828.332ms
-		ReloadNativeAssets: 0.022ms
-		UnloadImportedAssets: 1.440ms
-		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.650ms
-		InitializingProgressBar: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 44.347ms
+	ProcessAssetsWithTransientArtifactChanges: 60.103ms
+	CategorizeAssets: 33.605ms
+	ImportOutOfDateAssets: 3520.025ms (1700.749ms without children)
+		CompileScripts: 1817.234ms
+		ReloadNativeAssets: 0.014ms
+		UnloadImportedAssets: 1.210ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.463ms
+		InitializingProgressBar: 0.000ms
 		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
-		OnDemandSchedulerStart: 0.578ms
-	PostProcessAllAssets: 30.987ms
-	GatherAllCurrentPrimaryArtifactRevisions: 0.000ms
-	UnloadStreamsBegin: 2.141ms
-	PersistCurrentRevisions: 0.110ms
+		OnDemandSchedulerStart: 0.355ms
+	PostProcessAllAssets: 21.614ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.001ms
+	UnloadStreamsBegin: 1.756ms
+	PersistCurrentRevisions: 0.106ms
 	UnloadStreamsEnd: 0.001ms
-	GenerateScriptTypeHashes: 2.542ms
-	Untracked: 2367.308ms
+	GenerateScriptTypeHashes: 1.720ms
+	Untracked: 2986.891ms
 
 Application.AssetDatabase Initial Refresh End
-Scanning for USB devices : 3.734ms
+Scanning for USB devices : 6.221ms
 Initializing Unity extensions:
 [Licensing::Client] Successfully resolved entitlement details
 [MODES] ModeService[none].Initialize
 [MODES] ModeService[none].LoadModes
 [MODES] Loading mode Default (0) for mode-current-id-Yarn Match
 Unloading 18 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 7170 unused Assets / (3.6 MB). Loaded Objects now: 7993.
-Memory consumption went from 236.1 MB to 232.5 MB.
-Total: 8.916000 ms (FindLiveObjects: 0.519300 ms CreateObjectMapping: 0.263400 ms MarkObjects: 5.813400 ms  DeleteObjects: 2.318800 ms)
+Unloading 7185 unused Assets / (6.2 MB). Loaded Objects now: 8009.
+Memory consumption went from 230.7 MB to 224.6 MB.
+Total: 7.626000 ms (FindLiveObjects: 0.377600 ms CreateObjectMapping: 0.254000 ms MarkObjects: 5.086300 ms  DeleteObjects: 1.907300 ms)
 
-Start importing ProjectSettings/ProjectSettings.asset using Guid(00000000000000004000000000000000) (LibraryAssetImporter) -> (artifact id: '4b4e93803ac44de5ddbdf629e091eaf9') in 0.0088523 seconds
-Shader Hidden/ProbeVolume/VoxelizeScene is not supported: GPU does not support conservative rasterization
-Refreshing native plugins compatible for Editor in 2.72 ms, found 5 plugins.
+Start importing ProjectSettings/ProjectSettings.asset using Guid(00000000000000004000000000000000) (LibraryAssetImporter) -> (artifact id: '4b4e93803ac44de5ddbdf629e091eaf9') in 0.008584 seconds
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Refreshing native plugins compatible for Editor in 2.18 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Asset Pipeline Refresh (id=68ecd86ec5c1bdd49855c5330cd81f3b): Total: 0.233 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=9cffae567ec932744863601f0dfd6073): Total: 0.329 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=3 ms, native=71 ms
+		Asset DB Callback time: managed=78 ms, native=175 ms
+		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
+		Project Asset Count: scripts=1516, non-scripts=3222
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 0.000ms
+	ApplyChangesToAssetFolders: 0.137ms
+	Scan: 18.378ms
+	OnSourceAssetsModified: 0.001ms
+	CategorizeAssetsWithTransientArtifact: 0.008ms
+	ProcessAssetsWithTransientArtifactChanges: 0.095ms
+	CategorizeAssets: 37.745ms
+	ImportOutOfDateAssets: 11.254ms (0.358ms without children)
+		ImportManagerImport: 9.511ms (0.782ms without children)
+			ImportInProcess: 8.717ms
+			UpdateCategorizedAssets: 0.013ms
+		ReloadNativeAssets: 0.031ms
+		UnloadImportedAssets: 0.294ms
+		ReloadImportedAssets: 0.000ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.627ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.432ms
+	PostProcessAllAssets: 280.648ms
+	Hotreload: 2.730ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.362ms
+	UnloadStreamsBegin: 0.818ms
+	PersistCurrentRevisions: 0.212ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: -23.394ms
+
 Yarn Match Android launcher icons configured: Assets/Art/YarnMatch/AppIcon/YarnMatchIcon.png
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace ()
@@ -365,12 +411,12 @@ YarnMatchAndroidBuild:BuildAndroidApkFromCommandLine () (at Assets/Editor/YarnMa
 
 (Filename: ./Library/PackageCache/com.unity.render-pipelines.universal/Editor/BuildProcessors/URPPreprocessBuild.cs Line: 52)
 
-Start importing ProjectSettings/GraphicsSettings.asset using Guid(00000000000000006100000000000000) (LibraryAssetImporter) -> (artifact id: '99c841fe1bba45b4c6fd0b34c30c40ea') in 0.0028078 seconds
-Start importing Assets/UniversalRenderPipelineGlobalSettings.asset using Guid(93b439a37f63240aca3dd4e01d978a9f) (NativeFormatImporter) -> (artifact id: '14ee2382a625a56f83fbe51b205d1262') in 0.0021562 seconds
-Start importing Assets/Settings/UniversalRP.asset using Guid(681886c5eb7344803b6206f758bf0b1c) (NativeFormatImporter) -> (artifact id: '8e0156fda259f94154cdde34a8429fd3') in 0.0019791 seconds
-Refreshing native plugins compatible for Editor in 3.31 ms, found 5 plugins.
+Start importing ProjectSettings/GraphicsSettings.asset using Guid(00000000000000006100000000000000) (LibraryAssetImporter) -> (artifact id: '99c841fe1bba45b4c6fd0b34c30c40ea') in 0.0051413 seconds
+Start importing Assets/UniversalRenderPipelineGlobalSettings.asset using Guid(93b439a37f63240aca3dd4e01d978a9f) (NativeFormatImporter) -> (artifact id: '14ee2382a625a56f83fbe51b205d1262') in 0.0054653 seconds
+Start importing Assets/Settings/UniversalRP.asset using Guid(681886c5eb7344803b6206f758bf0b1c) (NativeFormatImporter) -> (artifact id: '8e0156fda259f94154cdde34a8429fd3') in 0.0032951 seconds
+Refreshing native plugins compatible for Editor in 2.24 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Asset Pipeline Refresh (id=24e4b25312f9adb498861fef4ff78070): Total: 0.029 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=811db72d435455a4588697fa7428bfda): Total: 0.051 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
 DisplayProgressbar: Checking prerequisites
 PlayerSettings->Active Input Handling is set to Both, this is unsupported on Android and might cause issues with input and application performance. Please choose only one active input handling.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
@@ -394,9 +440,9 @@ YarnMatchAndroidBuild:BuildAndroidApkFromCommandLine () (at Assets/Editor/YarnMa
 
 (Filename: Assets/Editor/YarnMatchAndroidBuild.cs Line: 36)
 
-Android PostProcess task "Checking prerequisites" took 17.5711 ms
+Android PostProcess task "Checking prerequisites" took 12.5226 ms
 DisplayProgressbar: Detect Java Development Kit (JDK)
-Android PostProcess task "Detect Java Development Kit (JDK)" took 93.3676 ms
+Android PostProcess task "Detect Java Development Kit (JDK)" took 211.4797 ms
 DisplayProgressbar: Detecting Android SDK
  Observed package id 'platforms;android-33' in inconsistent location 'D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\platforms\android-13' (Expected 'D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\platforms\android-33')
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
@@ -465,149 +511,577 @@ AndroidSDKTools:
 
 	adb           : D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\platform-tools\adb.exe
 
-Android PostProcess task "Detecting Android SDK" took 3741.004 ms
+Android PostProcess task "Detecting Android SDK" took 3375.7761 ms
 DisplayProgressbar: Detect Android NDK
-Android PostProcess task "Detect Android NDK" took 2.6821 ms
-Android PostProcess task "Trying to find a suitable Android device" took 0.4327 ms
+Android PostProcess task "Detect Android NDK" took 2.1586 ms
+Android PostProcess task "Trying to find a suitable Android device" took 0.2682 ms
 DisplayProgressbar: Check resources
-Android PostProcess task "Check resources" took 0.2416 ms
+Android PostProcess task "Check resources" took 0.203 ms
 DisplayProgressbar: Check Android Player Settings
-Android PostProcess task "Check Android Player Settings" took 0.2527 ms
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+Android PostProcess task "Check Android Player Settings" took 0.2304 ms
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aEDbgSkipCompile.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssembliesAndTypeDB
 WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
 DisplayProgressbar: Compiling Scripts
-ExitCode: 0 Duration: 0s111ms
-*** Tundra build success (0.07 seconds), 0 items updated, 4 evaluated
-Start importing Assets/Resources/PerformanceTestRunInfo.json using Guid(84675f2bbc88b4242a10264dc32fc568) (TextScriptImporter) -> (artifact id: '91d4456e6d46e436d0bd18639b2c5256') in 0.0048704 seconds
-Start importing Assets/Resources/PerformanceTestRunSettings.json using Guid(a9c8ebdfbbe58344ab365730cd7df2af) (TextScriptImporter) -> (artifact id: '97a1fdfdafc09018170085ae182aa5b8') in 0.0042985 seconds
+ExitCode: 0 Duration: 0s736ms
+[3/4        0s] BuildPlayerDataGenerator Library/BuildPlayerData/Editor/TypeDb-All.json
+*** Tundra build success (0.72 seconds), 1 items updated, 4 evaluated
+Start importing Assets/Resources/PerformanceTestRunInfo.json using Guid(60c05708f1072d1449c420315bace74a) (TextScriptImporter) -> (artifact id: '94b6d2722c49d757f3b3a8340a78e9fa') in 0.0034051 seconds
+Start importing Assets/Resources/PerformanceTestRunSettings.json using Guid(02cad98cdfc49b9479d3c5f87c9b96b1) (TextScriptImporter) -> (artifact id: '4fec94b285eef90350fcaf442168f7f3') in 0.0025516 seconds
 Total cache size 265988266
-Total cache size after purge 265988266, took 00:00:00.2350621
-Refreshing native plugins compatible for Editor in 2.75 ms, found 5 plugins.
+Total cache size after purge 265988266, took 00:00:00.1328349
+Refreshing native plugins compatible for Editor in 2.66 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Asset Pipeline Refresh (id=dcf00e7cd0f954a48bac26315787aeac): Total: 0.782 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=31fe77bed32049943aba9cebb7c4fed8): Total: 0.596 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
 	Summary:
 		Imports: total=2 (actual=2, local cache=0, cache server=0)
-		Asset DB Process Time: managed=0 ms, native=45 ms
-		Asset DB Callback time: managed=730 ms, native=5 ms
+		Asset DB Process Time: managed=0 ms, native=29 ms
+		Asset DB Callback time: managed=563 ms, native=3 ms
 		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
-		Project Asset Count: scripts=1516, non-scripts=3074
+		Project Asset Count: scripts=1516, non-scripts=3224
 		Asset File Changes: new=2, changed=2, moved=0, deleted=0
 		Scan Filter Count: 0
 	InvokeCustomDependenciesCallbacks: 0.001ms
-	InvokePackagesCallback: 0.001ms
-	ApplyChangesToAssetFolders: 0.124ms
-	Scan: 17.320ms
-	OnSourceAssetsModified: 0.600ms
-	CategorizeAssetsWithTransientArtifact: 0.006ms
-	ProcessAssetsWithTransientArtifactChanges: 0.065ms
-	CategorizeAssets: 10.549ms
-	ImportOutOfDateAssets: 11.514ms (0.363ms without children)
-		ImportManagerImport: 10.052ms (0.344ms without children)
-			ImportInProcess: 9.686ms
-			UpdateCategorizedAssets: 0.022ms
-		ReloadNativeAssets: 0.018ms
-		UnloadImportedAssets: 0.173ms
+	InvokePackagesCallback: 0.000ms
+	ApplyChangesToAssetFolders: 0.064ms
+	Scan: 9.858ms
+	OnSourceAssetsModified: 0.448ms
+	CategorizeAssetsWithTransientArtifact: 0.004ms
+	ProcessAssetsWithTransientArtifactChanges: 0.048ms
+	CategorizeAssets: 8.062ms
+	ImportOutOfDateAssets: 7.459ms (0.235ms without children)
+		ImportManagerImport: 6.532ms (0.236ms without children)
+			ImportInProcess: 6.283ms
+			UpdateCategorizedAssets: 0.013ms
+		ReloadNativeAssets: 0.017ms
+		UnloadImportedAssets: 0.129ms
 		ReloadImportedAssets: 0.000ms
-		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.467ms
-		InitializingProgressBar: 0.006ms
-		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
-		OnDemandSchedulerStart: 0.433ms
-	PostProcessAllAssets: 731.446ms
-	Hotreload: 4.178ms
-	GatherAllCurrentPrimaryArtifactRevisions: 0.253ms
-	UnloadStreamsBegin: 0.003ms
-	PersistCurrentRevisions: 0.231ms
-	UnloadStreamsEnd: 0.002ms
-	Untracked: 5.672ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.302ms
+		InitializingProgressBar: 0.004ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.239ms
+	PostProcessAllAssets: 562.925ms
+	Hotreload: 3.783ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.215ms
+	UnloadStreamsBegin: 0.002ms
+	PersistCurrentRevisions: 0.146ms
+	UnloadStreamsEnd: 0.001ms
+	Untracked: 3.397ms
 
 [ScriptCompilation] Requested script compilation because: Recompiling scripts for player build.
 BuildPlayer: start building target 13
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aP.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssembliesAndTypeDB
 WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
-ExitCode: 0 Duration: 0s342ms
-[352/611    0s] WriteResponseFile Library/Bee/artifacts/rsp/4747638433968585886.rsp
-[515/611    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-[547/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Flow.dll
-[548/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Tilemap.Extras.dll
-[549/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll
-[550/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll
-[551/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/UnityEngine.UI.pdb
-[552/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.IK.Runtime.dll
-[553/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.pdb
-[554/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Timeline.pdb
-[555/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll
-[556/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.pdb
-[557/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.pdb
-[558/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.pdb
-[559/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Common.Runtime.pdb
-[560/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.pdb
-[561/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.PixelPerfect.pdb
-[562/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Mathematics.pdb
-[563/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.pdb
-[564/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll
-[565/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Collections.pdb
-[566/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.pdb
-[567/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Assembly-CSharp.pdb
-[568/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.pdb
-[569/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Core.dll
-[570/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Multiplayer.Center.Common.pdb
-[571/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.pdb
-[572/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.pdb
-[573/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Animation.Runtime.pdb
-[574/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Animation.Runtime.dll
-[575/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Assembly-CSharp.dll
-[576/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll
-[577/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Rendering.LightTransport.Runtime.pdb
-[578/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Core.pdb
-[579/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.IK.Runtime.pdb
-[580/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InternalAPIEngineBridge.001.pdb
-[581/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.TextMeshPro.pdb
-[582/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll
-[583/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.SpriteShape.Runtime.pdb
-[584/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.pdb
-[585/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Flow.pdb
-[586/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Tilemap.Extras.pdb
-[587/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Burst.pdb
-[588/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.ForUI.pdb
-[589/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.State.pdb
-[590/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll
-[591/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Mathematics.dll
-[592/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Multiplayer.Center.Common.dll
-[593/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.TextMeshPro.dll
-[594/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
-[595/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Burst.dll
-[596/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.dll
-[597/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll
-[598/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll
-[599/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Collections.dll
-[600/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Common.Runtime.dll
-[601/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll
-[602/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Timeline.dll
-[603/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll
-[604/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.PixelPerfect.dll
-[605/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll
-[606/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.State.dll
-[607/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.ForUI.dll
-[608/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/UnityEngine.UI.dll
-*** Tundra build success (0.32 seconds), 64 items updated, 611 evaluated
-Rebuilding Data files because Assets/Resources/PerformanceTestRunInfo.json is dirty (hash)
-SpriteAtlasPacking completed in 0.001743 sec
+ExitCode: 4 Duration: 0s447ms
+[305/611    0s] WriteResponseFile Library/Bee/artifacts/rsp/4747638433968585886.rsp
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1300b0aP-inputdata.json
+[514/611    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[515/611    0s] Csc Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.dll (+2 others)
+##### CommandLine
+"D:\Unity\Editor\6000.0.23f1c1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "D:/Unity/Editor/6000.0.23f1c1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.rsp" "@Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.rsp2"
+##### Contents of Library\Bee\artifacts\1300b0aP.dag\Assembly-CSharp.rsp
+-target:library
+-out:"Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.dll"
+-refout:"Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.ref.dll"
+-define:UNITY_6000_0_23
+-define:UNITY_6000_0
+-define:UNITY_6000
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_6_OR_NEWER
+-define:UNITY_2017_1_OR_NEWER
+-define:UNITY_2017_2_OR_NEWER
+-define:UNITY_2017_3_OR_NEWER
+-define:UNITY_2017_4_OR_NEWER
+-define:UNITY_2018_1_OR_NEWER
+-define:UNITY_2018_2_OR_NEWER
+-define:UNITY_2018_3_OR_NEWER
+-define:UNITY_2018_4_OR_NEWER
+-define:UNITY_2019_1_OR_NEWER
+-define:UNITY_2019_2_OR_NEWER
+-define:UNITY_2019_3_OR_NEWER
+-define:UNITY_2019_4_OR_NEWER
+-define:UNITY_2020_1_OR_NEWER
+-define:UNITY_2020_2_OR_NEWER
+-define:UNITY_2020_3_OR_NEWER
+-define:UNITY_2021_1_OR_NEWER
+-define:UNITY_2021_2_OR_NEWER
+-define:UNITY_2021_3_OR_NEWER
+-define:UNITY_2022_1_OR_NEWER
+-define:UNITY_2022_2_OR_NEWER
+-define:UNITY_2022_3_OR_NEWER
+-define:UNITY_2023_1_OR_NEWER
+-define:UNITY_2023_2_OR_NEWER
+-define:UNITY_2023_3_OR_NEWER
+-define:UNITY_6000_0_OR_NEWER
+-define:ENABLE_AR
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_EVENT_QUEUE
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_TEXTURE_STREAMING
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_VR
+-define:ENABLE_WEBCAM
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_EDITOR_GAME_SERVICES
+-define:ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_HUB_LICENSE
+-define:ENABLE_WEBSOCKET_CLIENT
+-define:ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API
+-define:ENABLE_DIRECTOR_AUDIO
+-define:ENABLE_DIRECTOR_TEXTURE
+-define:ENABLE_MANAGED_JOBS
+-define:ENABLE_MANAGED_TRANSFORM_JOBS
+-define:ENABLE_MANAGED_ANIMATION_JOBS
+-define:ENABLE_MANAGED_AUDIO_JOBS
+-define:ENABLE_ENGINE_CODE_STRIPPING
+-define:ENABLE_ONSCREEN_KEYBOARD
+-define:ENABLE_MANAGED_UNITYTLS
+-define:INCLUDE_DYNAMIC_GI
+-define:ENABLE_SCRIPTING_GC_WBARRIERS
+-define:PLATFORM_SUPPORTS_MONO
+-define:ENABLE_MARSHALLING_TESTS
+-define:ENABLE_VIDEO
+-define:ENABLE_NAVIGATION_OFFMESHLINK_TO_NAVMESHLINK
+-define:ENABLE_ACCELERATOR_CLIENT_DEBUGGING
+-define:ENABLE_ACCESSIBILITY
+-define:TEXTCORE_1_0_OR_NEWER
+-define:EDITOR_ONLY_NAVMESH_BUILDER_DEPRECATED
+-define:PLATFORM_ANDROID
+-define:UNITY_ANDROID
+-define:UNITY_ANDROID_API
+-define:ENABLE_EGL
+-define:ENABLE_NETWORK
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:UNITY_CAN_SHOW_SPLASH_SCREEN
+-define:UNITY_HAS_GOOGLEVR
+-define:UNITY_HAS_TANGO
+-define:ENABLE_SPATIALTRACKING
+-define:ENABLE_ETC_COMPRESSION
+-define:PLATFORM_EXTENDS_VULKAN_DEVICE
+-define:PLATFORM_HAS_MULTIPLE_SWAPCHAINS
+-define:UNITY_ANDROID_SUPPORTS_SHADOWFILES
+-define:PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP
+-define:PLATFORM_EXTENDS_VULKAN_PIPELINE_CACHE
+-define:PLATFORM_SUPPORTS_SPLIT_GRAPHICS_JOBS
+-define:PLATFORM_HAS_ADDITIONAL_API_CHECKS
+-define:ENABLE_UNITYADS_RUNTIME
+-define:UNITY_UNITYADS_API
+-define:ENABLE_IL2CPP
+-define:NET_STANDARD_2_0
+-define:NET_STANDARD
+-define:NET_STANDARD_2_1
+-define:NETSTANDARD
+-define:NETSTANDARD2_1
+-define:UNITY_PRO_LICENSE
+-define:ENABLE_CUSTOM_RENDER_TEXTURE
+-define:ENABLE_DIRECTOR
+-define:ENABLE_LOCALIZATION
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_TILEMAP
+-define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
+-define:ENABLE_LEGACY_INPUT_MANAGER
+-define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER
+-define:CSHARP_7_OR_LATER
+-define:CSHARP_7_3_OR_NEWER
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Core.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Data.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Drawing.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.IO.Compression.FileSystem.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Net.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Numerics.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Runtime.Serialization.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.ServiceModel.Web.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Transactions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Web.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Windows.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Linq.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/System.Xml.Serialization.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/Microsoft.Win32.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.AppContext.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Buffers.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Concurrent.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.NonGeneric.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Collections.Specialized.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.EventBasedAsync.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ComponentModel.TypeConverter.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Console.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Data.Common.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Contracts.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Debug.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.FileVersionInfo.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Process.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.StackTrace.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TextWriterTraceListener.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tools.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.TraceSource.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Diagnostics.Tracing.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Drawing.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Dynamic.Runtime.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Calendars.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Globalization.Extensions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Compression.ZipFile.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.DriveInfo.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.FileSystem.Watcher.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.IsolatedStorage.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.MemoryMappedFiles.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.Pipes.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.IO.UnmanagedMemoryStream.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Expressions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Parallel.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Linq.Queryable.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Memory.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Http.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NameResolution.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.NetworkInformation.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Ping.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Requests.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Security.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.Sockets.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebHeaderCollection.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.Client.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Net.WebSockets.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Numerics.Vectors.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ObjectModel.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.DispatchProxy.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.ILGeneration.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Emit.Lightweight.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Extensions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Reflection.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Reader.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.ResourceManager.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Resources.Writer.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.CompilerServices.VisualC.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Extensions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Handles.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.InteropServices.RuntimeInformation.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Numerics.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Formatters.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Json.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Runtime.Serialization.Xml.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Claims.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Algorithms.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Csp.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Encoding.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.Primitives.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Cryptography.X509Certificates.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.Principal.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Security.SecureString.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.Encoding.Extensions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Text.RegularExpressions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Overlapped.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Extensions.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Tasks.Parallel.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Thread.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.ThreadPool.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Threading.Timer.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.ValueTuple.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.ReaderWriter.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XDocument.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlDocument.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XmlSerializer.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.AccessibilityModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.AIModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.AndroidJNIModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.AnimationModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.ARModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.AssetBundleModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.AudioModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.ClothModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.ContentLoadModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.CoreModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.CrashReportingModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.DirectorModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.DSPGraphModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.GameCenterModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.GIModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.GraphicsStateCollectionSerializerModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.GridModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.HierarchyCoreModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.HotReloadModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.ImageConversionModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.IMGUIModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.InputForUIModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.InputLegacyModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.InputModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.JSONSerializeModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.LocalizationModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.MarshallingModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.MultiplayerModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.ParticleSystemModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.PerformanceReportingModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.Physics2DModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.PhysicsModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.PropertiesModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.ScreenCaptureModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.ShaderVariantAnalyticsModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.SharedInternalsModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.SpriteMaskModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.SpriteShapeModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.StreamingModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.SubstanceModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.SubsystemsModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.TerrainModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.TerrainPhysicsModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.TextCoreFontEngineModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.TextCoreTextEngineModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.TextRenderingModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.TilemapModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.TLSModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UIElementsModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UIModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UmbraModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityAnalyticsCommonModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityAnalyticsModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityConnectModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityCurlModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityTestProtocolModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityWebRequestAssetBundleModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityWebRequestAudioModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityWebRequestModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityWebRequestTextureModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.UnityWebRequestWWWModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.VehiclesModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.VFXModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.VideoModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.VRModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.WindModule.dll"
+-r:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Variations/il2cpp/Managed/UnityEngine.XRModule.dll"
+-r:"Library/PackageCache/com.unity.collections/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll"
+-r:"Library/PackageCache/com.unity.ext.nunit/net40/unity-custom/nunit.framework.dll"
+-r:"Library/PackageCache/com.unity.visualscripting/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.2D.Animation.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.2D.Common.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.2D.IK.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.2D.PixelPerfect.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.2D.SpriteShape.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.2D.Tilemap.Extras.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Burst.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Collections.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.InputSystem.ForUI.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.InputSystem.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.InternalAPIEngineBridge.001.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Mathematics.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Multiplayer.Center.Common.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Rendering.LightTransport.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipeline.Universal.ShaderLibrary.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.Core.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.Core.Runtime.Shared.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.Core.ShaderLibrary.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.GPUDriven.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.Universal.2D.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.Universal.Config.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.Universal.Runtime.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.RenderPipelines.Universal.Shaders.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.TextMeshPro.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.Timeline.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.VisualScripting.Core.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.VisualScripting.Flow.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/Unity.VisualScripting.State.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aP.dag/UnityEngine.UI.ref.dll"
+-analyzer:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
+-analyzer:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+-analyzer:"D:/Unity/Editor/6000.0.23f1c1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/Scripts/YarnMatch/Audio/YarnMatchAudio.cs"
+"Assets/Scripts/YarnMatch/Audio/YarnMatchMusic.cs"
+"Assets/Scripts/YarnMatch/Core/Generation/YarnMatchReachabilityPlanner.cs"
+"Assets/Scripts/YarnMatch/Core/Generation/YarnMatchTemplateSampler.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchBoardModel.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchBoardPatternGenerator.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchCollectionJob.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchGame.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchLevelCatalog.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchLevelConfig.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchMechanicLayoutGenerator.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchPoolModel.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchRackModel.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchReferencePatternGenerator.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchStrategicPatternWeaver.cs"
+"Assets/Scripts/YarnMatch/Core/YarnMatchTypes.cs"
+"Assets/Scripts/YarnMatch/Infrastructure/YarnMatchBootstrap.cs"
+"Assets/Scripts/YarnMatch/Presentation/Animation/YarnMatchAnimationController.cs"
+"Assets/Scripts/YarnMatch/Presentation/Effects/YarnMatchEffectPool.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchBoardCellHover.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchButtonFeedback.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchLevelList.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchMusicControls.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchOverlayController.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchPresentation.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiBuilder.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiPrimitives.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiReferences.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiRenderer.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiTheme.cs"
+"Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiViews.cs"
+"Assets/Scripts/YarnMatch/Visuals/YarnMatchVisualFactory.cs"
+-langversion:9.0
+/deterministic
+/optimize+
+/debug:portable
+/nologo
+/RuntimeMetadataVersion:v4.0.30319
+/nowarn:0169
+/nowarn:0649
+/nowarn:0282
+/nowarn:1701
+/nowarn:1702
+/utf8output
+/preferreduilang:en-US
+/additionalfile:"Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.UnityAdditionalFile.txt"
+##### Custom Environment Variables
+DOTNET_MULTILEVEL_LOOKUP=0
+##### ExitCode
+1
+##### Output
+error CS2001: Source file 'E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchBoardCellHover.cs' could not be found.
+*** Tundra requires additional run (0.43 seconds), 3 items updated, 513 evaluated
+Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\netcorerun\netcorerun.exe "D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1300b0aP.dag.json" "Library/Bee/1300b0aP-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+ExitCode: 0 Duration: 0s265ms
+Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aP.dag" --continue-on-failure --dagfilejson="Library\Bee\1300b0aP.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssembliesAndTypeDB
+WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+ExitCode: 0 Duration: 2s155ms
+Finished compiling graph: 612 nodes, 6584 flattened edges (5334 ToBuild, 80 ToUse), maximum node priority 332
+[400/611    0s] WriteText Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.rsp
+[514/611    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[545/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Rendering.LightTransport.Runtime.dll
+[546/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Tilemap.Extras.dll
+[547/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Collections.dll
+[548/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/UnityEngine.UI.dll
+[549/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.pdb
+[550/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Common.Runtime.pdb
+[551/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Timeline.pdb
+[552/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.SpriteShape.Runtime.pdb
+[553/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.pdb
+[554/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.pdb
+[555/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.pdb
+[556/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Flow.pdb
+[557/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.pdb
+[558/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.pdb
+[559/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.PixelPerfect.pdb
+[560/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Animation.Runtime.pdb
+[561/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Multiplayer.Center.Common.pdb
+[562/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Burst.pdb
+[563/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.State.pdb
+[564/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InternalAPIEngineBridge.001.pdb
+[565/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Core.pdb
+[566/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Mathematics.pdb
+[567/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/UnityEngine.UI.pdb
+[568/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.TextMeshPro.pdb
+[569/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Rendering.LightTransport.Runtime.pdb
+[570/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.pdb
+[571/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Tilemap.Extras.pdb
+[572/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.pdb
+[573/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.pdb
+[574/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.pdb
+[575/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Collections.pdb
+[576/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.pdb
+[577/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.ForUI.pdb
+[578/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.IK.Runtime.pdb
+[579/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Mathematics.dll
+[580/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.TextMeshPro.dll
+[581/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.2D.Runtime.dll
+[582/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Config.Runtime.dll
+[583/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll
+[584/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll
+[585/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
+[586/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.GPUDriven.Runtime.dll
+[587/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.State.dll
+[588/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Animation.Runtime.dll
+[589/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Burst.dll
+[590/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll
+[591/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.PixelPerfect.dll
+[592/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll
+[593/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Multiplayer.Center.Common.dll
+[594/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.Timeline.dll
+[595/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Core.dll
+[596/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll
+[597/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.IK.Runtime.dll
+[598/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.SpriteShape.Runtime.dll
+[599/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.VisualScripting.Flow.dll
+[600/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.dll
+[601/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.2D.Common.Runtime.dll
+[602/611    1s] Csc Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.dll (+2 others)
+[603/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.InputSystem.ForUI.dll
+[604/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll
+[605/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Unity.RenderPipelines.Core.Runtime.Shared.dll
+[606/611    0s] ILPostProcess Library/Bee/artifacts/1300b0aP.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aP.dag/Assembly-CSharp.dll, with 121 defines and 224 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[607/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Assembly-CSharp.pdb
+[608/611    0s] CopyFiles Library/Bee/PlayerScriptAssemblies/Assembly-CSharp.dll
+[610/611    0s] BuildPlayerDataGenerator Library/BuildPlayerData/Player/RuntimeInitializeOnLoads.json (+1 other)
+*** Tundra build success (2.13 seconds), 67 items updated, 611 evaluated
+Rebuilding Data files because Assets/Resources/YarnMatch/Patterns/pattern_29_turtle.png is dirty (hash)
+SpriteAtlasPacking completed in 0.001379 sec
 Total cache size 265988266
-Total cache size after purge 265988266, took 00:00:00.1671772
+Total cache size after purge 265988266, took 00:00:00.1302009
 Opening scene 'Assets/Scenes/SampleScene.unity'
 Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
 Loaded scene 'Assets/Scenes/SampleScene.unity'
-	Deserialize:            2.470 ms
-	Integration:            265.329 ms
+	Deserialize:            2.069 ms
+	Integration:            160.423 ms
 	Integration of assets:  0.002 ms
-	Thread Wait Time:       0.012 ms
-	Total Operation Time:   267.814 ms
-Unloading 61 unused Assets / (0.6 MB). Loaded Objects now: 8124.
-Memory consumption went from 236.8 MB to 236.2 MB.
-Total: 7.404400 ms (FindLiveObjects: 0.434700 ms CreateObjectMapping: 0.154000 ms MarkObjects: 6.567300 ms  DeleteObjects: 0.247700 ms)
+	Thread Wait Time:       0.007 ms
+	Total Operation Time:   162.502 ms
+Unloading 61 unused Assets / (0.6 MB). Loaded Objects now: 8140.
+Memory consumption went from 235.3 MB to 234.7 MB.
+Total: 6.200700 ms (FindLiveObjects: 0.263400 ms CreateObjectMapping: 0.132300 ms MarkObjects: 5.579600 ms  DeleteObjects: 0.224800 ms)
 
-Created GICache directory at C:/Users/admin/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.009s, timestamps: [20.686 - 20.696]
+Created GICache directory at C:/Users/admin/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.009s, timestamps: [22.865 - 22.874]
 
 
 Mono dependencies included in the build
@@ -861,20 +1335,20 @@ Dependency assembly - System.Security.SecureString.dll
 Dependency assembly - System.Net.HttpListener.dll
 
 DisplayProgressbar: Fetching assembly references
-Unloading 113 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 1554 unused Assets / (15.9 MB). Loaded Objects now: 8122.
-Memory consumption went from 270.5 MB to 254.6 MB.
-Total: 9.383400 ms (FindLiveObjects: 0.330300 ms CreateObjectMapping: 0.148400 ms MarkObjects: 7.758300 ms  DeleteObjects: 1.145200 ms)
+Unloading 263 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1854 unused Assets / (12.2 MB). Loaded Objects now: 8138.
+Memory consumption went from 279.2 MB to 267.0 MB.
+Total: 7.519200 ms (FindLiveObjects: 0.241200 ms CreateObjectMapping: 0.108400 ms MarkObjects: 5.313700 ms  DeleteObjects: 1.855300 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 0 unused Assets / (2.2 KB). Loaded Objects now: 8124.
-Memory consumption went from 237.2 MB to 237.2 MB.
-Total: 11.725700 ms (FindLiveObjects: 0.461400 ms CreateObjectMapping: 0.164000 ms MarkObjects: 11.069900 ms  DeleteObjects: 0.029100 ms)
+Unloading 0 unused Assets / (2.2 KB). Loaded Objects now: 8140.
+Memory consumption went from 237.4 MB to 237.4 MB.
+Total: 5.599900 ms (FindLiveObjects: 0.219600 ms CreateObjectMapping: 0.089600 ms MarkObjects: 5.281100 ms  DeleteObjects: 0.008900 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 166 unused Assets / (139.2 MB). Loaded Objects now: 8124.
-Memory consumption went from 377.8 MB to 238.6 MB.
-Total: 16.174300 ms (FindLiveObjects: 0.254000 ms CreateObjectMapping: 0.107300 ms MarkObjects: 6.321800 ms  DeleteObjects: 9.490000 ms)
+Unloading 166 unused Assets / (139.6 MB). Loaded Objects now: 8140.
+Memory consumption went from 378.4 MB to 238.8 MB.
+Total: 13.595600 ms (FindLiveObjects: 0.207200 ms CreateObjectMapping: 0.083300 ms MarkObjects: 5.339100 ms  DeleteObjects: 7.965200 ms)
 
 Compiling shader "TextMeshPro/Sprite" pass "Default" (vp)
     Full variant space:         8
@@ -883,7 +1357,7 @@ Compiling shader "TextMeshPro/Sprite" pass "Default" (vp)
     After scriptable stripping: 8
     Processed in 0.03 seconds
     starting compilation...
-    finished in 0.01 seconds. Local cache hits 8 (0.11s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader TextMeshPro/Sprite in 0.00s
     gles3 (total internal programs: 4, unique: 4)
@@ -895,7 +1369,7 @@ Compiling shader "TextMeshPro/Mobile/Distance Field" pass "" (vp)
     After scriptable stripping: 24
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 24 (0.03s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 24 (0.07s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader TextMeshPro/Mobile/Distance Field in 0.00s
     gles3 (total internal programs: 12, unique: 12)
@@ -1007,7 +1481,7 @@ Compiling shader "Hidden/Universal Render Pipeline/CameraMotionBlur" pass "Camer
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1019,7 +1493,7 @@ Compiling shader "Hidden/Universal Render Pipeline/BokehDepthOfField" pass "Boke
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1055,7 +1529,7 @@ Compiling shader "Hidden/Universal Render Pipeline/BokehDepthOfField" pass "Boke
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1100,7 +1574,7 @@ Compiling shader "Hidden/Universal Render Pipeline/BokehDepthOfField" pass "Boke
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1126,20 +1600,20 @@ Compiling shader "Hidden/Light2D" pass "" (vp)
     After scriptable stripping: 1024
     Processed in 0.01 seconds
     starting compilation...
-    finished in 0.06 seconds. Local cache hits 1024 (1.80s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.10 seconds. Local cache hits 1024 (2.83s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.01s
 Serialized binary data for shader Hidden/Light2D in 0.00s
     gles3 (total internal programs: 512, unique: 512)
     vulkan (total internal programs: 512, unique: 512)
 Compressed shader 'Hidden/Light2D' on gles3 from 7.80MB to 0.13MB
 Compressed shader 'Hidden/Light2D' on vulkan from 3.75MB to 0.33MB
-Compressed shader 'Hidden/Light2D' in 0.04s
+Compressed shader 'Hidden/Light2D' in 0.03s
 Compiling shader "Hidden/Universal Render Pipeline/XR/XROcclusionMesh" pass "" (vp)
     Full variant space:         4
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 0
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Hidden/Universal Render Pipeline/XR/XROcclusionMesh in 0.00s
     gles3 (total internal programs: 0, unique: 0)
@@ -1194,7 +1668,7 @@ Compiling shader "Hidden/Universal Render Pipeline/GaussianDepthOfField" pass "G
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1212,7 +1686,7 @@ Compiling shader "Hidden/Universal Render Pipeline/GaussianDepthOfField" pass "G
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1221,7 +1695,7 @@ Compiling shader "Hidden/Universal Render Pipeline/GaussianDepthOfField" pass "G
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1230,7 +1704,7 @@ Compiling shader "Hidden/Universal Render Pipeline/GaussianDepthOfField" pass "G
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1260,7 +1734,7 @@ Compiling shader "Hidden/Universal Render Pipeline/Bloom" pass "Bloom Blur Verti
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1269,7 +1743,7 @@ Compiling shader "Hidden/Universal Render Pipeline/Bloom" pass "Bloom Upsample" 
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1311,7 +1785,7 @@ Compiling shader "Hidden/Universal Render Pipeline/LutBuilderLdr" pass "LutBuild
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1332,7 +1806,7 @@ Compiling shader "Hidden/Universal Render Pipeline/LensFlareDataDriven" pass "Le
     After settings filtering:   16
     After built-in stripping:   16
     After scriptable stripping: 16
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 16 (0.02s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1352,14 +1826,14 @@ Compiling shader "Hidden/Universal Render Pipeline/LensFlareDataDriven" pass "Le
     After scriptable stripping: 16
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 16 (0.02s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 16 (0.03s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Compiling shader "Hidden/Universal Render Pipeline/LensFlareDataDriven" pass "LensFlareOcclusion" (vp)
     Full variant space:         2
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1371,7 +1845,7 @@ Compiling shader "Hidden/Universal Render Pipeline/LensFlareScreenSpace" pass "L
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1389,7 +1863,7 @@ Compiling shader "Hidden/Universal Render Pipeline/LensFlareScreenSpace" pass "L
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1398,7 +1872,7 @@ Compiling shader "Hidden/Universal Render Pipeline/LensFlareScreenSpace" pass "L
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1407,7 +1881,7 @@ Compiling shader "Hidden/Universal Render Pipeline/LensFlareScreenSpace" pass "L
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1440,7 +1914,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "Nearest" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1458,7 +1932,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "NearestQuad" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1467,7 +1941,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearQuad" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1476,7 +1950,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "NearestQuadPadding" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1494,7 +1968,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "NearestQuadPaddingRepeat" (vp
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1503,7 +1977,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearQuadPaddingRepeat" (v
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1521,7 +1995,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "NearestQuadPaddingAlphaBlend"
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1530,7 +2004,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearQuadPaddingAlphaBlend
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1539,7 +2013,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "NearestQuadPaddingAlphaBlendR
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1548,7 +2022,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearQuadPaddingAlphaBlend
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1566,7 +2040,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "CubeToOctahedral" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1584,7 +2058,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "CubeToOctahedralAlpha" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1593,7 +2067,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "CubeToOctahedralRed" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1602,7 +2076,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearQuadLuminance" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1611,7 +2085,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearQuadAlpha" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1620,7 +2094,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearQuadRed" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1629,7 +2103,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "NearestCubeToOctahedralPaddin
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1638,7 +2112,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearCubeToOctahedralPaddi
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1647,7 +2121,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "BilinearDebugDraw" (vp)
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1656,7 +2130,7 @@ Compiling shader "Hidden/Universal/CoreBlit" pass "NearestDebugDraw" (vp)
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1677,7 +2151,7 @@ Compiling shader "Hidden/Universal Render Pipeline/TemporalAA" pass "TemporalAA 
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1686,7 +2160,7 @@ Compiling shader "Hidden/Universal Render Pipeline/TemporalAA" pass "TemporalAA 
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1695,7 +2169,7 @@ Compiling shader "Hidden/Universal Render Pipeline/TemporalAA" pass "TemporalAA 
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1704,7 +2178,7 @@ Compiling shader "Hidden/Universal Render Pipeline/TemporalAA" pass "TemporalAA 
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1713,7 +2187,7 @@ Compiling shader "Hidden/Universal Render Pipeline/TemporalAA" pass "TemporalAA 
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1725,7 +2199,7 @@ Compiling shader "Hidden/Universal Render Pipeline/PaniniProjection" pass "Panin
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 4
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 4 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1754,18 +2228,18 @@ Compiling shader "Hidden/Universal Render Pipeline/FinalPost" pass "FinalPost" (
     After settings filtering:   128
     After built-in stripping:   128
     After scriptable stripping: 96
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
-    finished in 0.01 seconds. Local cache hits 96 (0.16s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.01 seconds. Local cache hits 96 (0.22s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Compiling shader "Hidden/Universal Render Pipeline/FinalPost" pass "FinalPost" (vp)
     Full variant space:         5120
     After settings filtering:   128
     After built-in stripping:   128
     After scriptable stripping: 96
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
-    finished in 0.01 seconds. Local cache hits 96 (0.15s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.01 seconds. Local cache hits 96 (0.24s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Hidden/Universal Render Pipeline/FinalPost in 0.00s
     gles3 (total internal programs: 96, unique: 96)
@@ -1796,7 +2270,7 @@ Compiling shader "Hidden/Universal Render Pipeline/Debug/DebugReplacement" pass 
     After settings filtering:   4
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1808,7 +2282,7 @@ Compiling shader "Hidden/Universal/CoreBlitColorAndDepth" pass "ColorOnly" (vp)
     After settings filtering:   2
     After built-in stripping:   2
     After scriptable stripping: 2
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
     finished in 0.00 seconds. Local cache hits 2 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
@@ -1829,7 +2303,7 @@ Compiling shader "Hidden/Universal Render Pipeline/XR/XRMirrorView" pass "" (vp)
     After settings filtering:   4
     After built-in stripping:   4
     After scriptable stripping: 0
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Hidden/Universal Render Pipeline/XR/XRMirrorView in 0.00s
     gles3 (total internal programs: 0, unique: 0)
@@ -1839,9 +2313,9 @@ Compiling shader "Hidden/Universal Render Pipeline/CopyDepth" pass "CopyDepth" (
     After settings filtering:   16
     After built-in stripping:   16
     After scriptable stripping: 16
-    Processed in 0.01 seconds
+    Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 16 (0.02s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 16 (0.03s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Hidden/Universal Render Pipeline/CopyDepth in 0.00s
     gles3 (total internal programs: 8, unique: 8)
@@ -1884,11 +2358,11 @@ Compiling shader "Hidden/Universal Render Pipeline/UberPost" pass "UberPost" (vp
     After settings filtering:   1920
     After built-in stripping:   1920
     After scriptable stripping: 1440
-    Processed in 0.02 seconds
+    Processed in 0.01 seconds
     starting compilation...
-    finished in 0.09 seconds. Local cache hits 1440 (2.40s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.12 seconds. Local cache hits 1440 (3.40s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.01s
-Serialized binary data for shader Hidden/Universal Render Pipeline/UberPost in 0.01s
+Serialized binary data for shader Hidden/Universal Render Pipeline/UberPost in 0.00s
     gles3 (total internal programs: 720, unique: 720)
     vulkan (total internal programs: 720, unique: 720)
 Compressed shader 'Hidden/Universal Render Pipeline/UberPost' on gles3 from 10.07MB to 0.16MB
@@ -1901,7 +2375,7 @@ Compiling shader "Hidden/Universal Render Pipeline/Scaling Setup" pass "ScalingS
     After scriptable stripping: 8
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 8 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Hidden/Universal Render Pipeline/Scaling Setup in 0.00s
     gles3 (total internal programs: 4, unique: 4)
@@ -1988,7 +2462,7 @@ Compiling shader "Legacy Shaders/Diffuse" pass "DEFERRED" (vp)
     After scriptable stripping: 8
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 8 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Legacy Shaders/Diffuse in 0.00s
     gles3 (total internal programs: 17, unique: 17)
@@ -2105,15 +2579,6 @@ Compiling shader "Hidden/Internal-ScreenSpaceShadows" pass "" (vp)
     After scriptable stripping: 8
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 8 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
-    Prepared data for serialisation in 0.00s
-Compiling shader "Hidden/Internal-ScreenSpaceShadows" pass "" (vp)
-    Full variant space:         8
-    After settings filtering:   8
-    After built-in stripping:   8
-    After scriptable stripping: 8
-    Processed in 0.00 seconds
-    starting compilation...
     finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Compiling shader "Hidden/Internal-ScreenSpaceShadows" pass "" (vp)
@@ -2132,7 +2597,16 @@ Compiling shader "Hidden/Internal-ScreenSpaceShadows" pass "" (vp)
     After scriptable stripping: 8
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 8 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    Prepared data for serialisation in 0.00s
+Compiling shader "Hidden/Internal-ScreenSpaceShadows" pass "" (vp)
+    Full variant space:         8
+    After settings filtering:   8
+    After built-in stripping:   8
+    After scriptable stripping: 8
+    Processed in 0.00 seconds
+    starting compilation...
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Hidden/Internal-ScreenSpaceShadows in 0.00s
     gles3 (total internal programs: 16, unique: 16)
@@ -2192,7 +2666,7 @@ Compiling shader "Hidden/Internal-DeferredShading" pass "" (vp)
     After scriptable stripping: 52
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 52 (0.08s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 52 (0.12s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Compiling shader "Hidden/Internal-DeferredShading" pass "" (vp)
     Full variant space:         2
@@ -2528,7 +3002,7 @@ Compiling shader "Sprites/Default" pass "" (vp)
     After scriptable stripping: 8
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 8 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Sprites/Default in 0.00s
     gles3 (total internal programs: 4, unique: 4)
@@ -2540,7 +3014,7 @@ Compiling shader "Sprites/Mask" pass "" (vp)
     After scriptable stripping: 8
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 8 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader Sprites/Mask in 0.00s
     gles3 (total internal programs: 4, unique: 4)
@@ -2564,7 +3038,7 @@ Compiling shader "UI/DefaultETC1" pass "Default" (vp)
     After scriptable stripping: 8
     Processed in 0.00 seconds
     starting compilation...
-    finished in 0.00 seconds. Local cache hits 8 (0.00s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
+    finished in 0.00 seconds. Local cache hits 8 (0.01s CPU time), remote cache hits 0 (0.00s CPU time), compiled 0 variants (0.00s CPU time), skipped 0 variants
     Prepared data for serialisation in 0.00s
 Serialized binary data for shader UI/DefaultETC1 in 0.00s
     gles3 (total internal programs: 4, unique: 4)
@@ -2891,110 +3365,115 @@ Serialized binary data for shader Hidden/TextCore/Distance Field SSD in 0.00s
     gles3 (total internal programs: 1, unique: 1)
     vulkan (total internal programs: 1, unique: 1)
 DisplayProgressbar: Initializing
-Android PostProcess task "Initializing" took 0.7439 ms
+Android PostProcess task "Initializing" took 0.7012 ms
 DisplayProgressbar: Check gradle project collisions
-Android PostProcess task "Check gradle project collisions" took 0.212 ms
+Android PostProcess task "Check gradle project collisions" took 0.1797 ms
 DisplayProgressbar: Preparing banner
-Android PostProcess task "Preparing banner" took 0.3496 ms
+Android PostProcess task "Preparing banner" took 0.2607 ms
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --dagfile="Library/Bee/Player94859039.dag" --profile="Library/Bee/backend1.traceevents" Player
 WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
-ExitCode: 4 Duration: 0s70ms
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\netcorerun\netcorerun.exe "D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\AndroidPlayerBuildProgram.exe" "D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Bee;D:/Unity/Editor/6000.0.23f1c1/Editor/Data/Tools/BuildPipeline" "Library/Bee/Player94859039.dag.json" "Library/Bee/Player94859039-inputdata.json" "Library\Bee\buildprogram0.traceevents"
 WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+ExitCode: 4 Duration: 0s89ms
 DisplayProgressbar: Incremental Player Build
-ExitCode: 0 Duration: 0s643ms
+ExitCode: 0 Duration: 0s665ms
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --dagfile="Library/Bee/Player94859039.dag" --dagfilejson="Library\Bee\Player94859039.dag.json" --profile="Library/Bee/backend2.traceevents" Player
 WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
-ExitCode: 0 Duration: 0s487ms
+E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes/Library/PackageCache/com.unity.burst/.Runtime\bcl.exe exited after 9019 ms.
+stdout:
+Starting 1 library requests
+Done
+stderr:
+
+Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\Tools\netcorerun\netcorerun.exe "D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\AndroidPlayerBuildProgram.exe" "D:/Unity/Editor/6000.0.23f1c1/Editor/Data/PlaybackEngines/AndroidPlayer/Bee;D:/Unity/Editor/6000.0.23f1c1/Editor/Data/Tools/BuildPipeline" "Library/Bee/Player94859039.dag.json" "Library/Bee/Player94859039-inputdata.json" "Library\Bee\buildprogram1.traceevents"
+WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+ExitCode: 4 Duration: 14s
+ExitCode: 0 Duration: 0s391ms
+Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --dagfile="Library/Bee/Player94859039.dag" --dagfilejson="Library\Bee\Player94859039.dag.json" --profile="Library/Bee/backend3.traceevents" Player
+WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes
+ExitCode: 0 Duration: 28s
+Total cache size 265988266
+Total cache size after purge 265988266, took 00:00:00.1235871
 DisplayProgressbar: Calling IPostGenerateGradleAndroidProject callbacks
 Calling IPostGenerateGradleAndroidProject callbacks on 'E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary':
-Android PostProcess task "Calling IPostGenerateGradleAndroidProject callbacks" took 1.7418 ms
+Android PostProcess task "Calling IPostGenerateGradleAndroidProject callbacks" took 1.3708 ms
 DisplayProgressbar: Validate Gradle Project
-Android PostProcess task "Validate Gradle Project" took 0.9998 ms
-Android PostProcess task "Cloud Diagnostics Symbol Upload" took 0.2373 ms
+Android PostProcess task "Validate Gradle Project" took 1.2342 ms
+Android PostProcess task "Cloud Diagnostics Symbol Upload" took 0.1838 ms
 DisplayProgressbar: Building Gradle project
-Total cache size 265988266
-Total cache size after purge 265988266, took 00:00:00.2208729
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\bin\java.exe -classpath "D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\Tools\gradle\lib\gradle-launcher-8.4.jar" org.gradle.launcher.GradleMain "-Dorg.gradle.jvmargs=-Xmx4096m" "assembleRelease" 
 WorkingDir: E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes/Library/Bee/Android/Prj/IL2CPP/Gradle\launcher
-Android PostProcess task "Building Gradle project" took 32291.2847 ms
+Android PostProcess task "Building Gradle project" took 31355.7054 ms
 DisplayProgressbar: Building Gradle Symbols
-Android PostProcess task "Building Gradle Symbols" took 0.3037 ms
+Android PostProcess task "Building Gradle Symbols" took 0.1648 ms
 DisplayProgressbar: Processing Mapping File
-Android PostProcess task "Processing Mapping File" took 0.2119 ms
+Android PostProcess task "Processing Mapping File" took 0.1693 ms
 DisplayProgressbar: Moving output package(s)
 Deleting file 'E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes/build/YarnMatch.apk'
 Copy 'E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes/Library/Bee/Android/Prj/IL2CPP/Gradle\launcher\build\outputs\apk\release\launcher-release.apk' -> 
  'E:/UnityProject/ThreeDiabetes/ThreeDiabetes/ThreeDiabetes/build/YarnMatch.apk'
-Android PostProcess task "Moving output package(s)" took 14.8261 ms
-Android PostProcess task "Checking Symbols size" took 0.5118 ms
-Refreshing native plugins compatible for Editor in 3.11 ms, found 5 plugins.
+Android PostProcess task "Moving output package(s)" took 14.619 ms
+Android PostProcess task "Checking Symbols size" took 0.5951 ms
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+Refreshing native plugins compatible for Editor in 2.16 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Asset Pipeline Refresh (id=fd68742b83a4a9c4983adf5e0b67b6cb): Total: 0.631 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=1e039c3da79c0c342b0adfb29ac658b9): Total: 0.568 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
 	Summary:
 		Imports: total=0 (actual=0, local cache=0, cache server=0)
-		Asset DB Process Time: managed=0 ms, native=50 ms
-		Asset DB Callback time: managed=575 ms, native=4 ms
+		Asset DB Process Time: managed=0 ms, native=54 ms
+		Asset DB Callback time: managed=508 ms, native=4 ms
 		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
-		Project Asset Count: scripts=1516, non-scripts=3072
+		Project Asset Count: scripts=1516, non-scripts=3222
 		Asset File Changes: new=0, changed=0, moved=0, deleted=2
 		Scan Filter Count: 0
 	InvokeCustomDependenciesCallbacks: 0.001ms
 	InvokePackagesCallback: 0.001ms
-	ApplyChangesToAssetFolders: 0.146ms
-	Scan: 8.168ms
-	OnSourceAssetsModified: 0.053ms
+	ApplyChangesToAssetFolders: 0.131ms
+	Scan: 6.780ms
+	OnSourceAssetsModified: 0.044ms
 	CategorizeAssetsWithTransientArtifact: 0.008ms
-	ProcessAssetsWithTransientArtifactChanges: 0.116ms
-	UnregisterDeletedAssets: 0.018ms
-	CategorizeAssets: 9.072ms
-	ImportOutOfDateAssets: 1.131ms (0.345ms without children)
-		ReloadNativeAssets: 0.088ms
-		UnloadImportedAssets: 0.069ms
-		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.372ms
+	ProcessAssetsWithTransientArtifactChanges: 0.157ms
+	UnregisterDeletedAssets: 0.016ms
+	CategorizeAssets: 8.685ms
+	ImportOutOfDateAssets: 0.818ms (0.209ms without children)
+		ReloadNativeAssets: 0.025ms
+		UnloadImportedAssets: 0.058ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.313ms
 		InitializingProgressBar: 0.000ms
 		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
-		OnDemandSchedulerStart: 0.257ms
-	PostProcessAllAssets: 576.291ms
-	Hotreload: 4.093ms
-	GatherAllCurrentPrimaryArtifactRevisions: 0.193ms
-	UnloadStreamsBegin: 1.045ms
-	PersistCurrentRevisions: 0.155ms
+		OnDemandSchedulerStart: 0.213ms
+	PostProcessAllAssets: 509.882ms
+	Hotreload: 3.381ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.231ms
+	UnloadStreamsBegin: 1.753ms
+	PersistCurrentRevisions: 0.207ms
 	UnloadStreamsEnd: 0.001ms
-	Untracked: 30.753ms
+	Untracked: 35.490ms
 
-Refreshing native plugins compatible for Editor in 2.33 ms, found 5 plugins.
+Refreshing native plugins compatible for Editor in 2.43 ms, found 5 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 
 -------------------------------------------------------------------------------
 Build Report
 Uncompressed usage by category (Percentages based on user generated assets only):
-Textures               16.7 mb	 56.9% 
+Textures               9.6 mb	 37.5% 
 Meshes                 0.0 kb	 0.0% 
 Animations             0.0 kb	 0.0% 
-Sounds                 442.3 kb	 1.5% 
-Shaders                1.8 mb	 6.3% 
-Other Assets           10.0 mb	 34.1% 
+Sounds                 442.3 kb	 1.7% 
+Shaders                1.8 mb	 7.2% 
+Other Assets           13.3 mb	 52.0% 
 Levels                 0.0 kb	 0.0% 
-File headers           139.5 kb	 0.5% 
-Total User Assets      29.3 mb	 100.0% 
-Complete build size    650.0 mb
+File headers           169.4 kb	 0.6% 
+Total User Assets      25.6 mb	 100.0% 
+Complete build size    647.8 mb
 Used Assets and files from the Resources folder, sorted by uncompressed size:
  9.3 mb	 1.4% Assets/Resources/Fonts/SimHei.ttf
+ 3.2 mb	 0.5% Assets/Resources/YarnMatch/Patterns/PatternTemplates.json
  2.7 mb	 0.4% Built-in Texture2D: Splash Screen Unity Logo
  1.0 mb	 0.2% Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
  1.0 mb	 0.2% Packages/com.unity.render-pipelines.universal/Runtime/2D/Data/Textures/FalloffLookupTexture.png
- 882.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_10_idiom.png
  754.1 kb	 0.1% Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/UberPost.shader
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_07_rocket.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_04_sunflower.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_03_butterfly.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_09_house.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_08_crown.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_06_fish.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_05_tree.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_02_cat.png
- 576.6 kb	 0.1% Assets/Resources/YarnMatch/Patterns/pattern_01_apple.png
  507.4 kb	 0.1% Packages/com.unity.render-pipelines.universal/Shaders/2D/Light2D.shader
  344.5 kb	 0.1% Assets/TextMesh Pro/Fonts/LiberationSans.ttf
  341.5 kb	 0.1% Assets/TextMesh Pro/Sprites/EmojiOne.png
@@ -3020,49 +3499,8 @@ Used Assets and files from the Resources folder, sorted by uncompressed size:
  79.7 kb	 0.0% Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Fonts/PerfectDOSVGA437.ttf
  67.1 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/Utils/CoreBlit.shader
  59.1 kb	 0.0% Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Widgets/DebugUIBitField.prefab
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_12_watermelon.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_11_strawberry.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_50_snowman.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_49_castle.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_48_musicnote.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_47_bicycle.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_45_camera.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_41_teacup.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_40_umbrella.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_39_balloon.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_38_sailboat.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_37_rainbow.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_33_octopus.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_30_ladybug.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_29_turtle.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_26_rabbit.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_24_penguin.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_22_mushroom.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_21_clover.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_20_bamboo.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_17_cactus.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_16_cherries.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_15_carrot.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_14_pineapple.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_46_train.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_44_book.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_43_gift.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_42_cake.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_36_moon.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_35_star.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_34_crab.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_32_duck.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_31_bee.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_28_fox.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_27_bear.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_25_owl.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_23_whale.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_19_lotus.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_18_tulip.png
- 50.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_13_pear.png
  50.5 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/LensFlareDataDriven.shader
  41.8 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/TemporalAA.shader
- 37.1 kb	 0.0% Assets/Resources/YarnMatch/Patterns/PatternTemplates.json
  33.5 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/BokehDepthOfField.shader
  29.0 kb	 0.0% Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
  25.7 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/SubpixelMorphologicalAntialiasing.shader
@@ -3087,16 +3525,216 @@ Used Assets and files from the Resources folder, sorted by uncompressed size:
  7.2 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/Utils/CopyDepth.shader
  7.0 kb	 0.0% Packages/com.unity.render-pipelines.core/Shaders/CoreCopy.shader
  6.5 kb	 0.0% Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Widgets/DebugUIColor.prefab
+ 6.3 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_195_brightfuture.png
  6.3 kb	 0.0% Resources/unity_builtin_extra
  6.3 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/PaniniProjection.shader
+ 6.1 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_199_singingbirds.png
  6.1 kb	 0.0% Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Widgets/DebugUIVector4.prefab
+ 6.1 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_200_fullmoon.png
+ 6.0 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_194_springflowers.png
+ 6.0 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_197_perseverance.png
+ 5.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_196_happylife.png
+ 5.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_192_goodfortune.png
  5.7 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/Debug/DebugReplacement.shader
+ 5.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_10_idiom.png
+ 5.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_198_contentment.png
+ 5.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_147_jellyfish.png
+ 5.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_107_cloud.png
+ 5.5 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_193_smoothsailing.png
  5.4 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/2D/Shadow2D-Shadow-Sprite.shader
  5.2 kb	 0.0% Packages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Widgets/DebugUIVector3.prefab
+ 5.2 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_103_reed.png
  5.2 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/Utils/Sampling.shader
+ 5.1 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_104_cattail.png
+ 5.1 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_102_willow.png
  5.1 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/PostProcessing/StopNaN.shader
+ 5.1 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_47_bicycle.png
+ 5.0 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_119_snowdrop.png
+ 5.0 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_120_sprout.png
+ 5.0 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_150_ant.png
+ 5.0 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_100_palm.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_41_teacup.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_113_island.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_20_bamboo.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_161_helicopter.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_23_whale.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_154_swan.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_115_coral.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_188_headphones.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_169_carousel.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_167_windmill.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_171_microscope.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_153_flamingo.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_149_dragonfly.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_146_seahorse.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_184_violin.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_180_palette.png
  4.9 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/Utils/FallbackError.shader
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_078_cookie.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_37_rainbow.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_170_telescope.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_164_firetruck.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_145_shark.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_48_musicnote.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_157_lantern.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_082_mapleleaf.png
+ 4.9 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_066_corn.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_32_duck.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_22_mushroom.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_091_lavender.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_088_cherryblossom.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_35_star.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_21_clover.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_143_seal.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_140_cow.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_101_spruce.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_056_banana.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_155_rooster.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_16_cherries.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_090_daisy.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_064_pumpkin.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_182_scissors.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_098_succulent.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_07_rocket.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_075_donut.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_065_radish.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_30_ladybug.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_26_rabbit.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_110_mountain.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_04_sunflower.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_15_carrot.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_106_snowflake.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_187_trumpet.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_12_watermelon.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_068_chili.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_01_apple.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_40_umbrella.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_28_fox.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_08_crown.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_083_ginkgoleaf.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_137_deer.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_29_turtle.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_24_penguin.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_093_dandelion.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_086_acorn.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_069_tomato.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_18_tulip.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_105_sun.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_09_house.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_057_kiwi.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_50_snowman.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_36_moon.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_27_bear.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_152_peacock.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_11_strawberry.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_03_butterfly.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_183_guitar.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_159_hotairballoon.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_135_squirrel.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_116_wave.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_087_pinecone.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_059_coconut.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_053_avocado.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_43_gift.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_186_drum.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_17_cactus.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_160_airplane.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_128_giraffe.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_117_crystal.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_02_cat.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_34_crab.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_191_spinningtop.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_173_hourglass.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_148_snail.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_085_fern.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_079_pizza.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_074_croissant.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_071_garlic.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_062_eggplant.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_166_lighthouse.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_132_rhino.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_060_dragonfruit.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_39_balloon.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_178_backpack.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_14_pineapple.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_144_dolphin.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_136_hedgehog.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_133_crocodile.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_126_lion.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_122_dog.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_121_globe.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_099_bonsai.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_094_lily.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_06_fish.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_33_octopus.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_172_clock.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_125_tiger.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_38_sailboat.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_31_bee.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_179_pencil.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_174_key.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_131_hippo.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_089_rose.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_080_burger.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_076_cupcake.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_058_mango.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_055_grapes.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_25_owl.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_19_lotus.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_181_paintbrush.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_49_castle.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_176_compass.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_175_lock.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_168_ferriswheel.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_139_sheep.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_130_monkey.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_109_planet.png
+ 4.8 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_070_onion.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_190_robot.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_189_gamepad.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_158_kite.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_156_bat.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_096_poppy.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_177_treasurechest.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_151_parrot.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_127_elephant.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_114_seashell.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_063_broccoli.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_051_orange.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_097_iris.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_052_lemon.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_118_raindrop.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_095_daffodil.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_084_monstera.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_072_egg.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_061_papaya.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_165_submarine.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_142_hamster.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_141_pig.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_138_horse.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_124_koala.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_108_comet.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_092_orchid.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_185_piano.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_163_car.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_111_volcano.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_077_icecream.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_05_tree.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_42_cake.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_123_panda.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_054_peach.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_13_pear.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_067_peas.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_112_waterfall.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_129_zebra.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_073_bread.png
  4.7 kb	 0.0% Packages/com.unity.render-pipelines.universal/Shaders/2D/Shadow2D-Shadow-Geometry.shader
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_081_candy.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_134_frog.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_46_train.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_44_book.png
+ 4.7 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_162_bus.png
+ 4.6 kb	 0.0% Assets/Resources/YarnMatch/Patterns/pattern_45_camera.png
  4.6 kb	 0.0% Assets/Resources/YarnMatch/Tunnels/YarnMatchTunnel_Right.png
  4.6 kb	 0.0% Assets/Resources/YarnMatch/Tunnels/YarnMatchTunnel_Up.png
  4.6 kb	 0.0% Assets/Resources/YarnMatch/Tunnels/YarnMatchTunnel_Left.png
@@ -4310,6 +4948,7 @@ Used Assets and files from the Resources folder, sorted by uncompressed size:
  0.1 kb	 0.0% Packages/com.unity.2d.animation/Runtime/BatchedDeformation/UpdateBoundsJob.cs
  0.1 kb	 0.0% Packages/com.unity.2d.animation/Runtime/BatchedDeformation/DeformationJobs.cs
  0.1 kb	 0.0% Packages/com.unity.2d.animation/IK/Runtime/Solver2DMenuAttribute.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/Animation/YarnMatchBoardAnimationController.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/YarnMatchReferencePatternGenerator.cs
  0.1 kb	 0.0% Packages/com.unity.visualscripting/Runtime/VisualScripting.State/Units/SetStateGraph.cs
  0.1 kb	 0.0% Packages/com.unity.visualscripting/Runtime/VisualScripting.State/Units/GetStateGraphs.cs
@@ -4897,8 +5536,12 @@ Used Assets and files from the Resources folder, sorted by uncompressed size:
  0.1 kb	 0.0% Packages/com.unity.burst/Runtime/BurstCompileAttribute.cs
  0.1 kb	 0.0% Packages/com.unity.2d.animation/IK/Runtime/FabrikSolver2D.cs
  0.1 kb	 0.0% Packages/com.unity.2d.animation/IK/Runtime/Culling/CullingManager.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchSpoolCapacityBadge.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchOverlayController.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchBoardColumnGraphic.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/Animation/YarnMatchAnimationController.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Infrastructure/YarnMatchPatternResources.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/YarnMatchCollectionScheduler.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchReachabilityPlanner.cs
  0.1 kb	 0.0% Packages/com.unity.visualscripting/Runtime/VisualScripting.State/State.cs
  0.1 kb	 0.0% Packages/com.unity.visualscripting/Runtime/VisualScripting.State/IState.cs
@@ -5057,13 +5700,22 @@ Used Assets and files from the Resources folder, sorted by uncompressed size:
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Visuals/YarnMatchVisualFactory.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiReferences.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchUiPrimitives.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchThumbnailQueue.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchPresentation.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchPoolBadgeLayer.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchMusicControls.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchLevelThumbnail.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchButtonFeedback.cs
- 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchBoardCellHover.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Presentation/UI/YarnMatchBoardSurface.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/YarnMatchLevelCatalog.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/YarnMatchCollectionJob.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchTemplateSampler.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchTemplatePalette.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchTemplateDeck.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchPatternTemplate.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchPatternLayout.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchOpeningPlanner.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchLevelDifficulty.cs
  0.1 kb	 0.0% Packages/com.unity.visualscripting/Runtime/VisualScripting.Flow/Unit.cs
  0.1 kb	 0.0% Packages/com.unity.visualscripting/Runtime/VisualScripting.Flow/Framework/This.cs
  0.1 kb	 0.0% Packages/com.unity.visualscripting/Runtime/VisualScripting.Flow/Framework/Nulls/Null.cs
@@ -5221,6 +5873,7 @@ Used Assets and files from the Resources folder, sorted by uncompressed size:
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/YarnMatchPoolModel.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/YarnMatchLevelConfig.cs
  0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/YarnMatchBoardModel.cs
+ 0.1 kb	 0.0% Assets/Scripts/YarnMatch/Core/Generation/YarnMatchRoundData.cs
  0.1 kb	 0.0% Packages/com.unity.ugui/Runtime/UGUI/UI/Core/Culling/IClipRegion.cs
  0.1 kb	 0.0% Packages/com.unity.ugui/Runtime/TMP/TextMeshPro.cs
  0.1 kb	 0.0% Packages/com.unity.ugui/Runtime/TMP/TMP_TextInfo.cs
@@ -5295,23 +5948,23 @@ Used Assets and files from the Resources folder, sorted by uncompressed size:
  0.1 kb	 0.0% Assets/Resources/PerformanceTestRunSettings.json
 -------------------------------------------------------------------------------
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 1545 unused Assets / (10.7 MB). Loaded Objects now: 8245.
-Memory consumption went from 256.9 MB to 246.2 MB.
-Total: 9.254800 ms (FindLiveObjects: 0.312100 ms CreateObjectMapping: 0.138200 ms MarkObjects: 6.803900 ms  DeleteObjects: 1.999800 ms)
+Unloading 1695 unused Assets / (11.1 MB). Loaded Objects now: 8411.
+Memory consumption went from 261.2 MB to 250.1 MB.
+Total: 8.252500 ms (FindLiveObjects: 0.362900 ms CreateObjectMapping: 0.117100 ms MarkObjects: 5.711600 ms  DeleteObjects: 2.060200 ms)
 
 DisplayProgressNotification: Build Successful
 Build Finished, Result: Success.
-##utp:{"type":"PlayerBuildInfo","version":2,"phase":"Immediate","time":1788790066804,"processId":23532,"steps":[{"description":"Preprocess Player","duration":89},{"description":"Prepare For Build","duration":3869},{"description":"ProducePlayerScriptAssemblies","duration":1606},{"description":"Verify Build setup","duration":44},{"description":"Prepare assets for target platform","duration":3},{"description":"Prepare splash screen","duration":0},{"description":"Building scenes","duration":444},{"description":"Build scripts DLLs","duration":54},{"description":"Build GlobalGameManagers file","duration":119},{"description":"Writing asset files","duration":1453},{"description":"Building Resources/unity_builtin_extra","duration":170},{"description":"Write data build dirty tracking information","duration":487},{"description":"Postprocess built player","duration":35269}],"duration":43607}
+##utp:{"type":"PlayerBuildInfo","version":2,"phase":"Immediate","time":1788919445097,"processId":36764,"steps":[{"description":"Preprocess Player","duration":85},{"description":"Prepare For Build","duration":3617},{"description":"ProducePlayerScriptAssemblies","duration":4472},{"description":"Verify Build setup","duration":26},{"description":"Prepare assets for target platform","duration":2},{"description":"Prepare splash screen","duration":1},{"description":"Building scenes","duration":386},{"description":"Build scripts DLLs","duration":46},{"description":"Build GlobalGameManagers file","duration":134},{"description":"Writing asset files","duration":1415},{"description":"Building Resources/unity_builtin_extra","duration":155},{"description":"Write data build dirty tracking information","duration":353},{"description":"Postprocess built player","duration":77506}],"duration":88198}
 Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
 Loaded scene 'Temp/__Backupscenes/0.backup'
-	Deserialize:            0.426 ms
-	Integration:            204.225 ms
+	Deserialize:            0.436 ms
+	Integration:            167.473 ms
 	Integration of assets:  0.002 ms
-	Thread Wait Time:       0.009 ms
-	Total Operation Time:   204.661 ms
-Unloading 0 unused Assets / (96 B). Loaded Objects now: 8241.
-Memory consumption went from 245.4 MB to 245.4 MB.
-Total: 7.541100 ms (FindLiveObjects: 0.550000 ms CreateObjectMapping: 0.128900 ms MarkObjects: 6.842500 ms  DeleteObjects: 0.018500 ms)
+	Thread Wait Time:       0.007 ms
+	Total Operation Time:   167.917 ms
+Unloading 0 unused Assets / (2.3 KB). Loaded Objects now: 8407.
+Memory consumption went from 246.1 MB to 246.1 MB.
+Total: 5.926600 ms (FindLiveObjects: 0.330200 ms CreateObjectMapping: 0.089200 ms MarkObjects: 5.494800 ms  DeleteObjects: 0.011900 ms)
 
 Yarn Match APK built: E:\UnityProject\ThreeDiabetes\ThreeDiabetes\ThreeDiabetes\build\YarnMatch.apk
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
@@ -5328,13 +5981,13 @@ YarnMatchAndroidBuild:BuildAndroidApkFromCommandLine () (at Assets/Editor/YarnMa
 Batchmode quit successfully invoked - shutting down!
 Starting: D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\OpenJDK\bin\java.exe -classpath "D:\Unity\Editor\6000.0.23f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\Tools\gradle\lib\gradle-launcher-8.4.jar" org.gradle.launcher.GradleMain "-Dorg.gradle.jvmargs=-Xmx4096m" "--stop" 
 WorkingDir: 
-Killing ADB server in 0.0500001 seconds.
+Killing ADB server in 0.0405089 seconds.
 [Physics::Module] Cleanup current backned.
 [Physics::Module] Id: 0xf2b8ea05
 [Licensing::IpcConnector] License Notification channel disconnected successfully.
 [Licensing::IpcConnector] License Client channel disconnected successfully.
 AcceleratorClientConnectionCallback - disconnected - :0
 Cleanup mono
-22:07:48.848 |V| RiderPlugin                    | :1                             | AppDomain.CurrentDomain.DomainUnload lifetimeDefinition.Terminate
+10:04:06.588 |V| RiderPlugin                    | :1                             | AppDomain.CurrentDomain.DomainUnload lifetimeDefinition.Terminate
 Exiting batchmode successfully now!
 Exiting without the bug reporter. Application will terminate with return code 0

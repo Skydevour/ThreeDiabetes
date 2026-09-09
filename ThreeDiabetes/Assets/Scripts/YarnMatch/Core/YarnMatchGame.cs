@@ -10,9 +10,8 @@ public sealed class YarnMatchGame : MonoBehaviour
     private const string DailyUnlockDateKey = "YarnMatch.DailyUnlockDate";
     private const string DailyUnlockEnabledKey = "YarnMatch.DailyUnlockEnabled";
     private readonly List<YarnMatchCollectionJob> _collectionJobs = new List<YarnMatchCollectionJob>();
-    private readonly HashSet<YarnMatchBoardCell> _claimedBoardCells = new HashSet<YarnMatchBoardCell>();
+    private YarnMatchCollectionScheduler _scheduler;
     private readonly HashSet<YarnMatchPoolCell> _pendingReplenishments = new HashSet<YarnMatchPoolCell>();
-    private bool _boardSettleInProgress;
     private bool _gameStarted;
     private bool _inputLocked;
     private int _roundId;
@@ -26,6 +25,9 @@ public sealed class YarnMatchGame : MonoBehaviour
     private YarnMatchGameState _state;
     private bool _dailyUnlockActive;
     private bool _specialChallenge;
+    private Coroutine _roundBuildRoutine;
+    private int _activeReplenishmentAnimations;
+    private Coroutine _levelSelectRoutine;
 
     private void Awake()
     {
@@ -43,6 +45,24 @@ public sealed class YarnMatchGame : MonoBehaviour
 
     private void OpenLevelSelect()
     {
+        if (_levelSelectRoutine != null) return;
+        _levelSelectRoutine = StartCoroutine(OpenLevelSelectRoutine());
+    }
+
+    private IEnumerator OpenLevelSelectRoutine()
+    {
+        _presentation.SetLoading(true);
+        yield return null;
+        var loading = YarnMatchPatternResources.LoadAsync();
+        while (!loading.IsCompleted) yield return null;
+        _levelSelectRoutine = null;
+        _presentation.SetLoading(false);
+        if (loading.IsFaulted)
+        {
+            Debug.LogException(loading.Exception.GetBaseException());
+            _presentation.ShowToast("图案加载失败，请重新打开", 2f);
+            yield break;
+        }
         RefreshDailyUnlockState();
         _presentation.ShowLevelSelect(GetAvailableHighestLevel(), _dailyUnlockActive);
     }
@@ -84,34 +104,79 @@ public sealed class YarnMatchGame : MonoBehaviour
 
     private void ReturnToMainMenu()
     {
+        if (_levelSelectRoutine != null)
+        {
+            StopCoroutine(_levelSelectRoutine);
+            _levelSelectRoutine = null;
+        }
         _gameStarted = false;
         _inputLocked = true;
         _state = YarnMatchGameState.Resolving;
         _roundId++;
+        if (_roundBuildRoutine != null)
+        {
+            StopCoroutine(_roundBuildRoutine);
+            _roundBuildRoutine = null;
+        }
         _presentation.CancelAnimations();
         _presentation.ShowMainMenu();
     }
 
     private void StartNewGame()
     {
+        _roundId++;
+        _state = YarnMatchGameState.Resolving;
+        _inputLocked = true;
+        if (_roundBuildRoutine != null) StopCoroutine(_roundBuildRoutine);
+        _presentation.CancelAnimations();
+        _presentation.SetLoading(true);
+        _roundBuildRoutine = StartCoroutine(BuildRound(_roundId));
+    }
+
+    private IEnumerator BuildRound(int roundId)
+    {
+        yield return null;
+        var loading = YarnMatchPatternResources.LoadAsync();
+        while (!loading.IsCompleted) yield return null;
+        if (roundId != _roundId) yield break;
+        if (loading.IsFaulted)
+        {
+            Debug.LogException(loading.Exception.GetBaseException());
+            _roundBuildRoutine = null;
+            ReturnToMainMenu();
+            _presentation.ShowToast("图案加载失败，请重新进入", 2f);
+            yield break;
+        }
         _levelConfig = _specialChallenge
             ? YarnMatchLevelCatalog.CreateSpecialRound()
             : YarnMatchLevelCatalog.CreateRound(_selectedLevel);
-        _roundId++;
-        _state = YarnMatchGameState.Playing;
-        _inputLocked = false;
+        var preparation = YarnMatchRoundData.PrepareAsync(_levelConfig);
+        while (!preparation.IsCompleted) yield return null;
+        if (roundId != _roundId) yield break;
+        if (preparation.IsFaulted)
+        {
+            Debug.LogException(preparation.Exception.GetBaseException());
+            _roundBuildRoutine = null;
+            ReturnToMainMenu();
+            _presentation.ShowToast("关卡准备失败，请重新进入", 2f);
+            yield break;
+        }
+        YarnMatchRoundData data = preparation.Result;
         _collectionJobs.Clear();
-        _claimedBoardCells.Clear();
         _pendingReplenishments.Clear();
-        _boardSettleInProgress = false;
-        _board = new YarnMatchBoardModel();
-        _board.Build(_levelConfig);
-        _pool = new YarnMatchPoolModel();
-        _pool.Build(_levelConfig, _board.ColorCounts);
+        _activeReplenishmentAnimations = 0;
+        _board = data.Board;
+        _scheduler = new YarnMatchCollectionScheduler(_board, _levelConfig.Seed);
+        _pool = data.Pool;
         _rack = new YarnMatchRackModel();
         _presentation.SetLevel(_levelConfig.Number);
-        _presentation.ResetGame(_board, _pool, _rack);
+        yield return _presentation.ResetGame(_board, _pool, _rack);
+        if (roundId != _roundId) yield break;
+        _state = YarnMatchGameState.Playing;
+        _inputLocked = false;
         _presentation.SetInteraction(_pool, _state, true);
+        _presentation.SetLoading(false);
+        _roundBuildRoutine = null;
     }
 
     private void SelectSpool(YarnMatchSpoolToken token)
@@ -242,33 +307,10 @@ public sealed class YarnMatchGame : MonoBehaviour
             return;
         }
 
-        if (_boardSettleInProgress)
+        while (_scheduler.TryReserve(_collectionJobs, out YarnMatchCollectionJob job, out YarnMatchBoardCell cell))
         {
-            return;
-        }
-
-        for (int jobIndex = 0; jobIndex < _collectionJobs.Count; jobIndex++)
-        {
-            YarnMatchCollectionJob job = _collectionJobs[jobIndex];
-            if (!job.Ready || job.Completing)
-            {
-                continue;
-            }
-
-            int available = job.Entry.Capacity - job.Entry.Progress - job.PendingCells;
-            while (available > 0)
-            {
-                YarnMatchBoardCell cell = FindAvailableExposedCell(job.Entry.Color);
-                if (cell == null)
-                {
-                    break;
-                }
-
-                _claimedBoardCells.Add(cell);
-                job.PendingCells++;
-                available--;
-                StartCoroutine(CollectCellForJob(job, cell, roundId));
-            }
+            job.PendingCells++;
+            StartCoroutine(CollectCellForJob(job, cell, roundId));
         }
 
         TryEvaluateTerminal(roundId);
@@ -277,90 +319,25 @@ public sealed class YarnMatchGame : MonoBehaviour
     private IEnumerator CollectCellForJob(YarnMatchCollectionJob job, YarnMatchBoardCell cell, int roundId)
     {
         yield return _presentation.PlayCellIntoRack(cell, job.Entry);
-        if (!IsCurrentRound(roundId))
-        {
-            _claimedBoardCells.Remove(cell);
-            job.PendingCells = Mathf.Max(0, job.PendingCells - 1);
-            yield break;
-        }
+        if (!IsCurrentRound(roundId)) yield break;
 
-        bool removed = false;
-        _claimedBoardCells.Remove(cell);
-        if (_board.Remove(cell))
-        {
-            removed = true;
-            _rack.AddProgress(job.Entry);
-            _presentation.RenderBoard(_board, false);
-            _presentation.RenderRack(_rack);
-            _presentation.UpdateHeader(_board, _rack);
-            StartCoroutine(_presentation.PlayRackImpact(job.Entry));
-            TryUnlockFinalRackSlot();
-        }
-
-        job.PendingCells = Mathf.Max(0, job.PendingCells - 1);
-
+        bool removed = _board.Remove(cell);
         if (removed)
         {
-            yield return WaitForBoardSettle(roundId);
+            _rack.AddProgress(job.Entry);
+            _presentation.RenderRack(_rack);
+            _presentation.UpdateHeader(_board, _rack);
+            TryUnlockFinalRackSlot();
         }
-
-        ScheduleCollections(roundId);
+        job.PendingCells--;
         TryCompleteJob(job, roundId);
+        if (removed) yield return _presentation.PlayColumnDrop(cell.Column);
+        if (!IsCurrentRound(roundId)) yield break;
+        _scheduler.ReleaseColumn(cell.Column);
+        ScheduleCollections(roundId);
     }
 
-    private bool HasPendingCollectionCells()
-    {
-        for (int index = 0; index < _collectionJobs.Count; index++)
-        {
-            if (_collectionJobs[index].PendingCells > 0)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private IEnumerator WaitForBoardSettle(int roundId)
-    {
-        while (IsCurrentRound(roundId) && HasPendingCollectionCells())
-        {
-            yield return null;
-        }
-
-        if (!IsCurrentRound(roundId))
-        {
-            yield break;
-        }
-
-        if (_boardSettleInProgress)
-        {
-            while (IsCurrentRound(roundId) && _boardSettleInProgress)
-            {
-                yield return null;
-            }
-
-            yield break;
-        }
-
-        _boardSettleInProgress = true;
-        yield return _presentation.PlayBoardDrop(_board);
-        _boardSettleInProgress = false;
-    }
-
-    private YarnMatchBoardCell FindAvailableExposedCell(YarnMatchColor color)
-    {
-        for (int column = 0; column < _board.Columns.Count; column++)
-        {
-            List<YarnMatchBoardCell> stack = _board.Columns[column];
-            if (stack.Count > 0 && stack[0].Color == color && !_claimedBoardCells.Contains(stack[0]))
-            {
-                return stack[0];
-            }
-        }
-
-        return null;
-    }
+    private YarnMatchBoardCell FindAvailableExposedCell(YarnMatchColor color) => _scheduler.FindAvailable(color);
 
     private void TryCompleteJob(YarnMatchCollectionJob job, int roundId)
     {
@@ -407,8 +384,11 @@ public sealed class YarnMatchGame : MonoBehaviour
             yield break;
         }
 
+        _activeReplenishmentAnimations++;
         _presentation.RenderPoolCell(_pool, cell, _state);
         yield return _presentation.PlayPoolEmergence(token);
+        if (!IsCurrentRound(roundId)) yield break;
+        _activeReplenishmentAnimations--;
         ScheduleCollections(roundId);
     }
 
@@ -442,8 +422,8 @@ public sealed class YarnMatchGame : MonoBehaviour
 
     private bool HasResolutionInProgress()
     {
-        if (_boardSettleInProgress
-            || _claimedBoardCells.Count > 0
+        if (_scheduler.IsBusy
+            || _activeReplenishmentAnimations > 0
             || _pendingReplenishments.Count > 0)
         {
             return true;
@@ -721,22 +701,7 @@ public sealed class YarnMatchGame : MonoBehaviour
         _presentation.ShowToast("今天的关卡已经全部解锁", 1.5f);
     }
 
-    private int CountAvailableExposed(YarnMatchColor color)
-    {
-        int count = 0;
-        for (int column = 0; column < _board.Columns.Count; column++)
-        {
-            List<YarnMatchBoardCell> stack = _board.Columns[column];
-            if (stack.Count > 0
-                && stack[0].Color == color
-                && !_claimedBoardCells.Contains(stack[0]))
-            {
-                count++;
-            }
-        }
-
-        return count;
-    }
+    private int CountAvailableExposed(YarnMatchColor color) => _scheduler.CountAvailable(color);
 
     private void SaveProgress()
     {

@@ -11,6 +11,7 @@ public static class YarnMatchVisualFactory
     private static readonly Dictionary<int, Sprite> ChainSprites = new Dictionary<int, Sprite>();
     private static Sprite _solidSprite;
     private static Sprite _panelSprite;
+    private static Sprite _circleSprite;
 
     public static Sprite GetSolidSprite()
     {
@@ -33,6 +34,16 @@ public static class YarnMatchVisualFactory
             _panelSprite = Sprite.Create(texture, new Rect(0f, 0f, 64f, 64f), new Vector2(0.5f, 0.5f), 100f, 0, SpriteMeshType.FullRect, new Vector4(18f, 18f, 18f, 18f));
         }
         return _panelSprite;
+    }
+
+    public static Sprite GetCircleSprite()
+    {
+        if (_circleSprite == null)
+        {
+            Texture2D texture = CreateRoundedTexture(64, 64, 32);
+            _circleSprite = Sprite.Create(texture, new Rect(0f, 0f, 64f, 64f), new Vector2(0.5f, 0.5f), 100f);
+        }
+        return _circleSprite;
     }
 
     public static Sprite GetTunnelSprite(YarnMatchTunnelDirection direction)

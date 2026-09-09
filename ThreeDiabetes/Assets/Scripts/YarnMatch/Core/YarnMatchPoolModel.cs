@@ -195,13 +195,11 @@ public sealed class YarnMatchPoolModel
         Clear();
         _columns = Math.Max(1, columns);
         _rows = Math.Max(2, rows);
-        CreateCells();
-
         int safeColorCount = Math.Max(1, Math.Min(colorCount, Enum.GetValues(typeof(YarnMatchColor)).Length));
         int boardTokenCount = CountRequiredTokens(boardColorCounts);
         int desiredTokenCount = targetTokenCount > 0
             ? targetTokenCount
-            : boardTokenCount > 0 ? boardTokenCount : _cells.Count;
+            : boardTokenCount > 0 ? boardTokenCount : _columns * _rows;
         List<YarnMatchColor> tokenColors = BuildTokenColors(
             desiredTokenCount,
             safeColorCount,
@@ -209,6 +207,13 @@ public sealed class YarnMatchPoolModel
             boardColorCounts,
             seed);
         desiredTokenCount = tokenColors.Count;
+
+        if (tunnelCount == 0 && desiredTokenCount > _columns * _rows)
+        {
+            _columns = Math.Max(_columns, (desiredTokenCount + 7) / 8);
+            _rows = Math.Max(_rows, (desiredTokenCount + _columns - 1) / _columns);
+        }
+        CreateCells();
 
         int maximumTunnelCount = Math.Max(0, Math.Min(_cells.Count / 2, desiredTokenCount / 2));
         int configuredTunnelCount = Math.Min(Math.Max(0, tunnelCount), maximumTunnelCount);
@@ -572,6 +577,14 @@ public sealed class YarnMatchPoolModel
         }
         AttachToken(destination, target);
         return target;
+    }
+
+    internal void PlaceToken(YarnMatchSpoolToken target, YarnMatchPoolCell destination)
+    {
+        if (target.Cell == destination) return;
+        if (target.Cell != null) AttachToken(target.Cell, destination.Token);
+        else ReplaceInQueue(target, destination.Token);
+        AttachToken(destination, target);
     }
 
     private YarnMatchPoolCell FindRefreshCell(bool allowEmpty)

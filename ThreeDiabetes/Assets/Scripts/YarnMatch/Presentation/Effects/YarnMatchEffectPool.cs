@@ -6,6 +6,7 @@ internal sealed class YarnMatchEffectPool
 {
     private readonly Transform _root;
     private readonly Queue<Image> _flyingImages = new Queue<Image>();
+    private readonly Dictionary<Image, YarnMatchSpoolCapacityBadge> _flyingBadges = new Dictionary<Image, YarnMatchSpoolCapacityBadge>();
     private readonly Queue<Image> _trailImages = new Queue<Image>();
 
     internal YarnMatchEffectPool(Transform root)
@@ -17,7 +18,7 @@ internal sealed class YarnMatchEffectPool
     {
         for (int index = 0; index < 8; index++)
         {
-            _flyingImages.Enqueue(CreatePooledImage("Pooled Yarn"));
+            _flyingImages.Enqueue(CreateFlyingImage());
         }
         for (int index = 0; index < 24; index++)
         {
@@ -25,9 +26,11 @@ internal sealed class YarnMatchEffectPool
         }
     }
 
-    internal Image GetFlyingImage()
+    internal Image GetFlyingImage(int capacity)
     {
-        Image image = _flyingImages.Count > 0 ? _flyingImages.Dequeue() : CreatePooledImage("Pooled Yarn");
+        Image image = _flyingImages.Count > 0 ? _flyingImages.Dequeue() : CreateFlyingImage();
+        _flyingBadges[image].SetCapacity(capacity);
+        image.rectTransform.localScale = Vector3.one;
         image.gameObject.SetActive(true);
         return image;
     }
@@ -94,6 +97,13 @@ internal sealed class YarnMatchEffectPool
                 }
             }
         }
+    }
+
+    private Image CreateFlyingImage()
+    {
+        Image image = CreatePooledImage("Pooled Yarn");
+        _flyingBadges.Add(image, new YarnMatchSpoolCapacityBadge(image.transform, 62f));
+        return image;
     }
 
     private Image CreatePooledImage(string name)

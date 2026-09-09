@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,7 +11,7 @@ internal sealed class YarnMatchUiRenderer
     private readonly YarnMatchUiReferences _ui;
     private readonly YarnMatchAudio _audio;
     private readonly Action<YarnMatchSpoolToken> _onSpoolSelected;
-    private readonly Dictionary<YarnMatchBoardCell, YarnMatchBoardCellView> _boardViews = new Dictionary<YarnMatchBoardCell, YarnMatchBoardCellView>();
+    internal YarnMatchBoardSurface BoardSurface { get; private set; }
     private readonly Dictionary<YarnMatchPoolCell, YarnMatchPoolCellView> _poolCellViews = new Dictionary<YarnMatchPoolCell, YarnMatchPoolCellView>();
     private readonly Dictionary<YarnMatchSpoolToken, YarnMatchPoolTokenView> _poolTokenViews = new Dictionary<YarnMatchSpoolToken, YarnMatchPoolTokenView>();
     private readonly Dictionary<YarnMatchTunnel, YarnMatchTunnelView> _tunnelViews = new Dictionary<YarnMatchTunnel, YarnMatchTunnelView>();
@@ -41,7 +42,7 @@ internal sealed class YarnMatchUiRenderer
         _onSpoolSelected = onSpoolSelected;
     }
 
-    internal void ResetGame(YarnMatchBoardModel board, YarnMatchPoolModel pool, YarnMatchRackModel rack)
+    internal IEnumerator ResetGame(YarnMatchBoardModel board, YarnMatchPoolModel pool, YarnMatchRackModel rack)
     {
         _poolColumns = pool.Columns;
         _poolRows = pool.Rows;
@@ -51,10 +52,8 @@ internal sealed class YarnMatchUiRenderer
         _previewCell = null;
         _hasPreviewColor = false;
         ConfigureBoardLayout(board);
-        YarnMatchUiPrimitives.ClearChildren(_ui.BoardCellsRoot);
         YarnMatchUiPrimitives.ClearChildren(_ui.RackRoot);
         YarnMatchUiPrimitives.ClearChildren(_ui.PoolRoot);
-        _boardViews.Clear();
         _rackViews.Clear();
         _visibleRackEntries.Clear();
         _poolCellViews.Clear();
@@ -65,48 +64,19 @@ internal sealed class YarnMatchUiRenderer
         _rackSlotImages.Clear();
         _rackSlotLabels.Clear();
 
+        for (int color = 0; color < board.ColorCounts.Count; color++)
+        {
+            if (board.ColorCounts[color] == 0) continue;
+            YarnMatchVisualFactory.GetSpoolSprite(YarnMatchUiTheme.Palette[color]);
+            yield return null;
+        }
         SetBoardGridVisibility(board);
         BuildBoardViews(board);
         BuildRackSlots(rack);
-        BuildPoolSlots(pool);
-        RenderBoard(board, true);
+        yield return BuildPoolSlots(pool);
         RenderPool(pool, YarnMatchGameState.Playing);
         RenderRack(rack);
         UpdateHeader(board, rack);
-    }
-
-    internal void RenderBoard(YarnMatchBoardModel board, bool snapPositions)
-    {
-        for (int index = 0; index < board.AllCells.Count; index++)
-        {
-            YarnMatchBoardCell cell = board.AllCells[index];
-            YarnMatchBoardCellView view = _boardViews[cell];
-            if (!cell.Active)
-            {
-                view.Group.alpha = 0f;
-                view.Group.blocksRaycasts = false;
-                continue;
-            }
-
-            view.Group.alpha = 1f;
-            view.Group.blocksRaycasts = true;
-            view.Image.color = YarnMatchUiTheme.Palette[(int)cell.Color];
-            if (snapPositions)
-            {
-                for (int strandIndex = 0; strandIndex < view.Strands.Count; strandIndex++)
-                {
-                    view.Strands[strandIndex].Group.alpha = 0f;
-                    view.Strands[strandIndex].Rect.gameObject.SetActive(false);
-                }
-                view.Rect.localScale = Vector3.one;
-                view.Rect.anchoredPosition = BoardPosition(cell.Column, cell.Row);
-            }
-        }
-
-        if (_previewCell != null && !_previewCell.Active)
-        {
-            ClearColorPreview();
-        }
     }
 
     internal void RenderPool(YarnMatchPoolModel pool, YarnMatchGameState state)
@@ -187,6 +157,7 @@ internal sealed class YarnMatchUiRenderer
         }
 
         cellView.SpoolImage.sprite = YarnMatchVisualFactory.GetSpoolSprite(YarnMatchUiTheme.Palette[(int)token.Color]);
+        cellView.CapacityBadge.SetCapacity(token.Capacity);
         cellView.SpoolImage.color = cell.Unlocked
             ? Color.white
             : new Color(0.64f, 0.68f, 0.78f, 0.80f);
@@ -333,6 +304,11 @@ internal sealed class YarnMatchUiRenderer
 
     private void SetBoardCellPreview(YarnMatchBoardCell cell)
     {
+        if (cell == null)
+        {
+            ClearColorPreview();
+            return;
+        }
         if (cell == null || !cell.Active || _currentPool == null || _currentState != YarnMatchGameState.Playing || !_selectionEnabled)
         {
             return;
@@ -346,33 +322,6 @@ internal sealed class YarnMatchUiRenderer
         {
             ApplyColorPreview();
         }
-    }
-
-    private void ClearBoardCellPreview(YarnMatchBoardCell cell, PointerEventData eventData)
-    {
-        if (_previewCell != cell)
-        {
-            return;
-        }
-
-        // PointerExit fires before the next cell's PointerEnter. Keep the preview
-        // alive while the cursor is still inside the board to avoid a blank frame.
-        if (IsPointerInsideBoardArea(eventData))
-        {
-            return;
-        }
-
-        ClearColorPreview();
-    }
-
-    private bool IsPointerInsideBoardArea(PointerEventData eventData)
-    {
-        return eventData != null
-            && _ui.BoardArea != null
-            && RectTransformUtility.RectangleContainsScreenPoint(
-                _ui.BoardArea,
-                eventData.position,
-                eventData.enterEventCamera);
     }
 
     private void ClearColorPreview()
@@ -420,11 +369,6 @@ internal sealed class YarnMatchUiRenderer
         view.Button.gameObject.SetActive(false);
     }
 
-    internal bool TryGetBoardCellView(YarnMatchBoardCell cell, out YarnMatchBoardCellView view)
-    {
-        return _boardViews.TryGetValue(cell, out view);
-    }
-
     internal bool TryGetPoolTokenView(YarnMatchSpoolToken token, out YarnMatchPoolTokenView view)
     {
         return _poolTokenViews.TryGetValue(token, out view);
@@ -438,15 +382,15 @@ internal sealed class YarnMatchUiRenderer
         }
     }
 
-    internal void HideRackProgress(YarnMatchRackEntry entry)
+    internal void SetRackProgressVisible(YarnMatchRackEntry entry, bool visible)
     {
         if (entry == null || !_rackViews.TryGetValue(entry, out YarnMatchRackEntryView view))
         {
             return;
         }
 
-        view.FillImage.transform.parent.gameObject.SetActive(false);
-        view.CountLabel.gameObject.SetActive(false);
+        view.FillImage.transform.parent.gameObject.SetActive(visible);
+        view.CountLabel.gameObject.SetActive(visible);
     }
 
     internal bool TryGetRackSlotCanvasPosition(int slot, out Vector2 position)
@@ -485,44 +429,20 @@ internal sealed class YarnMatchUiRenderer
     private void ConfigureBoardLayout(YarnMatchBoardModel board)
     {
         _boardColumns = Mathf.Max(1, board.Columns.Count);
-        _boardRows = 1;
-        for (int index = 0; index < board.AllCells.Count; index++)
-        {
-            _boardRows = Mathf.Max(_boardRows, board.AllCells[index].Row + 1);
-        }
+        _boardRows = board.InitialRows;
 
         _isLargeBoard = true;
-        _fitBoardToViewport = _boardColumns == _boardRows;
+        _fitBoardToViewport = board.FitToViewport;
         _boardCellSize = YarnMatchUiTheme.BoardCellSizeFor(_boardColumns, _boardRows, _fitBoardToViewport);
     }
 
     private void BuildBoardViews(YarnMatchBoardModel board)
     {
-        for (int index = 0; index < board.AllCells.Count; index++)
+        if (BoardSurface == null)
         {
-            YarnMatchBoardCell cell = board.AllCells[index];
-            Image image = YarnMatchUiPrimitives.CreateImage("Yarn Cell", _ui.BoardCellsRoot, YarnMatchVisualFactory.GetSolidSprite(), YarnMatchUiTheme.Palette[(int)cell.Color], Vector2.one * _boardCellSize, BoardPosition(cell.Column, cell.Row), false);
-            image.raycastTarget = true;
-            YarnMatchBoardCell hoverCell = cell;
-            YarnMatchBoardCellHover hover = image.gameObject.AddComponent<YarnMatchBoardCellHover>();
-            hover.Configure(
-                eventData => SetBoardCellPreview(hoverCell),
-                eventData => ClearBoardCellPreview(hoverCell, eventData));
-            CanvasGroup group = image.gameObject.AddComponent<CanvasGroup>();
-            YarnMatchBoardCellView view = new YarnMatchBoardCellView { Rect = image.rectTransform, Image = image, Group = group };
-            int strandCount = YarnMatchUiTheme.BoardStrandCountForSize(_boardCellSize);
-            for (int strandIndex = 0; strandIndex < strandCount; strandIndex++)
-            {
-                float strandSlot = _boardCellSize / strandCount;
-                float strandHeight = Mathf.Max(0.8f, strandSlot * 0.72f);
-                float y = -_boardCellSize * 0.5f + strandSlot * 0.5f + strandIndex * strandSlot;
-                Image strandImage = YarnMatchUiPrimitives.CreateImage("Yarn Strand", image.transform, YarnMatchVisualFactory.GetThreadSprite(YarnMatchUiTheme.Palette[(int)cell.Color]), Color.white, new Vector2(_boardCellSize * 0.75f, strandHeight), new Vector2(0f, y), false);
-                strandImage.rectTransform.localRotation = Quaternion.Euler(0f, 0f, strandIndex % 2 == 0 ? -8f : 8f);
-                CanvasGroup strandGroup = strandImage.gameObject.AddComponent<CanvasGroup>();
-                view.Strands.Add(new YarnMatchStrandView { Rect = strandImage.rectTransform, Group = strandGroup });
-            }
-            _boardViews.Add(cell, view);
+            BoardSurface = _ui.BoardCellsRoot.gameObject.AddComponent<YarnMatchBoardSurface>();
         }
+        BoardSurface.Configure(board, _boardCellSize, SetBoardCellPreview);
     }
 
     private void SetBoardGridVisibility(YarnMatchBoardModel board)
@@ -573,11 +493,14 @@ internal sealed class YarnMatchUiRenderer
         }
     }
 
-    private void BuildPoolSlots(YarnMatchPoolModel pool)
+    private IEnumerator BuildPoolSlots(YarnMatchPoolModel pool)
     {
+        float frameStart = Time.realtimeSinceStartup;
         float cellSize = YarnMatchUiTheme.PoolCellSize(_poolColumns, _poolRows);
         _ui.PoolSlotsRoot = YarnMatchUiPrimitives.CreateChild("Pool Slots", _ui.PoolRoot).transform;
         _ui.PoolButtonsRoot = YarnMatchUiPrimitives.CreateChild("Pool Buttons", _ui.PoolRoot).transform;
+        YarnMatchPoolBadgeLayer badges = YarnMatchUiPrimitives.CreateChild("Pool Capacity Badges", _ui.PoolRoot)
+            .AddComponent<YarnMatchPoolBadgeLayer>();
         for (int index = 0; index < pool.Cells.Count; index++)
         {
             YarnMatchPoolCell cell = pool.Cells[index];
@@ -623,10 +546,16 @@ internal sealed class YarnMatchUiRenderer
                 Button = button,
                 SpoolImage = spoolImage,
                 FreezeImage = freezeImage,
+                CapacityBadge = badges.Attach(button.GetComponent<RectTransform>(), cellSize),
                 Group = spoolGroup,
                 Outline = spoolOutline,
                 BaseAlpha = 1f
             });
+            if (Time.realtimeSinceStartup - frameStart >= 0.004f)
+            {
+                yield return null;
+                frameStart = Time.realtimeSinceStartup;
+            }
         }
 
         float badgeSize = Mathf.Clamp(cellSize * 0.48f, 18f, 30f);
@@ -671,6 +600,11 @@ internal sealed class YarnMatchUiRenderer
                 FontStyles.Bold);
             _tunnelViews.Add(tunnel, new YarnMatchTunnelView { CountLabel = count, CountBadge = countBadge });
             UpdateTunnelView(tunnel);
+            if (Time.realtimeSinceStartup - frameStart >= 0.004f)
+            {
+                yield return null;
+                frameStart = Time.realtimeSinceStartup;
+            }
         }
 
         for (int index = 0; index < pool.Chains.Count; index++)
@@ -708,7 +642,7 @@ internal sealed class YarnMatchUiRenderer
         fill.rectTransform.anchorMin = new Vector2(0f, 0.5f);
         fill.rectTransform.anchorMax = new Vector2(0f, 0.5f);
         fill.rectTransform.pivot = new Vector2(0f, 0.5f);
-        TMP_Text count = YarnMatchUiPrimitives.CreateText("Rack Count", slotObject.transform, "0/3", 10, new Color(0.25f, 0.32f, 0.46f), TextAlignmentOptions.Center, new Vector2(0f, -40f), new Vector2(64f, 20f), FontStyles.Bold);
+        TMP_Text count = YarnMatchUiPrimitives.CreateText("Rack Count", slotObject.transform, "0/" + entry.Capacity, 10, new Color(0.25f, 0.32f, 0.46f), TextAlignmentOptions.Center, new Vector2(0f, -40f), new Vector2(64f, 20f), FontStyles.Bold);
         return new YarnMatchRackEntryView { SpoolRect = spoolRect, BaseScale = spoolRect.localScale, SpoolImage = spoolRect.GetComponent<Image>(), SpoolGroup = spoolGroup, FillImage = fill, CountLabel = count };
     }
 
@@ -726,7 +660,7 @@ internal sealed class YarnMatchUiRenderer
     private void UpdateRackEntryView(YarnMatchRackEntry entry)
     {
         YarnMatchRackEntryView view = _rackViews[entry];
-        view.FillImage.fillAmount = entry.Progress / (float)entry.Capacity;
+        view.FillImage.fillAmount = (entry.Progress + view.InFlightProgress) / entry.Capacity;
         view.CountLabel.text = entry.Progress + "/" + entry.Capacity;
         view.SpoolImage.color = entry.Progress == 0 ? Color.white : Color.Lerp(Color.white, YarnMatchUiTheme.Palette[(int)entry.Color], 0.16f);
     }

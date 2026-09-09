@@ -1,9 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public sealed class YarnMatchLevelConfig
 {
     private readonly int[] _columnHeights;
+    private YarnMatchPatternLayout _pattern;
+    private Task<YarnMatchPatternLayout> _preparation;
+    internal int TemplateIndex { get; }
+    internal YarnMatchPatternLayout Pattern => _pattern ?? (_pattern = UsesReferencePattern
+        ? YarnMatchPatternLayout.Dense(ColumnHeights, YarnMatchReferencePatternGenerator.Generate(ColumnHeights))
+        : YarnMatchTemplateSampler.Generate(this));
+    internal Task<YarnMatchPatternLayout> PreparePatternAsync()
+    {
+        if (_preparation == null)
+            _preparation = _pattern != null ? Task.FromResult(_pattern) : Task.Run(() => UsesReferencePattern
+                ? YarnMatchPatternLayout.Dense(ColumnHeights, YarnMatchReferencePatternGenerator.Generate(ColumnHeights))
+                : YarnMatchTemplateSampler.Generate(this));
+        return _preparation;
+    }
+    internal void RetainPattern(YarnMatchPatternLayout pattern) => _pattern = pattern;
+    internal void ReleasePattern()
+    {
+        _pattern = null;
+        _preparation = null;
+    }
     public int Number { get; }
     public int Chapter => YarnMatchLevelCatalog.GetChapterIndex(Number) + 1;
     public int ChapterLevel => (Number - 1) % YarnMatchLevelCatalog.LevelsPerChapter + 1;
@@ -25,12 +46,13 @@ public sealed class YarnMatchLevelConfig
     public bool UsesReferencePattern { get; }
     public int Seed { get; }
     public IReadOnlyList<int> ColumnHeights => _columnHeights;
-    public int TotalBoardCells { get; }
+    public int TotalBoardCells => Pattern.CellCount;
     public string Summary => ColorCount + " 色 · " + BoardColumns + " × " + BoardRows;
 
     internal YarnMatchLevelConfig(int number, int colorCount, int poolColumns, int poolRows,
         int tunnelCountMin, int tunnelCountMax, int tunnelQueueMin, int tunnelQueueMax,
-        int freezeCount, int chainCount, int seed, bool referencePattern, int[] columnHeights)
+        int freezeCount, int chainCount, int seed, bool referencePattern, int[] columnHeights,
+        int templateIndex = 0)
     {
         Number = number;
         ColorCount = colorCount;
@@ -44,11 +66,11 @@ public sealed class YarnMatchLevelConfig
         ChainCount = chainCount;
         Seed = seed;
         UsesReferencePattern = referencePattern;
+        TemplateIndex = templateIndex;
         _columnHeights = (int[])columnHeights.Clone();
         for (int i = 0; i < _columnHeights.Length; i++)
         {
             BoardRows = Math.Max(BoardRows, _columnHeights[i]);
-            TotalBoardCells += _columnHeights[i];
         }
     }
 }

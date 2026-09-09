@@ -4,7 +4,11 @@
 
 - Engine: Unity `6000.0.23f1c1`.
 - Target: offline, single-player, portrait mobile puzzle game.
-- Reference resolution: `750 x 1334`.
+- Gameplay layout reference resolution: `750 x 1334`.
+- Background reference resolution: `750 x 1624`. Screen backgrounds use centered
+  aspect-preserving cover sizing against the actual Canvas. Full-screen overlay
+  roots stretch to the Canvas; decorative bands stretch horizontally. Keep these
+  separate from the fixed centered gameplay/control layout.
 - Current prototype: a color collection puzzle in the match-3 family. It is not a networked service and has no advertising, account, analytics, or remote configuration requirements.
 - General reusable guidance: use `game-developer` for Unity engineering and `match3-level-production` for match-3 style level rules, cascades, collection slots, tunnels, and playability validation.
 - The standard workflow for adding or tuning levels is [LEVEL_PRODUCTION.md](LEVEL_PRODUCTION.md). Follow it before changing catalog, pattern, pool, rack, or special-level data.
@@ -15,6 +19,7 @@ Keep the YarnMatch implementation split by responsibility under `Assets/Scripts/
 
 ```text
 Core/                         Pure gameplay models and rules
+Core/Generation/              Subject masks, sampling, template deck, round data preparation
 Infrastructure/               Runtime bootstrap and scene integration
 Presentation/UI/              UI construction, rendering, overlays, references
 Presentation/Animation/       Gameplay-independent presentation timelines
@@ -30,6 +35,11 @@ The core models are:
 - `YarnMatchPoolModel`: the level-configured lower selection area, selectable cells, orthogonal unlocks, and tunnel queues.
 - `YarnMatchRackModel`: in-progress same-color collection slots, capacity, progress, and final-slot unlock.
 - `YarnMatchGame`: command orchestration and game-state transitions only. It may coordinate services, but it must not become a UI builder or animation implementation.
+- `YarnMatchCollectionScheduler`: fair receiver reservations, exposed-column lookup,
+  and independent busy-column lifetime across collection and settling.
+- `YarnMatchLevelDifficulty`: final legal dimensions and profile-based subject ranking.
+- `YarnMatchOpeningPlanner`: existing-token arrangement for natural two-color openings.
+- `YarnMatchPatternResources`: async local pack loading and worker metadata preparation.
 
 Presentation ownership is kept behind `YarnMatchPresentation`, which delegates to focused UI, animation, effect, and overlay services. `YarnMatchVisualFactory` owns procedural visual resources. Do not reintroduce a monolithic `YarnMatchGame` or presentation class to solve a local issue.
 
@@ -48,17 +58,22 @@ Presentation ownership is kept behind `YarnMatchPresentation`, which delegates t
 
 The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implementation:
 
-- Every normal entry/restart creates a fresh seed and runtime layout from a difficulty
-  profile. No fixed per-level board, pool or mechanic configuration is loaded.
-- Fifty static pixel-art templates supply normal board subjects. The special challenge
+- Normal previews reserve a fresh seed from a difficulty profile; entry consumes
+  that seed and restart prepares a new one. No per-level layout is loaded or saved.
+- Two hundred local 64 x 64 pixel-art templates supply normal board subjects. The special challenge
   keeps its Excel-derived 48 x 40 image and independently randomizes its lower pool.
+- Normal boards use explicit subject masks and preserve initial sparse coordinates.
+  Source selection uses a difficulty-scored no-repeat deck and recent-history preference. Offline
+  artwork under .codex/tools/pattern-art exports PNGs and matching palette/mask
+  data. No API dependency or runtime subject-art generation is required. Current
+  review sheets and the resource manifest live in .codex/previews/local-patterns.
 - Actual per-color board counts determine spool counts and capacities, including
   capacity-1/2 tails. Each spool owns a separate concurrent rack job.
 - Visible lower positions grow from legal entrances. Four-direction selection access
   and eight-neighbor thaw damage are separate rules.
 - Generation plans chains and freezes against reachable attack sources; consumed
   chains do not persist on pipe refills, and refresh retains occupied source topology.
-- Chapters append 50 items to a reusable scrolling list. Previous chapters remain
+- Chapters append 50 thumbnails to a four-column reusable scrolling grid. Previous chapters remain
   accessible. Special challenge does not consume normal level 110 or normal progress.
 - Independent local music loops through menus and rounds; toggle/volume are persisted.
 - Approved normal geometry caps: 50 x 50 square boards, 50 x 100 long boards,
@@ -71,6 +86,16 @@ The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implement
 - Selection, source removal, tunnel emergence, board settling, collection, rack impact, completion, win, loss, restart, hint, and refresh each need visible feedback.
 - Selection flight and board collection run in parallel. Each selected spool owns an independent collection job. The scheduler repeatedly scans the current exposed front row, so a red job may collect, a green job may expose a new red cell, and the red job can continue without being restarted.
 - Each cell remains visible while its inner strands retract one by one along a soft curved path into the matching receiver. Do not replace this with a disappearing tile and a separate fake line.
+- `YarnMatchBoardSurface` owns reusable column graphics and active-tile pooling.
+  `YarnMatchBoardColumnGraphic` emits visible quads plus one-cell overscan only.
+  A single board hit surface maps pointer coordinates to the current column/row.
+- `YarnMatchBoardAnimationController` handles continuous bottom-up row removal,
+  soft threads, additive receiver progress and independent column drops. The spool
+  animation controller keeps arrival, emergence and completion behavior separate.
+- Round preparation uses a worker for plain board/pool/mechanic data. Unity resources
+  load asynchronously; plain JSON preparation and grid sampling also run in workers.
+  Unity object access and UI stay on the main thread. Thumbnail uploads use a 3 ms
+  budget; lower UI creation yields after a 4 ms slice. No frame-rate claim without profiling.
 - A receiver that reaches three visibly tightens, scales up, pulses, and exits upward. Do not represent collection as an instant disappear followed by a delayed fake spawn.
 - All buttons and tappable visual elements need a press/hover feedback path without allowing feedback components to own gameplay rules.
 

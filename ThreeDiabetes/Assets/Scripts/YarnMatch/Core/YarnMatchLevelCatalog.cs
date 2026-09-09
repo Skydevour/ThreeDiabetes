@@ -1,36 +1,52 @@
 using System;
+using System.Collections.Generic;
 
 public static class YarnMatchLevelCatalog
 {
     public const int LevelsPerChapter = 50;
     public const int ReferencePatternLevel = 110;
-    private const int MaximumBoardSize = 50;
     private const int MaximumPoolColumns = 12;
     private const int MaximumPoolRows = 8;
     private const int InitialPoolCells = 48;
     private const int PoolCellsPerMilestone = 10;
     private static readonly Random RoundSeeds = new Random();
+    private static readonly Dictionary<int, YarnMatchLevelConfig> PreviewRounds = new Dictionary<int, YarnMatchLevelConfig>();
+    private static readonly YarnMatchTemplateDeck TemplateDeck = new YarnMatchTemplateDeck();
 
-    // List metadata never allocates or caches playable layouts.
-    public static YarnMatchLevelConfig Get(int level) => BuildLevel(Math.Max(1, level), 0);
-    public static YarnMatchLevelConfig CreateRound(int level) => BuildLevel(Math.Max(1, level), RoundSeeds.Next());
+    public static YarnMatchLevelConfig Get(int level) => PrepareRound(level);
+    internal static YarnMatchLevelConfig PrepareRound(int level)
+    {
+        level = Math.Max(1, level);
+        if (!PreviewRounds.TryGetValue(level, out YarnMatchLevelConfig round))
+        {
+            var difficulty = new YarnMatchLevelDifficulty(level);
+            int template = TemplateDeck.Draw(difficulty, RoundSeeds, out int width, out int height);
+            round = BuildLevel(level, RoundSeeds.Next(), template, width, height);
+            PreviewRounds.Add(level, round);
+        }
+        return round;
+    }
+
+    public static YarnMatchLevelConfig CreateRound(int level)
+    {
+        YarnMatchLevelConfig round = PrepareRound(level);
+        PreviewRounds.Remove(round.Number);
+        return round;
+    }
     public static int GetChapterIndex(int level) => (Math.Max(1, level) - 1) / LevelsPerChapter;
     public static int GetChapterStartLevel(int level) => GetChapterIndex(level) * LevelsPerChapter + 1;
     public static int GetChapterEndLevel(int level) => GetChapterStartLevel(level) + LevelsPerChapter - 1;
     public static int GetColorCount(int level) => Math.Min(9, 4 + (Math.Max(1, level) - 1) / 3);
 
-    private static YarnMatchLevelConfig BuildLevel(int level, int seed)
+    private static YarnMatchLevelConfig BuildLevel(int level, int seed, int template, int size, int rows)
     {
-        int size = Math.Max(5, Math.Min(MaximumBoardSize, level));
-        int rows = size;
-        if (level >= 15 && new Random(seed).Next(4) == 0) rows *= 2;
         GetPoolShape(level, out int poolColumns, out int poolRows);
         int colorCount = GetColorCount(level);
         GetTunnelRanges(level, out int countMin, out int countMax, out int queueMax);
         GetGeneratedMechanicCounts(level, seed, out int freezes, out int chains);
         return new YarnMatchLevelConfig(level, colorCount, poolColumns, poolRows,
             countMin, countMax, countMin > 0 ? 5 : 0, queueMax,
-            freezes, chains, seed, false, Rectangle(size, rows));
+            freezes, chains, seed, false, Rectangle(size, rows), template);
     }
 
     private static void GetPoolShape(int level, out int columns, out int rows)

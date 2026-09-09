@@ -41,9 +41,13 @@ internal sealed class YarnMatchUiBuilder
         ui.Canvas = canvas;
         ui.CanvasRect = canvasObject.GetComponent<RectTransform>();
 
-        YarnMatchUiPrimitives.CreateImage("Background", canvasObject.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.985f, 0.99f, 1f), new Vector2(750f, 1334f), Vector2.zero, false);
-        YarnMatchUiPrimitives.CreateImage("Top Band", canvasObject.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.91f, 0.95f, 1f, 0.82f), new Vector2(750f, 420f), new Vector2(0f, 415f), false);
-        YarnMatchUiPrimitives.CreateImage("Pool Band", canvasObject.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.94f, 0.97f, 1f, 0.96f), new Vector2(750f, 430f), new Vector2(0f, -390f), false);
+        YarnMatchUiPrimitives.CreateScreenBackground("Background", canvasObject.transform, new Color(0.985f, 0.99f, 1f), false);
+        Image topBand = YarnMatchUiPrimitives.CreateImage("Top Band", canvasObject.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.91f, 0.95f, 1f, 0.82f), new Vector2(0f, 420f), new Vector2(0f, 415f), false);
+        topBand.rectTransform.anchorMin = new Vector2(0f, 0.5f);
+        topBand.rectTransform.anchorMax = new Vector2(1f, 0.5f);
+        Image poolBand = YarnMatchUiPrimitives.CreateImage("Pool Band", canvasObject.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.94f, 0.97f, 1f, 0.96f), new Vector2(0f, 430f), new Vector2(0f, -390f), false);
+        poolBand.rectTransform.anchorMin = new Vector2(0f, 0.5f);
+        poolBand.rectTransform.anchorMax = new Vector2(1f, 0.5f);
 
         BuildHeader(ui, canvasObject.transform, onBackToMainMenu);
         BuildBoardArea(ui, canvasObject.transform);
@@ -129,10 +133,9 @@ internal sealed class YarnMatchUiBuilder
         Action onPreviewFailure,
         Action onBackToMainMenu)
     {
-        ui.ResultOverlay = YarnMatchUiPrimitives.CreateChild("Result Overlay", parent);
+        ui.ResultOverlay = YarnMatchUiPrimitives.CreateScreenLayer("Result Overlay", parent);
         ui.ResultCanvasGroup = ui.ResultOverlay.AddComponent<CanvasGroup>();
-        Image dim = YarnMatchUiPrimitives.CreateImage("Dim", ui.ResultOverlay.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.18f, 0.22f, 0.32f, 0.38f), new Vector2(750f, 1334f), Vector2.zero, false);
-        dim.raycastTarget = true;
+        YarnMatchUiPrimitives.CreateScreenBackground("Dim", ui.ResultOverlay.transform, new Color(0.18f, 0.22f, 0.32f, 0.38f), true);
         Image panel = YarnMatchUiPrimitives.CreateImage("Result Panel", ui.ResultOverlay.transform, YarnMatchVisualFactory.GetPanelSprite(), Color.white, new Vector2(610f, 350f), new Vector2(0f, 10f), true);
         ui.ResultPanelRect = panel.rectTransform;
         ui.ResultTitle = YarnMatchUiPrimitives.CreateText("Result Title", panel.transform, "完成啦！", 40, new Color(0.08f, 0.60f, 0.32f), TextAlignmentOptions.Center, new Vector2(0f, 86f), new Vector2(540f, 62f), FontStyles.Bold);
@@ -151,9 +154,8 @@ internal sealed class YarnMatchUiBuilder
 
     private void BuildMainMenu(YarnMatchUiReferences ui, Transform parent, Action onOpenLevelSelect)
     {
-        ui.MainMenuOverlay = YarnMatchUiPrimitives.CreateChild("Main Menu", parent);
-        Image dim = YarnMatchUiPrimitives.CreateImage("Menu Background", ui.MainMenuOverlay.transform, YarnMatchVisualFactory.GetSolidSprite(), new Color(0.985f, 0.99f, 1f, 1f), new Vector2(750f, 1334f), Vector2.zero, false);
-        dim.raycastTarget = true;
+        ui.MainMenuOverlay = YarnMatchUiPrimitives.CreateScreenLayer("Main Menu", parent);
+        YarnMatchUiPrimitives.CreateScreenBackground("Menu Background", ui.MainMenuOverlay.transform, new Color(0.985f, 0.99f, 1f, 1f), true);
         YarnMatchUiPrimitives.CreateImage("Menu Yarn Blue", ui.MainMenuOverlay.transform, YarnMatchVisualFactory.GetCellSprite(YarnMatchUiTheme.Palette[(int)YarnMatchColor.Cyan]), Color.white, new Vector2(144f, 144f), new Vector2(-150f, 210f), false);
         YarnMatchUiPrimitives.CreateImage("Menu Yarn Pink", ui.MainMenuOverlay.transform, YarnMatchVisualFactory.GetCellSprite(YarnMatchUiTheme.Palette[(int)YarnMatchColor.Pink]), Color.white, new Vector2(118f, 118f), new Vector2(148f, 160f), false);
         TMP_Text title = YarnMatchUiPrimitives.CreateText("Menu Title", ui.MainMenuOverlay.transform, "线团消消乐", 46, new Color(0.13f, 0.19f, 0.36f), TextAlignmentOptions.Center, new Vector2(0f, 360f), new Vector2(650f, 70f), FontStyles.Bold);
@@ -168,12 +170,9 @@ internal sealed class YarnMatchUiBuilder
         Action<int> onLevelSelected, Action onUnlockAllLevels,
         Action onStartSpecialChallenge, Action onBackToMainMenu)
     {
-        ui.LevelSelectOverlay = YarnMatchUiPrimitives.CreateChild("Level Select", parent);
+        ui.LevelSelectOverlay = YarnMatchUiPrimitives.CreateScreenLayer("Level Select", parent);
         Transform root = ui.LevelSelectOverlay.transform;
-        Image background = YarnMatchUiPrimitives.CreateImage("Level Background", root,
-            YarnMatchVisualFactory.GetSolidSprite(), Color.white,
-            new Vector2(750f, 1334f), Vector2.zero, false);
-        background.raycastTarget = true;
+        YarnMatchUiPrimitives.CreateScreenBackground("Level Background", root, Color.white, true);
         ui.LevelSelectTitle = YarnMatchUiPrimitives.CreateText("Level Title", root,
             "选择关卡", 34, new Color(0.12f, 0.20f, 0.30f), TextAlignmentOptions.Center,
             new Vector2(0f, 599f), new Vector2(650f, 54f), FontStyles.Bold);

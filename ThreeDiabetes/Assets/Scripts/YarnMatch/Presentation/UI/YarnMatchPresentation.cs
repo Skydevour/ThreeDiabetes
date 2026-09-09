@@ -12,6 +12,7 @@ public sealed class YarnMatchPresentation : MonoBehaviour
     private YarnMatchEffectPool _effects;
     private YarnMatchAnimationController _animations;
     private bool _initialized;
+    private GameObject _loadingOverlay;
 
     public void Initialize(
         Action<YarnMatchSpoolToken> onSpoolSelected,
@@ -57,22 +58,31 @@ public sealed class YarnMatchPresentation : MonoBehaviour
         _effects.Build();
         _animations = new YarnMatchAnimationController(_renderer, _effects, _audio);
         _overlays = new YarnMatchOverlayController(this, _ui, _audio);
+        var loading = YarnMatchUiPrimitives.CreateScreenBackground("Round Loading", _ui.CanvasRect, Color.white, true);
+        _loadingOverlay = loading.gameObject;
+        YarnMatchUiPrimitives.CreateText("Loading", loading.transform, "正在整理毛线…", 24,
+            new Color(0.22f, 0.25f, 0.30f), TMPro.TextAlignmentOptions.Center,
+            Vector2.zero, new Vector2(400f, 60f), TMPro.FontStyles.Normal);
+        _loadingOverlay.SetActive(false);
         _initialized = true;
     }
 
-    public void ResetGame(YarnMatchBoardModel board, YarnMatchPoolModel pool, YarnMatchRackModel rack)
+    public IEnumerator ResetGame(YarnMatchBoardModel board, YarnMatchPoolModel pool, YarnMatchRackModel rack)
     {
         _animations?.Reset();
         _effects.Clear();
         _overlays.ResetForGame();
-        _renderer.ResetGame(board, pool, rack);
+        yield return _renderer.ResetGame(board, pool, rack);
         _overlays.SetStatus("选择底部露出的同色线团，线圈会逐根收紧");
     }
 
     public void ShowMainMenu()
     {
+        SetLoading(false);
         _overlays.ShowMainMenu();
     }
+
+    public void SetLoading(bool visible) => _loadingOverlay.SetActive(visible);
 
     public void ShowLevelSelect(int highestUnlockedLevel, bool dailyUnlockActive)
     {
@@ -88,11 +98,6 @@ public sealed class YarnMatchPresentation : MonoBehaviour
     {
         _animations?.Reset();
         _effects?.Clear();
-    }
-
-    public void RenderBoard(YarnMatchBoardModel board, bool snapPositions)
-    {
-        _renderer.RenderBoard(board, snapPositions);
     }
 
     public void RenderPool(YarnMatchPoolModel pool, YarnMatchGameState state)
@@ -158,14 +163,9 @@ public sealed class YarnMatchPresentation : MonoBehaviour
         return _animations.PlayCellIntoRack(cell, entry);
     }
 
-    public IEnumerator PlayBoardDrop(YarnMatchBoardModel board)
+    public IEnumerator PlayColumnDrop(int column)
     {
-        return _animations.PlayBoardDrop(board);
-    }
-
-    public IEnumerator PlayRackImpact(YarnMatchRackEntry entry)
-    {
-        return _animations.PlayRackImpact(entry);
+        return _animations.PlayColumnDrop(column);
     }
 
     public IEnumerator PlayRackPulse(YarnMatchRackEntry entry)

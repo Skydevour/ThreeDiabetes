@@ -1,118 +1,64 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-
-[Serializable]
-internal sealed class YarnMatchPatternTemplate
-{
-    public string id;
-    public string title;
-    public int minSize;
-    public string[] palette;
-    public string[] rows;
-}
-
-[Serializable]
-internal sealed class YarnMatchPatternPack
-{
-    public YarnMatchPatternTemplate[] patterns;
-}
 
 internal static class YarnMatchTemplateSampler
 {
-    private static readonly int[] Colors =
-        { 0xF5384D, 0xFC7D14, 0xFFBF0D, 0x1AB861, 0x08B3E6, 0x1F5CE0, 0x8038D1, 0xF23394, 0xFFEEAD };
-    private static YarnMatchPatternTemplate[] _templates;
+    internal static IReadOnlyList<YarnMatchPatternTemplate> Templates => YarnMatchPatternResources.Templates;
 
-    internal static IReadOnlyList<YarnMatchPatternTemplate> Templates
+    internal static void GetDimensions(int templateIndex, int detail, out int width, out int height)
     {
-        get
-        {
-            if (_templates == null)
-            {
-                TextAsset asset = Resources.Load<TextAsset>("YarnMatch/Patterns/PatternTemplates");
-                _templates = JsonUtility.FromJson<YarnMatchPatternPack>(asset.text).patterns;
-            }
-            return _templates;
-        }
+        YarnMatchPatternTemplate template = Templates[templateIndex];
+        width = detail;
+        height = Math.Max(1, Math.Min(100, (int)Math.Round(detail * template.Height / (double)template.Width,
+            MidpointRounding.AwayFromZero)));
     }
 
-    internal static IReadOnlyList<YarnMatchColor> Generate(
-        IReadOnlyList<int> heights, int colorCount, int seed)
+    internal static YarnMatchPatternLayout Generate(YarnMatchLevelConfig config)
     {
-        System.Random random = new System.Random(seed);
-        var candidates = new List<YarnMatchPatternTemplate>();
-        foreach (YarnMatchPatternTemplate template in Templates)
-            if (template.minSize <= heights.Count) candidates.Add(template);
-        YarnMatchPatternTemplate selected = candidates[random.Next(candidates.Count)];
-        int[] sourcePalette = new int[selected.palette.Length];
-        for (int i = 0; i < sourcePalette.Length; i++)
-            sourcePalette[i] = Convert.ToInt32(selected.palette[i], 16);
-        int height = 0;
-        foreach (int h in heights) height = Math.Max(height, h);
-        int sourceWidth = selected.rows[0].Length;
-        int sourceHeight = selected.rows.Length;
-        float scale = Math.Min(heights.Count / (float)sourceWidth, height / (float)sourceHeight);
-        float offsetX = (heights.Count - sourceWidth * scale) * 0.5f;
-        float offsetY = (height - sourceHeight * scale) * 0.5f;
-        bool mirror = selected.minSize < 32 && random.Next(2) == 0;
-        var pixels = new List<int>();
-        int[] frequencies = new int[Colors.Length];
-        for (int x = 0; x < heights.Count; x++)
-        for (int y = 0; y < heights[x]; y++)
+        YarnMatchPatternTemplate template = Templates[config.TemplateIndex];
+        int width = config.BoardColumns, height = config.BoardRows;
+        var symbols = new List<int>(width * height);
+        int[] sampled = new int[width * height];
+        double[] weights = new double[template.palette.Length];
+        double scale = Math.Min(width / (double)template.Width, height / (double)template.Height);
+        double offsetX = (width - template.Width * scale) * 0.5;
+        double offsetY = (height - template.Height * scale) * 0.5;
+        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
-            int sx = (int)Math.Floor((x + 0.5f - offsetX) / scale);
-            int sy = (int)Math.Floor((height - y - 0.5f - offsetY) / scale);
-            int symbol = Decode(selected.rows[0][0]);
-            if (sx >= 0 && sx < sourceWidth && sy >= 0 && sy < sourceHeight)
-                symbol = Decode(selected.rows[sy][mirror ? sourceWidth - 1 - sx : sx]);
-            int color = Nearest(sourcePalette[symbol], null);
-            pixels.Add(color);
-            frequencies[color]++;
+            int symbol = Sample(template,
+                template.Left + (x - offsetX) / scale,
+                template.Top + (height - y - 1d - offsetY) / scale,
+                1d / scale, weights);
+            sampled[y * width + x] = symbol;
+            if (symbol >= 0) symbols.Add(symbol);
         }
 
-        var order = new List<int>();
-        for (int i = 0; i < Colors.Length; i++) order.Add(i);
-        order.Sort((a, b) => frequencies[b] != frequencies[a]
-            ? frequencies[b].CompareTo(frequencies[a]) : a.CompareTo(b));
-        var palette = order.GetRange(0, colorCount);
-        var pattern = new List<YarnMatchColor>(pixels.Count);
-        int[] used = new int[Colors.Length];
-        foreach (int color in pixels)
-        {
-            int mapped = palette.Contains(color) ? color : Nearest(Colors[color], palette);
-            pattern.Add((YarnMatchColor)mapped);
-            used[mapped]++;
-        }
-        // Small border accents supply missing gameplay colors without scattering the subject.
-        int cursor = 0;
-        foreach (int color in palette)
-        {
-            if (used[color] > 0) continue;
-            while (used[(int)pattern[cursor]] <= 1) cursor++;
-            used[(int)pattern[cursor]]--;
-            pattern[cursor++] = (YarnMatchColor)color;
-            used[color]++;
-        }
-        return pattern;
+        int[] map = YarnMatchTemplatePalette.Build(template.Rgb, symbols, config.ColorCount, out _);
+        for (int i = 0; i < sampled.Length; i++)
+            if (sampled[i] >= 0) sampled[i] = map[sampled[i]];
+        return new YarnMatchPatternLayout(width, height, sampled);
     }
 
-    private static int Decode(char value) => value <= '9' ? value - '0' : value - 'A' + 10;
-
-    private static int Nearest(int rgb, List<int> palette)
+    private static int Sample(YarnMatchPatternTemplate template, double left, double top,
+        double span, double[] weights)
     {
-        int best = 0, distance = int.MaxValue;
-        int count = palette == null ? Colors.Length : palette.Count;
-        for (int i = 0; i < count; i++)
+        Array.Clear(weights, 0, weights.Length);
+        double covered = 0;
+        for (int y = Math.Max(0, (int)Math.Floor(top)); y < Math.Min(template.rows.Length, Math.Ceiling(top + span)); y++)
+        for (int x = Math.Max(0, (int)Math.Floor(left)); x < Math.Min(template.rows[0].Length, Math.Ceiling(left + span)); x++)
         {
-            int color = palette == null ? i : palette[i];
-            int target = Colors[color];
-            int r = (rgb >> 16 & 255) - (target >> 16 & 255);
-            int g = (rgb >> 8 & 255) - (target >> 8 & 255);
-            int b = (rgb & 255) - (target & 255);
-            int d = r * r + g * g + b * b;
-            if (d < distance) { distance = d; best = color; }
+            if (template.mask[y][x] != '1') continue;
+            double area = (Math.Min(x + 1d, left + span) - Math.Max(x, left))
+                * (Math.Min(y + 1d, top + span) - Math.Max(y, top));
+            char symbol = template.rows[y][x];
+            weights[symbol <= '9' ? symbol - '0' : symbol - 'A' + 10] += area;
+            covered += area;
         }
+        // Retain narrow details without filling empty silhouette corners.
+        if (covered < span * span * 0.25) return -1;
+        int best = 0;
+        for (int i = 1; i < weights.Length; i++) if (weights[i] > weights[best]) best = i;
         return best;
     }
 }

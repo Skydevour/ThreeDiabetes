@@ -7,6 +7,7 @@ public sealed class YarnMatchBoardModel
     private readonly List<YarnMatchBoardCell> _allCells = new List<YarnMatchBoardCell>();
     private readonly int[] _colorCounts = new int[Enum.GetValues(typeof(YarnMatchColor)).Length];
     private readonly int[] _requiredSpoolsByColor = new int[Enum.GetValues(typeof(YarnMatchColor)).Length];
+    private readonly int[] _remainingByColor = new int[Enum.GetValues(typeof(YarnMatchColor)).Length];
 
     public IReadOnlyList<List<YarnMatchBoardCell>> Columns => _columns;
     public IReadOnlyList<YarnMatchBoardCell> AllCells => _allCells;
@@ -15,25 +16,16 @@ public sealed class YarnMatchBoardModel
     public int TotalCells { get; private set; }
     public int CollectedCells { get; private set; }
     public int RequiredSpoolCount { get; private set; }
+    public int InitialRows { get; private set; }
+    public bool FitToViewport { get; private set; }
 
     public void Build(YarnMatchLevelConfig config)
     {
-        if (config != null)
-        {
-            IReadOnlyList<YarnMatchColor> colors = config.UsesReferencePattern
-                ? YarnMatchReferencePatternGenerator.Generate(config.ColumnHeights)
-                : YarnMatchTemplateSampler.Generate(config.ColumnHeights, config.ColorCount, config.Seed);
-            Build(config.ColumnHeights, colors);
-            return;
-        }
-
-        Build(
-            config == null ? new[] { 1 } : config.ColumnHeights,
-            config == null ? 1 : config.ColorCount,
-            config == null ? 0 : config.Seed,
-            false,
-            config != null && config.UsesReferencePattern);
+        Build(config.Pattern);
+        FitToViewport = !config.UsesReferencePattern && config.BoardRows <= config.BoardColumns * 1.25f;
     }
+
+    internal static YarnMatchPatternLayout GeneratePattern(YarnMatchLevelConfig config) => config.Pattern;
 
     public void Build(IReadOnlyList<int> columnHeights, int colorCount, int cellsPerColor, int seed)
     {
@@ -57,47 +49,19 @@ public sealed class YarnMatchBoardModel
         bool useGraphicPattern,
         bool useReferencePattern)
     {
-        _columns.Clear();
-        _allCells.Clear();
-        TotalCells = 0;
-        CollectedCells = 0;
-        Array.Clear(_colorCounts, 0, _colorCounts.Length);
-        Array.Clear(_requiredSpoolsByColor, 0, _requiredSpoolsByColor.Length);
-        RequiredSpoolCount = 0;
-
         IReadOnlyList<YarnMatchColor> colors = useReferencePattern
             ? YarnMatchReferencePatternGenerator.Generate(columnHeights)
             : YarnMatchBoardPatternGenerator.Generate(columnHeights, colorCount, seed, useGraphicPattern);
 
-        int cursor = 0;
-        for (int column = 0; column < columnHeights.Count; column++)
-        {
-            List<YarnMatchBoardCell> stack = new List<YarnMatchBoardCell>();
-            for (int row = 0; row < columnHeights[column]; row++)
-            {
-                YarnMatchBoardCell cell = new YarnMatchBoardCell
-                {
-                    Color = colors[cursor],
-                    Column = column,
-                    Row = row
-                };
-                cursor++;
-                stack.Add(cell);
-                _allCells.Add(cell);
-                _colorCounts[(int)cell.Color]++;
-            }
-            _columns.Add(stack);
-        }
-
-        TotalCells = cursor;
-        for (int color = 0; color < _colorCounts.Length; color++)
-        {
-            _requiredSpoolsByColor[color] = (_colorCounts[color] + 2) / 3;
-            RequiredSpoolCount += _requiredSpoolsByColor[color];
-        }
+        Build(columnHeights, colors);
     }
 
     public void Build(IReadOnlyList<int> columnHeights, IReadOnlyList<YarnMatchColor> colors)
+    {
+        Build(YarnMatchPatternLayout.Dense(columnHeights, colors));
+    }
+
+    internal void Build(YarnMatchPatternLayout layout, bool fitToViewport = false)
     {
         _columns.Clear();
         _allCells.Clear();
@@ -107,20 +71,21 @@ public sealed class YarnMatchBoardModel
         Array.Clear(_requiredSpoolsByColor, 0, _requiredSpoolsByColor.Length);
         RequiredSpoolCount = 0;
 
-        int cursor = 0;
-        for (int column = 0; column < columnHeights.Count; column++)
+        InitialRows = layout.Height;
+        FitToViewport = fitToViewport || layout.Width == layout.Height;
+        for (int column = 0; column < layout.Width; column++)
         {
             List<YarnMatchBoardCell> stack = new List<YarnMatchBoardCell>();
-            int height = Math.Max(0, columnHeights[column]);
-            for (int row = 0; row < height; row++)
+            for (int row = 0; row < layout.Height; row++)
             {
+                int color = layout.Colors[row * layout.Width + column];
+                if (color < 0) continue;
                 YarnMatchBoardCell cell = new YarnMatchBoardCell
                 {
-                    Color = colors[cursor],
+                    Color = (YarnMatchColor)color,
                     Column = column,
                     Row = row
                 };
-                cursor++;
                 stack.Add(cell);
                 _allCells.Add(cell);
                 _colorCounts[(int)cell.Color]++;
@@ -128,7 +93,8 @@ public sealed class YarnMatchBoardModel
             _columns.Add(stack);
         }
 
-        TotalCells = cursor;
+        TotalCells = _allCells.Count;
+        Array.Copy(_colorCounts, _remainingByColor, _colorCounts.Length);
         for (int color = 0; color < _colorCounts.Length; color++)
         {
             _requiredSpoolsByColor[color] = (_colorCounts[color] + YarnMatchRackModel.CellsPerSpool - 1)
@@ -139,15 +105,7 @@ public sealed class YarnMatchBoardModel
 
     public int RemainingCells(YarnMatchColor color)
     {
-        int count = 0;
-        for (int index = 0; index < _allCells.Count; index++)
-        {
-            if (_allCells[index].Active && _allCells[index].Color == color)
-            {
-                count++;
-            }
-        }
-        return count;
+        return _remainingByColor[(int)color];
     }
 
     public YarnMatchBoardCell FindFirstExposed(YarnMatchColor color)
@@ -199,6 +157,7 @@ public sealed class YarnMatchBoardModel
         List<YarnMatchBoardCell> stack = _columns[cell.Column];
         stack.RemoveAt(0);
         cell.Active = false;
+        _remainingByColor[(int)cell.Color]--;
         CollectedCells++;
         ReindexColumn(cell.Column);
         return true;
@@ -209,7 +168,8 @@ public sealed class YarnMatchBoardModel
         List<YarnMatchBoardCell> stack = _columns[column];
         for (int row = 0; row < stack.Count; row++)
         {
-            stack[row].Row = row;
+            // Preserve authored holes and column offsets; only the removed yarn's height falls.
+            stack[row].Row--;
         }
     }
 }

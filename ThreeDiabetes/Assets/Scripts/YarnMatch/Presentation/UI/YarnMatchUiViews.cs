@@ -3,20 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-internal sealed class YarnMatchBoardCellView
-{
-    internal RectTransform Rect;
-    internal Image Image;
-    internal CanvasGroup Group;
-    internal readonly List<YarnMatchStrandView> Strands = new List<YarnMatchStrandView>();
-}
-
-internal sealed class YarnMatchStrandView
-{
-    internal RectTransform Rect;
-    internal CanvasGroup Group;
-}
-
 internal sealed class YarnMatchPoolCellView
 {
     internal Image ShadowImage;
@@ -24,6 +10,7 @@ internal sealed class YarnMatchPoolCellView
     internal Button Button;
     internal Image SpoolImage;
     internal Image FreezeImage;
+    internal YarnMatchSpoolCapacityBadge CapacityBadge;
     internal CanvasGroup Group;
     internal Outline Outline;
     internal float BaseAlpha;
@@ -52,6 +39,8 @@ internal sealed class YarnMatchChainView
 
 internal sealed class YarnMatchRackEntryView
 {
+    internal int ActiveCollections;
+    internal float InFlightProgress;
     internal RectTransform SpoolRect;
     internal Vector3 BaseScale;
     internal Image SpoolImage;

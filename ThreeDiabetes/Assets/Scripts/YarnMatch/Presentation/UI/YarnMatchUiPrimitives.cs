@@ -9,6 +9,7 @@ internal static class YarnMatchUiPrimitives
 {
     private const string FallbackFontResourcePath = "Fonts & Materials/LiberationSans SDF";
     private const string ProjectFontResourcePath = "Fonts/SimHei";
+    private static readonly Vector2 BackgroundReferenceSize = new Vector2(750f, 1624f);
 
     private static TMP_FontAsset _uiFontAsset;
     private static bool _fontWarningIssued;
@@ -23,6 +24,29 @@ internal static class YarnMatchUiPrimitives
         rect.pivot = new Vector2(0.5f, 0.5f);
         rect.anchoredPosition = Vector2.zero;
         return child;
+    }
+
+    internal static GameObject CreateScreenLayer(string name, Transform parent)
+    {
+        GameObject layer = CreateChild(name, parent);
+        RectTransform rect = layer.GetComponent<RectTransform>();
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+        return layer;
+    }
+
+    internal static Image CreateScreenBackground(string name, Transform parent, Color color, bool blockRaycasts)
+    {
+        Image image = CreateImage(name, parent, YarnMatchVisualFactory.GetSolidSprite(),
+            color, BackgroundReferenceSize, Vector2.zero, false);
+        image.raycastTarget = blockRaycasts;
+        // Cover the actual screen at the background aspect ratio, independently of gameplay layout.
+        AspectRatioFitter fitter = image.gameObject.AddComponent<AspectRatioFitter>();
+        fitter.aspectRatio = BackgroundReferenceSize.x / BackgroundReferenceSize.y;
+        fitter.aspectMode = AspectRatioFitter.AspectMode.EnvelopeParent;
+        return image;
     }
 
     internal static Image CreateImage(string name, Transform parent, Sprite sprite, Color color, Vector2 size, Vector2 position, bool sliced)
