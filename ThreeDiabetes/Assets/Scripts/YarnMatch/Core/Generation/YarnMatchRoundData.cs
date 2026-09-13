@@ -5,7 +5,7 @@ internal sealed class YarnMatchRoundData
     internal readonly YarnMatchBoardModel Board;
     internal readonly YarnMatchPoolModel Pool;
 
-    private YarnMatchRoundData(YarnMatchLevelConfig config, YarnMatchPatternLayout pattern)
+    internal YarnMatchRoundData(YarnMatchLevelConfig config, YarnMatchPatternLayout pattern)
     {
         Board = new YarnMatchBoardModel();
         Board.Build(pattern, !config.UsesReferencePattern && config.BoardRows <= config.BoardColumns * 1.25f);
@@ -15,9 +15,14 @@ internal sealed class YarnMatchRoundData
             YarnMatchOpeningPlanner.Arrange(Board, Pool, config.Seed);
     }
 
-    internal static async Task<YarnMatchRoundData> PrepareAsync(YarnMatchLevelConfig config)
+    private YarnMatchRoundData(YarnMatchLevelSnapshot snapshot)
     {
-        YarnMatchPatternLayout pattern = await config.PreparePatternAsync();
-        return await Task.Run(() => new YarnMatchRoundData(config, pattern));
+        Board = new YarnMatchBoardModel();
+        Board.Build(snapshot.CreatePattern(), snapshot.FitToViewport);
+        Pool = new YarnMatchPoolModel();
+        Pool.Restore(snapshot.Pool);
     }
+
+    internal static Task<YarnMatchRoundData> PrepareAsync(YarnMatchLevelSnapshot snapshot)
+        => Task.Run(() => new YarnMatchRoundData(snapshot));
 }

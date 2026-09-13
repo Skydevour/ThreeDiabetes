@@ -20,7 +20,9 @@ Keep the YarnMatch implementation split by responsibility under `Assets/Scripts/
 ```text
 Core/                         Pure gameplay models and rules
 Core/Generation/              Subject masks, sampling, template deck, round data preparation
+Core/Persistence/             Plain initial level/pool snapshots
 Infrastructure/               Runtime bootstrap and scene integration
+Infrastructure/Persistence/   Async chapter files and bounded cache
 Presentation/UI/              UI construction, rendering, overlays, references
 Presentation/Animation/       Gameplay-independent presentation timelines
 Presentation/Effects/         Pooled transient visuals and trails
@@ -58,10 +60,11 @@ Presentation ownership is kept behind `YarnMatchPresentation`, which delegates t
 
 The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implementation:
 
-- Normal previews reserve a fresh seed from a difficulty profile; entry consumes
-  that seed and restart prepares a new one. No per-level layout is loaded or saved.
+- Normal levels are generated once in batches of 50 and saved as complete initial
+  layouts. Previews, entry and replay use that saved board; fresh live models restore
+  all lower tokens, pipe queues and mechanics without repeating generation.
 - Two hundred local 64 x 64 pixel-art templates supply normal board subjects. The special challenge
-  keeps its Excel-derived 48 x 40 image and independently randomizes its lower pool.
+  keeps its Excel-derived 48 x 40 image and saves its initially randomized lower pool separately.
 - Normal boards use explicit subject masks and preserve initial sparse coordinates.
   Source selection uses a difficulty-scored no-repeat deck and recent-history preference. Offline
   artwork under .codex/tools/pattern-art exports PNGs and matching palette/mask
@@ -73,6 +76,10 @@ The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implement
   and eight-neighbor thaw damage are separate rules.
 - Generation plans chains and freezes against reachable attack sources; consumed
   chains do not persist on pipe refills, and refresh retains occupied source topology.
+- Refresh globally shuffles remaining visible/queued tokens, preserving every empty
+  cell, slot mechanic and individual queue length. It provides no guaranteed fill.
+- YarnMatchLevelStore owns persistentDataPath/YarnMatchLevels, atomic chapter writes
+  and a two-chapter cache. Saved snapshots never share mutable tokens with live games.
 - Chapters append 50 thumbnails to a four-column reusable scrolling grid. Previous chapters remain
   accessible. Special challenge does not consume normal level 110 or normal progress.
 - Independent local music loops through menus and rounds; toggle/volume are persisted.
@@ -93,7 +100,7 @@ The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implement
   soft threads, additive receiver progress and independent column drops. The spool
   animation controller keeps arrival, emergence and completion behavior separate.
 - Round preparation uses a worker for plain board/pool/mechanic data. Unity resources
-  load asynchronously; plain JSON preparation and grid sampling also run in workers.
+  load asynchronously for missing chapters; saved chapter reading and model restoration run in workers.
   Unity object access and UI stay on the main thread. Thumbnail uploads use a 3 ms
   budget; lower UI creation yields after a 4 ms slice. No frame-rate claim without profiling.
 - A receiver that reaches three visibly tightens, scales up, pulses, and exits upward. Do not represent collection as an instant disappear followed by a delayed fake spawn.

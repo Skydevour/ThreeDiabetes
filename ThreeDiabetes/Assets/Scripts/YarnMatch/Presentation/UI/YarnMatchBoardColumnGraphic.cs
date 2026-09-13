@@ -13,6 +13,8 @@ internal sealed class YarnMatchBoardColumnGraphic : MaskableGraphic
     internal YarnMatchBoardCell HighlightCell;
     internal float HighlightAmount;
 
+    public override Texture mainTexture => YarnMatchVisualFactory.GetCellPatternTexture();
+
     internal void Configure(List<YarnMatchBoardCell> cells, float x, float size)
     {
         _cells = cells;
@@ -61,10 +63,10 @@ internal sealed class YarnMatchBoardColumnGraphic : MaskableGraphic
             Color tint = YarnMatchUiTheme.Palette[(int)cell.Color];
             if (cell == HighlightCell) tint = Color.Lerp(tint, Color.white, HighlightAmount);
             int start = mesh.currentVertCount;
-            mesh.AddVert(new Vector3(left, y), tint, Vector2.zero);
-            mesh.AddVert(new Vector3(left, y + _size), tint, Vector2.zero);
-            mesh.AddVert(new Vector3(left + _size, y + _size), tint, Vector2.zero);
-            mesh.AddVert(new Vector3(left + _size, y), tint, Vector2.zero);
+            mesh.AddVert(new Vector3(left, y), tint, new Vector2(0f, 0f));
+            mesh.AddVert(new Vector3(left, y + _size), tint, new Vector2(0f, 1f));
+            mesh.AddVert(new Vector3(left + _size, y + _size), tint, new Vector2(1f, 1f));
+            mesh.AddVert(new Vector3(left + _size, y), tint, new Vector2(1f, 0f));
             mesh.AddTriangle(start, start + 1, start + 2);
             mesh.AddTriangle(start, start + 2, start + 3);
         }

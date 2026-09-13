@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1240" viewBox="0 0 1600 1240">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#9aa6b2" flood-opacity=".22"/>
+    </filter>
+    <pattern id="cross" width="12" height="12" patternUnits="userSpaceOnUse">
+      <path d="M0 0L12 12M12 0L0 12" stroke="#9eb2bd" stroke-width="1.1" opacity=".52"/>
+    </pattern>
+    <pattern id="knit" width="16" height="12" patternUnits="userSpaceOnUse">
+      <path d="M-4 3Q0 -2 4 3T12 3T20 3M-4 9Q0 4 4 9T12 9T20 9" fill="none" stroke="#92aab7" stroke-width="2" opacity=".5"/>
+    </pattern>
+    <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.45" fill="#7f9aa7" opacity=".62"/><circle cx="9" cy="9" r="1.45" fill="#7f9aa7" opacity=".62"/>
+    </pattern>
+    <pattern id="herringbone" width="20" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 0L10 8L0 16M10 0L20 8L10 16" fill="none" stroke="#7897a4" stroke-width="1.6" opacity=".52"/>
+    </pattern>
+    <pattern id="hex" width="24" height="21" patternUnits="userSpaceOnUse">
+      <path d="M6 1L18 1L24 10.5L18 20L6 20L0 10.5Z" fill="none" stroke="#6f95a3" stroke-width="1.4" opacity=".54"/>
+    </pattern>
+    <pattern id="diamonds" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M10 1L19 10L10 19L1 10Z" fill="none" stroke="#8ba1ad" stroke-width="1.4" opacity=".52"/>
+    </pattern>
+    <pattern id="waves" width="28" height="18" patternUnits="userSpaceOnUse">
+      <path d="M-7 9Q0 0 7 9T21 9T35 9" fill="none" stroke="#6f98a7" stroke-width="1.8" opacity=".5"/>
+    </pattern>
+    <pattern id="grid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M0 0H18M0 0V18" fill="none" stroke="#91a9b4" stroke-width="1.3" opacity=".55"/>
+    </pattern>
+    <pattern id="stitch" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M2 6L7 2M11 16L16 12M2 16L6 12M12 6L16 2" stroke="#648e9c" stroke-width="2.2" stroke-linecap="round" opacity=".55"/>
+    </pattern>
+    <pattern id="ribs" width="14" height="14" patternUnits="userSpaceOnUse">
+      <path d="M3 0V14M10 0V14" stroke="#789eaa" stroke-width="2" opacity=".48"/>
+    </pattern>
+    <pattern id="sun" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="16" cy="16" r="7" fill="none" stroke="#6f98a5" stroke-width="1.5" opacity=".52"/>
+      <path d="M16 2V8M16 24V30M2 16H8M24 16H30M6 6L10 10M22 22L26 26M26 6L22 10M10 22L6 26" stroke="#6f98a5" stroke-width="1.4" opacity=".48"/>
+    </pattern>
+    <style>
+      .title{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#243746}
+      .sub{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#72818c}
+      .label{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#2c4350;font-size:24px;font-weight:700}
+      .note{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#71818b;font-size:18px}
+      .card{fill:#f8fbfc;stroke:#dce8ed;stroke-width:2}
+      .tile{stroke:#d9e1e5;stroke-width:2}
+    </style>
+  </defs>
+  <rect width="1600" height="1240" fill="#ffffff"/>
+  <text x="800" y="70" text-anchor="middle" class="title" font-size="42" font-weight="700">待消除格底纹候选 · 纹理对比板</text>
+  <text x="800" y="108" text-anchor="middle" class="sub" font-size="22">左侧为纯白格，右侧为彩色格。纹理只负责区分格子，不改变颜色识别。</text>
+
+  <g transform="translate(50 145)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">01 细十字织纹</text><text x="24" y="74" class="note">最稳妥，白底识别度高</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#cross)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#ff5964" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#cross)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(430 145)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">02 波浪针织</text><text x="24" y="74" class="note">柔和、毛线感最明显</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#knit)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#31c886" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#knit)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(810 145)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">03 细点阵</text><text x="24" y="74" class="note">最轻量，适合大量格子</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#dots)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#ffd447" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#dots)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(1190 145)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">04 斜向编织</text><text x="24" y="74" class="note">方向感清楚，图案活泼</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#herringbone)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#42a9ef" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#herringbone)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+
+  <g transform="translate(50 485)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">05 蜂巢纹</text><text x="24" y="74" class="note">适合特殊关卡或机关格</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#hex)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#a56bea" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#hex)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(430 485)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">06 菱形布纹</text><text x="24" y="74" class="note">细密但不抢色，通用性强</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#diamonds)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#ff8f3d" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#diamonds)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(810 485)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">07 柔线波纹</text><text x="24" y="74" class="note">与收线动画语言一致</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#waves)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#ff5964" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#waves)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(1190 485)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">08 细方格</text><text x="24" y="74" class="note">边界最清楚，适合大图案</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#grid)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#44b7ba" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#grid)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+
+  <g transform="translate(50 825)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">09 交叉缝线</text><text x="24" y="74" class="note">像布料接缝，辨识强</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#stitch)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#fa6c9a" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#stitch)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(430 825)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">10 竖向罗纹</text><text x="24" y="74" class="note">很克制，适合纯色大面积</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#ribs)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#ffbd42" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#ribs)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(810 825)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">11 线圈中心</text><text x="24" y="74" class="note">强化毛线主题，装饰性更强</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#sun)"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#7d8df2" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#sun)"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+  <g transform="translate(1190 825)">
+    <rect width="360" height="310" rx="18" class="card"/>
+    <text x="24" y="44" class="label">12 织物组合</text><text x="24" y="74" class="note">边框 + 低对比点纹，最完整</text>
+    <rect x="38" y="104" width="104" height="104" rx="12" fill="#fff" class="tile"/><rect x="38" y="104" width="104" height="104" rx="12" fill="url(#dots)"/><rect x="44" y="110" width="92" height="92" rx="9" fill="none" stroke="#658b99" stroke-width="3" opacity=".62"/>
+    <rect x="198" y="104" width="104" height="104" rx="12" fill="#36a8e8" class="tile"/><rect x="198" y="104" width="104" height="104" rx="12" fill="url(#dots)"/><rect x="204" y="110" width="92" height="92" rx="9" fill="none" stroke="#4d8190" stroke-width="3" opacity=".62"/>
+    <text x="90" y="246" text-anchor="middle" class="note">纯白</text><text x="250" y="246" text-anchor="middle" class="note">彩色</text>
+  </g>
+</svg>

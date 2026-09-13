@@ -1,14 +1,15 @@
 # YarnMatch Level Production
 
-1. Read GAME_RULES.md before changing rules. Runtime layouts are not authored or
-   stored per level; the catalog computes a profile and creates a new round seed.
+1. Read GAME_RULES.md before changing rules. Missing chapters are generated in
+   50-level batches from catalog profiles and saved as complete initial layouts.
+   Stored levels are reused for previews, replays and future app sessions.
 2. Author meaningful local art in .codex/tools/pattern-art and compile it into
    Assets/Resources/YarnMatch/Patterns/PatternTemplates.json. Each template has
    an id, title, minimum usable board size, RGB palette, equal-length rows and a
    same-size binary mask. Symbols index the palette; mask 1 means a real yarn cell.
    Author the mask explicitly: white subject areas must survive, genuine holes must not.
 3. Export a matching PNG for asset review. Gameplay and selection thumbnails both
-   use the same prepared PatternLayout with template and seed; never choose
+   use the same saved PatternLayout; never choose
    an independent static PNG for a playable item. The existing special image stays separate.
 4. Crop to mask bounds, preserve the natural aspect ratio and sample the subject
    using categorical occupied-area coverage. Select distinct source color regions
@@ -26,11 +27,13 @@
    Reject an individual impossible placement rather than relaxing live rules.
 9. Keep presentation independent: four-column reusable thumbnail rows without level
    numbers, local art, independent audio and separate animation ownership. Entry
-   consumes the preview reservation; replay draws a new template and seed. Static
+   restores the initial saved snapshot; replay uses the same layout. Static
    columns use batched visible meshes; only collecting tiles use pooled UI objects.
    Load Unity resources asynchronously, decode their plain data and sample grids in
    workers, and queue Unity thumbnail uploads with a 3 ms per-frame budget. Pure
-   board/pool/mechanic data builds in a worker, and lower UI construction uses 4 ms.
+   board/pool/mechanic data builds once in a worker and is persisted with ordered
+   queues, capacities and mechanism links. Later entry only restores fresh models;
+   lower UI construction uses 4 ms. File IO stays off the Unity thread.
 10. Compile the Player assembly and check Unity asset import. The user requested
     manual gameplay testing, no added test scripts, and no APK or commit unless asked.
 
@@ -111,15 +114,17 @@ It never inserts blockers or recolors the subject to force a combination.
 
 Runtime only loads the prepared template data, selects an eligible subject and
 samples it at the round's detail. It never executes the art compiler or synthesizes
-a new subject image. Gameplay thumbnails still use their exact pending PatternLayout,
+a new subject image. Gameplay thumbnails still use their exact saved PatternLayout,
 not a separately selected source PNG. Restart Play Mode after resource publication
 if the current session already cached the previous template pack.
 
-Await YarnMatchPatternResources.LoadAsync before querying the catalog. Resource
-objects/text extraction stay on the Unity thread; JSON metadata and subject sampling
-run off-thread. A round owns a shared sampling task for preview and entry. A recycled
-thumbnail releases its old config/task and never installs a stale result. The visible
-thumbnail queue starts one sample at a time and publishes under its frame budget.
+YarnMatchLevelStore awaits YarnMatchPatternResources.LoadAsync only when generating
+missing normal chapters. Resource objects/text extraction stay on the Unity thread;
+sampling, initial mechanic planning, chapter IO and live-model restoration run off-thread.
+The store caches at most two chapters; recycled thumbnails release their pending
+snapshot task and never install stale results. Existing chapter files bypass the
+artwork/generation path. Publish saves with a temporary file and same-directory rename.
+Keep initial snapshots independent of live mutation; refresh never writes saves.
 
 Background music is Assets/Resources/YarnMatch/Audio/QuietStitches.wav.
 Its deterministic offline source is .codex/tools/BakeBackgroundMusic.cs; it is not

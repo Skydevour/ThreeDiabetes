@@ -2,9 +2,16 @@
 
 ## Runtime Levels
 
-- Normal rounds use fresh seeds. Visible thumbnails reserve a template plus a seed;
-  entry consumes that reservation and restart creates a fresh one. Reservations are memory-only.
-- The level number selects a difficulty profile, not a saved layout.
+- Normal levels are generated once in batches of 50 and saved locally. The level
+  number selects a difficulty profile only during first generation. Entry, restart,
+  and later app sessions restore the same complete initial layout.
+- Startup prepares missing revealed chapters; clearing a chapter starts preparing
+  the next 50. Existing chapters are never overwritten by play or refresh.
+- Saves include the upper color/mask grid, seed, lower token identities/capacities,
+  occupied/empty positions, unlock/freeze state, chains, pipes and ordered queues.
+  Each entry creates fresh mutable models. Only two chapters are cached in memory.
+  File IO, first generation and model restoration run in workers; cached replays
+  skip template sampling, mechanic planning and opening arrangement.
 - Normal color budgets: levels 1-3 allow 4, 4-6 allow 5, 7-9 allow 6,
   10-12 allow 7, 13-15 allow 8, and later levels allow 9. Actual colors come
   only from the subject. Local replacement art has at least four foreground source
@@ -46,7 +53,7 @@
   No matching opportunity means no forced alteration. Board pixels, occupied lower
   positions, mechanics, token identities and capacities remain unchanged.
 - Special challenge is independent of normal level 110: its upper board retains
-  the Excel-derived 48-column, 40-row matrix, while its lower pool is randomized.
+  the Excel-derived 48-column, 40-row matrix; its lower pool is randomized once and saved separately.
 
 ## Quantity Conservation
 
@@ -114,21 +121,29 @@ or as a consumed token. Never copy a token to create assistance.
 
 ## Assistance and Progress
 
-- Refresh has no usage limit. It arranges an available target color without
-  changing capacities or removing occupied locked/frozen source positions.
-  Visible rearrangement swaps tokens; queue exchanges preserve token identity.
+- Refresh has no usage limit and globally shuffles all unconsumed visible and queued
+  tokens together, including tokens in frozen/locked/chain cells. Every currently
+  empty cell stays empty and each pipe retains its exact queue length. Colors,
+  identities and capacities move together; no new tokens/colors are created.
+  Slot unlock state, thaw hits, chain endpoints and pipe/output positions stay fixed.
+  The upper board and rack are untouched. No target-color or guaranteed-fill logic.
+  Refresh waits for arrivals, collections, settling and pipe replenishment to finish,
+  and remains unavailable when the rack is full or the round has ended.
 - Hint considers selectable spools with an exposed match and enough rack slots.
 - One four-column scrolling thumbnail grid contains all revealed chapters; old chapters remain visible.
   Completing level 50 unlocks 51 and reveals 51-100, and so on.
-- Items do not show level numbers. Their thumbnails use the exact generated board
-  colors, dimensions and orientation from the pending seed, not a separate PNG.
+- Items do not show level numbers. Their thumbnails use the exact saved board
+  colors, dimensions and orientation, not a separate PNG or new random seed.
   Locked items retain their picture and a lock-state label. Only visible rows and
   overscan own textures; recycled thumbnail components release their old textures.
-  Thumbnail sampling runs in a worker; Unity texture uploads run in a main-thread
+  Chapter loading runs in a worker; Unity thumbnail texture uploads run in a main-thread
   queue with a 3 ms between-upload budget. An item cannot enter before its picture
   is ready. Rebinding drops the old task reference so stale results cannot publish.
-- Only highest unlocked progression and today's temporary unlock state are saved.
-  Music enabled/volume preferences are also local.
+- Highest unlocked progression, today's temporary unlock and music preferences
+  remain in PlayerPrefs. Initial layouts live under persistentDataPath/YarnMatchLevels
+  as chapter-NNNN.json and special.json. A completed chapter is written to a temporary
+  file then renamed. Load errors are reported, not repaired by silently replacing
+  saved layouts. No mid-round save is performed.
 - Daily unlock applies to all revealed chapter levels, expires on local date change,
   and does not unlock infinitely many future chapters.
 

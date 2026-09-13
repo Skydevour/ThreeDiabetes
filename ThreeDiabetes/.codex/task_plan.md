@@ -1,5 +1,17 @@
 # Runtime Level Generation Implementation
 
+## 2026-09-13 Global Shuffle and Persistent Chapters
+
+This decision supersedes the historical targeted-refresh and per-entry randomization
+rules below. Current plan: plans/2026-09-13-shuffle-and-saved-levels.md.
+
+- [complete] One global shuffle of visible and queued tokens, preserving empty cells,
+  all token capacities, slot mechanics and individual pipe queue lengths.
+- [complete] Initial board/pool snapshots with independent restoration of mutable models.
+- [complete] Background generation and atomic local saves in batches of 50; special
+  challenge saved separately. Two-chapter cache and saved-layout thumbnails.
+- [complete] Final Unity compile and scoped review passed. No test scripts, APK or commit.
+
 ## 2026-09-09 Difficulty and Loading Follow-Up
 
 Approved continuation, using the existing Unity/game-development and planning workflow.

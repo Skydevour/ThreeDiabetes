@@ -1,30 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public sealed class YarnMatchLevelConfig
 {
     private readonly int[] _columnHeights;
     private YarnMatchPatternLayout _pattern;
-    private Task<YarnMatchPatternLayout> _preparation;
     internal int TemplateIndex { get; }
     internal YarnMatchPatternLayout Pattern => _pattern ?? (_pattern = UsesReferencePattern
         ? YarnMatchPatternLayout.Dense(ColumnHeights, YarnMatchReferencePatternGenerator.Generate(ColumnHeights))
         : YarnMatchTemplateSampler.Generate(this));
-    internal Task<YarnMatchPatternLayout> PreparePatternAsync()
-    {
-        if (_preparation == null)
-            _preparation = _pattern != null ? Task.FromResult(_pattern) : Task.Run(() => UsesReferencePattern
-                ? YarnMatchPatternLayout.Dense(ColumnHeights, YarnMatchReferencePatternGenerator.Generate(ColumnHeights))
-                : YarnMatchTemplateSampler.Generate(this));
-        return _preparation;
-    }
-    internal void RetainPattern(YarnMatchPatternLayout pattern) => _pattern = pattern;
-    internal void ReleasePattern()
-    {
-        _pattern = null;
-        _preparation = null;
-    }
     public int Number { get; }
     public int Chapter => YarnMatchLevelCatalog.GetChapterIndex(Number) + 1;
     public int ChapterLevel => (Number - 1) % YarnMatchLevelCatalog.LevelsPerChapter + 1;

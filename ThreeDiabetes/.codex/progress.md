@@ -1,5 +1,25 @@
 # Implementation Progress
 
+## 2026-09-13 Global Shuffle and Saved Chapters
+
+- Refresh now shuffles visible and queued tokens in one pool, including frozen and
+  chained positions. Empty slots, unlock/thaw/chain state, each queue length and
+  token identity/color/capacity are preserved. Removed targeted assistance helpers.
+- Core/Persistence contains initial board/pool snapshots. Pool restoration creates
+  independent tokens/cells and reconnects pipe outputs, queues and chain endpoints.
+- Infrastructure/Persistence/YarnMatchLevelStore generates missing 50-level batches
+  in workers and saves complete chapter JSON under persistentDataPath/YarnMatchLevels.
+  Temporary-file publication, two-chapter cache and separate special.json; gameplay
+  never writes the initial snapshots. Saved chapter errors are not silently regenerated.
+- Startup prepares revealed chapters; chapter completion begins the next batch.
+  Entry/restart and virtualized thumbnails use saved snapshots, avoiding repeated
+  image sampling and mechanic/opening generation. Existing progress/preferences remain.
+- Final Unity import/compilation exited 0, no C# warnings/errors; scoped diff check
+  passed. No test scripts, APK, commits or device-performance claims. Previous APK
+  remains the September 11 wave-texture build until another build is requested.
+
+This supersedes earlier per-entry fresh seeds and guaranteed/targeted-refresh plans.
+
 ## 2026-09-09 Board CanvasRenderer Fix
 
 - User paused the feature follow-up and reported MissingComponentException on entry.

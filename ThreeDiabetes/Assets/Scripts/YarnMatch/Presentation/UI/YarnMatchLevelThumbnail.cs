@@ -8,23 +8,23 @@ internal sealed class YarnMatchLevelThumbnail : MonoBehaviour
     private Image _image;
     private Texture2D _texture;
     private Sprite _sprite;
-    private YarnMatchLevelConfig _round;
-    private Task<YarnMatchPatternLayout> _pending;
+    private int _level;
+    private Task<YarnMatchLevelSnapshot> _pending;
     private bool _failed;
     internal bool IsReady => _sprite != null;
 
-    internal void Show(YarnMatchLevelConfig round)
+    internal void Show(int level)
     {
-        if (_round == round) return;
+        if (_level == level && !_failed) return;
         if (_image == null) _image = GetComponent<Image>();
         Release();
-        _round = round;
+        _level = level;
     }
 
     internal bool TryPublish()
     {
-        if (_round == null || _sprite != null || _failed) return true;
-        if (_pending == null) _pending = _round.PreparePatternAsync();
+        if (_level == 0 || _sprite != null || _failed) return true;
+        if (_pending == null) _pending = YarnMatchLevelStore.GetAsync(_level);
         if (!_pending.IsCompleted) return false;
         if (_pending.IsFaulted)
         {
@@ -32,8 +32,7 @@ internal sealed class YarnMatchLevelThumbnail : MonoBehaviour
             _failed = true;
             return true;
         }
-        YarnMatchPatternLayout layout = _pending.Result;
-        _round.RetainPattern(layout);
+        YarnMatchPatternLayout layout = _pending.Result.CreatePattern();
         Color32[] pixels = new Color32[layout.Width * layout.Height];
         for (int i = 0; i < pixels.Length; i++)
             if (layout.Colors[i] >= 0) pixels[i] = YarnMatchUiTheme.Palette[layout.Colors[i]];
@@ -51,6 +50,7 @@ internal sealed class YarnMatchLevelThumbnail : MonoBehaviour
         _image.sprite = _sprite;
         _image.preserveAspect = true;
         _image.enabled = true;
+        _pending = null;
         return true;
     }
 
@@ -58,8 +58,7 @@ internal sealed class YarnMatchLevelThumbnail : MonoBehaviour
 
     private void Release()
     {
-        _round?.ReleasePattern();
-        _round = null;
+        _level = 0;
         _pending = null;
         _failed = false;
         if (_image != null)

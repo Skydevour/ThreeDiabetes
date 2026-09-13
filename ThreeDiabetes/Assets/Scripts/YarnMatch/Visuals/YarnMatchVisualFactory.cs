@@ -12,6 +12,8 @@ public static class YarnMatchVisualFactory
     private static Sprite _solidSprite;
     private static Sprite _panelSprite;
     private static Sprite _circleSprite;
+    private static Texture2D _cellPatternTexture;
+    private static Sprite _cellPatternSprite;
 
     public static Sprite GetSolidSprite()
     {
@@ -113,6 +115,29 @@ public static class YarnMatchVisualFactory
         return sprite;
     }
 
+    public static Texture2D GetCellPatternTexture()
+    {
+        if (_cellPatternTexture == null)
+        {
+            _cellPatternTexture = CreateKnitPatternTexture();
+        }
+
+        return _cellPatternTexture;
+    }
+
+    public static Sprite GetCellPatternSprite()
+    {
+        if (_cellPatternSprite == null)
+        {
+            Texture2D texture = GetCellPatternTexture();
+            _cellPatternSprite = Sprite.Create(texture,
+                new Rect(0f, 0f, texture.width, texture.height),
+                new Vector2(0.5f, 0.5f), 100f);
+        }
+
+        return _cellPatternSprite;
+    }
+
     public static Sprite GetSpoolSprite(Color color)
     {
         int key = ColorUtility.ToHtmlStringRGB(color).GetHashCode();
@@ -169,12 +194,10 @@ public static class YarnMatchVisualFactory
         {
             for (int x = 0; x < size; x++)
             {
-                float waveA = Mathf.Sin(x * 0.72f + Mathf.Sin(y * 0.18f) * 1.5f);
-                float waveB = Mathf.Sin(y * 0.76f + Mathf.Sin(x * 0.16f) * 1.3f);
-                float weave = Mathf.Clamp01(0.5f + (waveA * 0.34f + waveB * 0.16f));
+                float wave = SoftWaveValue(x, y);
                 Color shadow = Color.Lerp(baseColor, Color.black, 0.08f);
                 Color highlight = Color.Lerp(baseColor, Color.white, 0.06f);
-                Color color = Color.Lerp(shadow, highlight, weave);
+                Color color = Color.Lerp(shadow, highlight, wave);
                 pixels[y * size + x] = new Color(color.r, color.g, color.b, 1f);
             }
         }
@@ -183,6 +206,35 @@ public static class YarnMatchVisualFactory
         texture.filterMode = FilterMode.Bilinear;
         texture.wrapMode = TextureWrapMode.Clamp;
         return texture;
+    }
+
+    private static Texture2D CreateKnitPatternTexture()
+    {
+        const int size = 72;
+        Texture2D texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
+        Color[] pixels = new Color[size * size];
+        for (int y = 0; y < size; y++)
+        {
+            for (int x = 0; x < size; x++)
+            {
+                float wave = SoftWaveValue(x, y);
+                Color color = Color.Lerp(new Color(0.82f, 0.90f, 0.93f), Color.white, wave);
+                pixels[y * size + x] = new Color(color.r, color.g, color.b, 1f);
+            }
+        }
+
+        texture.SetPixels(pixels);
+        texture.Apply();
+        texture.filterMode = FilterMode.Bilinear;
+        texture.wrapMode = TextureWrapMode.Repeat;
+        return texture;
+    }
+
+    private static float SoftWaveValue(int x, int y)
+    {
+        float wave = Mathf.Sin(y * 0.36f + Mathf.Sin(x * 0.09f) * 1.25f);
+        float ridge = Mathf.Pow(Mathf.Abs(wave), 5.5f);
+        return Mathf.Clamp01(0.56f + ridge * 0.44f);
     }
 
     private static Texture2D CreateThreadTexture(Color baseColor)

@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\YarnMatch\Audio\YarnMatchMusic.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Presentation\Animation\YarnMatchAnimationController.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchStrategicPatternWeaver.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\Persistence\YarnMatchLevelSnapshot.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchBoardSurface.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchThumbnailQueue.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Core\Generation\YarnMatchTemplatePalette.cs" />
@@ -88,11 +89,13 @@
     <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchUiRenderer.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchMechanicLayoutGenerator.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Infrastructure\YarnMatchPatternResources.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Core\Persistence\YarnMatchPoolSnapshot.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchBoardColumnGraphic.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchReferencePatternGenerator.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Presentation\UI\YarnMatchLevelThumbnail.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Core\Generation\YarnMatchTemplateDeck.cs" />
     <Compile Include="Assets\Scripts\YarnMatch\Core\YarnMatchCollectionScheduler.cs" />
+    <Compile Include="Assets\Scripts\YarnMatch\Infrastructure\Persistence\YarnMatchLevelStore.cs" />
     <None Include="Library\PackageCache\com.unity.modules.subsystems\package.json" />
     <None Include="Library\PackageCache\com.unity.render-pipelines.universal\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -17,7 +17,6 @@ public sealed class YarnMatchGame : MonoBehaviour
     private int _roundId;
     private int _selectedLevel = 1;
     private int _highestUnlockedLevel = 1;
-    private YarnMatchLevelConfig _levelConfig;
     private YarnMatchBoardModel _board;
     private YarnMatchPoolModel _pool;
     private YarnMatchRackModel _rack;
@@ -28,6 +27,7 @@ public sealed class YarnMatchGame : MonoBehaviour
     private Coroutine _roundBuildRoutine;
     private int _activeReplenishmentAnimations;
     private Coroutine _levelSelectRoutine;
+    private readonly System.Random _refreshSeeds = new System.Random();
 
     private void Awake()
     {
@@ -41,6 +41,15 @@ public sealed class YarnMatchGame : MonoBehaviour
         }
         _presentation.Initialize(SelectSpool, RequestRestart, AdvanceToNextLevel, ShowHint, RequestRefresh, OpenLevelSelect, StartSelectedLevel, UnlockAllLevelsForToday, StartSpecialChallenge, ReturnToMainMenu);
         _presentation.ShowMainMenu();
+        YarnMatchLevelStore.Initialize(Application.persistentDataPath);
+        StartCoroutine(PrepareSavedLevels());
+    }
+
+    private IEnumerator PrepareSavedLevels()
+    {
+        var preparation = YarnMatchLevelStore.EnsureLevelsAsync(_highestUnlockedLevel);
+        while (!preparation.IsCompleted) yield return null;
+        if (preparation.IsFaulted) Debug.LogException(preparation.Exception.GetBaseException());
     }
 
     private void OpenLevelSelect()
@@ -53,14 +62,14 @@ public sealed class YarnMatchGame : MonoBehaviour
     {
         _presentation.SetLoading(true);
         yield return null;
-        var loading = YarnMatchPatternResources.LoadAsync();
+        var loading = YarnMatchLevelStore.EnsureLevelsAsync(_highestUnlockedLevel);
         while (!loading.IsCompleted) yield return null;
         _levelSelectRoutine = null;
         _presentation.SetLoading(false);
         if (loading.IsFaulted)
         {
             Debug.LogException(loading.Exception.GetBaseException());
-            _presentation.ShowToast("图案加载失败，请重新打开", 2f);
+            _presentation.ShowToast("关卡存档读取或保存失败，请重新打开", 2f);
             yield break;
         }
         RefreshDailyUnlockState();
@@ -136,7 +145,7 @@ public sealed class YarnMatchGame : MonoBehaviour
     private IEnumerator BuildRound(int roundId)
     {
         yield return null;
-        var loading = YarnMatchPatternResources.LoadAsync();
+        var loading = YarnMatchLevelStore.GetAsync(_selectedLevel, _specialChallenge);
         while (!loading.IsCompleted) yield return null;
         if (roundId != _roundId) yield break;
         if (loading.IsFaulted)
@@ -144,13 +153,11 @@ public sealed class YarnMatchGame : MonoBehaviour
             Debug.LogException(loading.Exception.GetBaseException());
             _roundBuildRoutine = null;
             ReturnToMainMenu();
-            _presentation.ShowToast("图案加载失败，请重新进入", 2f);
+            _presentation.ShowToast("关卡存档读取或保存失败，请重新进入", 2f);
             yield break;
         }
-        _levelConfig = _specialChallenge
-            ? YarnMatchLevelCatalog.CreateSpecialRound()
-            : YarnMatchLevelCatalog.CreateRound(_selectedLevel);
-        var preparation = YarnMatchRoundData.PrepareAsync(_levelConfig);
+        YarnMatchLevelSnapshot snapshot = loading.Result;
+        var preparation = YarnMatchRoundData.PrepareAsync(snapshot);
         while (!preparation.IsCompleted) yield return null;
         if (roundId != _roundId) yield break;
         if (preparation.IsFaulted)
@@ -166,10 +173,10 @@ public sealed class YarnMatchGame : MonoBehaviour
         _pendingReplenishments.Clear();
         _activeReplenishmentAnimations = 0;
         _board = data.Board;
-        _scheduler = new YarnMatchCollectionScheduler(_board, _levelConfig.Seed);
+        _scheduler = new YarnMatchCollectionScheduler(_board, snapshot.Seed);
         _pool = data.Pool;
         _rack = new YarnMatchRackModel();
-        _presentation.SetLevel(_levelConfig.Number);
+        _presentation.SetLevel(snapshot.Number);
         yield return _presentation.ResetGame(_board, _pool, _rack);
         if (roundId != _roundId) yield break;
         _state = YarnMatchGameState.Playing;
@@ -520,24 +527,7 @@ public sealed class YarnMatchGame : MonoBehaviour
             return;
         }
 
-        YarnMatchSpoolToken readyToken = FindCompletableSelectableSpool();
-        if (readyToken != null)
-        {
-            StartCoroutine(_presentation.PulseSpool(readyToken));
-            _presentation.ShowToast(
-                YarnMatchUiTheme.GetColorName(readyToken.Color) + "滚筒已经可以直接收满",
-                1.25f);
-            return;
-        }
-
-        if (!TryFindRefreshTarget(out YarnMatchColor targetColor, out int exposedCount))
-        {
-            _presentation.ShowToast("当前没有可整理的滚筒", 1.1f);
-            return;
-        }
-
-        YarnMatchSpoolToken arrangedToken = _pool.MakeColorSelectable(targetColor);
-        if (arrangedToken == null)
+        if (!_pool.Refresh(_refreshSeeds.Next()))
         {
             _presentation.ShowToast("当前没有可整理的滚筒", 1.1f);
             return;
@@ -545,59 +535,7 @@ public sealed class YarnMatchGame : MonoBehaviour
 
         _presentation.RenderPool(_pool, _state);
         _presentation.SetInteraction(_pool, _state, true);
-        StartCoroutine(_presentation.PulseSpool(arrangedToken));
-        YarnMatchBoardCell exposedCell = FindAvailableExposedCell(targetColor);
-        if (exposedCell != null)
-        {
-            StartCoroutine(_presentation.PulseBoardCell(exposedCell));
-        }
-
-        string result = exposedCount >= YarnMatchRackModel.CellsPerSpool
-            ? "已整理出可以直接收满的" + YarnMatchUiTheme.GetColorName(targetColor) + "滚筒"
-            : "当前露出不足三格，已整理出推进最多的" + YarnMatchUiTheme.GetColorName(targetColor) + "滚筒";
-        _presentation.ShowToast(result, 1.5f);
-    }
-
-    private YarnMatchSpoolToken FindCompletableSelectableSpool()
-    {
-        List<YarnMatchSpoolToken> selectable = _pool.GetSelectableTokens();
-        for (int index = 0; index < selectable.Count; index++)
-        {
-            if (_rack.CanCreate(_pool.GetSelectionCount(selectable[index]))
-                && CountAvailableExposed(selectable[index].Color) >= selectable[index].Capacity)
-            {
-                return selectable[index];
-            }
-        }
-
-        return null;
-    }
-
-    private bool TryFindRefreshTarget(out YarnMatchColor targetColor, out int exposedCount)
-    {
-        targetColor = default(YarnMatchColor);
-        exposedCount = 0;
-        int colorCount = Enum.GetValues(typeof(YarnMatchColor)).Length;
-        for (int color = 0; color < colorCount; color++)
-        {
-            YarnMatchColor candidate = (YarnMatchColor)color;
-            int candidateCount = CountAvailableExposed(candidate);
-            if (candidateCount <= 0 || !_pool.HasRemainingToken(candidate))
-            {
-                continue;
-            }
-
-            bool candidateCompletes = candidateCount >= YarnMatchRackModel.CellsPerSpool;
-            bool currentCompletes = exposedCount >= YarnMatchRackModel.CellsPerSpool;
-            if ((candidateCompletes && !currentCompletes)
-                || candidateCompletes == currentCompletes && candidateCount > exposedCount)
-            {
-                targetColor = candidate;
-                exposedCount = candidateCount;
-            }
-        }
-
-        return exposedCount > 0;
+        _presentation.ShowToast("线轴已重新排列", 1.1f);
     }
 
     private void RequestRestart()
@@ -630,6 +568,9 @@ public sealed class YarnMatchGame : MonoBehaviour
         {
             _highestUnlockedLevel = _selectedLevel + 1;
             SaveProgress();
+            if (YarnMatchLevelCatalog.GetChapterIndex(_highestUnlockedLevel)
+                != YarnMatchLevelCatalog.GetChapterIndex(_selectedLevel))
+                StartCoroutine(PrepareSavedLevels());
         }
         _presentation.ShowResult(won, title, detail, !_specialChallenge);
         _presentation.SetInteraction(_pool, _state, false);

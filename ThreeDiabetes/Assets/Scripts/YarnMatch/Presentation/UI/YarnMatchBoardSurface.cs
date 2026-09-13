@@ -58,7 +58,7 @@ internal sealed class YarnMatchBoardSurface : MaskableGraphic,
     {
         Image image = _freeTiles.Count > 0 ? _freeTiles.Pop()
             : YarnMatchUiPrimitives.CreateImage("Collecting Yarn", transform,
-                YarnMatchVisualFactory.GetSolidSprite(), Color.white, Vector2.one, Vector2.zero, false);
+                YarnMatchVisualFactory.GetCellPatternSprite(), Color.white, Vector2.one, Vector2.zero, false);
         image.raycastTarget = false;
         image.color = YarnMatchUiTheme.Palette[(int)cell.Color];
         image.rectTransform.sizeDelta = Vector2.one * _cellSize;

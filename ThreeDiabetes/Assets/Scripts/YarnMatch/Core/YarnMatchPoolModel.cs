@@ -43,6 +43,41 @@ public sealed class YarnMatchPoolModel
         Build(config, null);
     }
 
+    internal void Restore(YarnMatchPoolSnapshot snapshot)
+    {
+        Clear();
+        _columns = snapshot.Columns;
+        _rows = snapshot.Rows;
+        CreateCells();
+        foreach (var token in snapshot.Tokens)
+            _tokens.Add(new YarnMatchSpoolToken { Id = token.Id, Color = token.Color, Capacity = token.Capacity });
+        for (int i = 0; i < _cells.Count; i++)
+        {
+            var source = snapshot.Cells[i];
+            var cell = _cells[i];
+            cell.Unlocked = source.Unlocked;
+            cell.FreezeHitsRemaining = source.FreezeHits;
+            if (source.Token >= 0) AttachToken(cell, _tokens[source.Token]);
+        }
+        foreach (var source in snapshot.Tunnels)
+        {
+            var tunnel = new YarnMatchTunnel
+            {
+                Target = _cells[source.Target], OutputCell = _cells[source.Output], Direction = source.Direction
+            };
+            tunnel.Target.Tunnel = tunnel;
+            tunnel.OutputCell.SourceTunnel = tunnel;
+            foreach (int token in source.Queue) tunnel.Queue.Add(_tokens[token]);
+            _tunnels.Add(tunnel);
+        }
+        foreach (var source in snapshot.Chains)
+        {
+            var chain = new YarnMatchChain { Id = source.Id, First = _cells[source.First], Second = _cells[source.Second] };
+            chain.First.ChainId = chain.Second.ChainId = chain.Id;
+            _chains.Add(chain);
+        }
+    }
+
     public void Build(YarnMatchLevelConfig config, IReadOnlyList<int> boardColorCounts)
     {
         if (config == null)
@@ -468,18 +503,6 @@ public sealed class YarnMatchPoolModel
         return token;
     }
 
-    public bool HasRemainingToken(YarnMatchColor color)
-    {
-        for (int index = 0; index < _tokens.Count; index++)
-        {
-            if (!_tokens[index].Used && _tokens[index].Color == color)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public List<YarnMatchSpoolToken> GetSelectableTokens()
     {
         List<YarnMatchSpoolToken> result = new List<YarnMatchSpoolToken>();
@@ -497,86 +520,31 @@ public sealed class YarnMatchPoolModel
     public bool Refresh(int seed)
     {
         List<YarnMatchPoolCell> occupiedCells = new List<YarnMatchPoolCell>();
-        List<YarnMatchSpoolToken> visibleTokens = new List<YarnMatchSpoolToken>();
+        List<YarnMatchSpoolToken> shuffled = new List<YarnMatchSpoolToken>();
         for (int index = 0; index < _cells.Count; index++)
         {
             YarnMatchPoolCell cell = _cells[index];
             if (cell.Token != null && !cell.Token.Used && cell.Tunnel == null)
             {
                 occupiedCells.Add(cell);
-                visibleTokens.Add(cell.Token);
+                shuffled.Add(cell.Token);
             }
         }
 
-        YarnMatchRandom.Shuffle(visibleTokens, seed);
-        for (int index = 0; index < occupiedCells.Count; index++)
-        {
-            AttachToken(occupiedCells[index], visibleTokens[index]);
-        }
+        foreach (var tunnel in _tunnels) shuffled.AddRange(tunnel.Queue);
+        if (shuffled.Count < 2) return false;
+        YarnMatchRandom.Shuffle(shuffled, seed);
 
-        List<YarnMatchSpoolToken> queued = new List<YarnMatchSpoolToken>();
-        List<int> queueSizes = new List<int>();
-        for (int tunnelIndex = 0; tunnelIndex < _tunnels.Count; tunnelIndex++)
-        {
-            List<YarnMatchSpoolToken> queue = _tunnels[tunnelIndex].Queue;
-            queueSizes.Add(queue.Count);
-            queued.AddRange(queue);
-            queue.Clear();
-        }
-        YarnMatchRandom.Shuffle(queued, seed + 1);
+        // Locations stay fixed; only complete tokens (including capacity) move.
+        foreach (var token in shuffled) token.Cell = null;
         int cursor = 0;
-        for (int tunnelIndex = 0; tunnelIndex < _tunnels.Count; tunnelIndex++)
+        foreach (var cell in occupiedCells) AttachToken(cell, shuffled[cursor++]);
+        foreach (var tunnel in _tunnels)
         {
-            for (int queueIndex = 0; queueIndex < queueSizes[tunnelIndex]; queueIndex++)
-            {
-                _tunnels[tunnelIndex].Queue.Add(queued[cursor++]);
-            }
+            for (int index = 0; index < tunnel.Queue.Count; index++)
+                tunnel.Queue[index] = shuffled[cursor++];
         }
-        return occupiedCells.Count > 1 || queued.Count > 1;
-    }
-
-    public YarnMatchSpoolToken MakeColorSelectable(YarnMatchColor color)
-    {
-        for (int index = 0; index < _cells.Count; index++)
-        {
-            YarnMatchSpoolToken token = _cells[index].Token;
-            if (token != null && token.Color == color && token.Cell.ChainId < 0 && IsSelectable(token))
-            {
-                return token;
-            }
-        }
-
-        YarnMatchSpoolToken target = null;
-        for (int index = 0; index < _tokens.Count; index++)
-        {
-            YarnMatchSpoolToken token = _tokens[index];
-            if (!token.Used && token.Color == color)
-            {
-                target = token;
-                break;
-            }
-        }
-        if (target == null)
-        {
-            return null;
-        }
-
-        YarnMatchPoolCell destination = FindRefreshCell(target.Cell == null);
-        if (destination == null)
-        {
-            return null;
-        }
-
-        if (target.Cell != null)
-        {
-            AttachToken(target.Cell, destination.Token);
-        }
-        else if (!ReplaceInQueue(target, destination.Token))
-        {
-            return null;
-        }
-        AttachToken(destination, target);
-        return target;
+        return true;
     }
 
     internal void PlaceToken(YarnMatchSpoolToken target, YarnMatchPoolCell destination)
@@ -585,23 +553,6 @@ public sealed class YarnMatchPoolModel
         if (target.Cell != null) AttachToken(target.Cell, destination.Token);
         else ReplaceInQueue(target, destination.Token);
         AttachToken(destination, target);
-    }
-
-    private YarnMatchPoolCell FindRefreshCell(bool allowEmpty)
-    {
-        for (int index = 0; index < _cells.Count; index++)
-        {
-            YarnMatchPoolCell cell = _cells[index];
-            if ((cell.Token != null || allowEmpty)
-                && cell.Tunnel == null
-                && cell.ChainId < 0
-                && cell.FreezeHitsRemaining == 0
-                && cell.Unlocked)
-            {
-                return cell;
-            }
-        }
-        return null;
     }
 
     private bool ReplaceInQueue(YarnMatchSpoolToken target, YarnMatchSpoolToken replacement)

@@ -103,7 +103,7 @@ internal sealed class YarnMatchLevelList
             item.Rect.anchoredPosition = new Vector2(
                 (column - (Columns - 1) * 0.5f) * ColumnStep, -(row + 0.5f) * RowHeight);
             item.State.text = unlocked ? string.Empty : "未解锁";
-            item.Preview.Show(YarnMatchLevelCatalog.PrepareRound(level));
+            item.Preview.Show(level);
             _previews.Enqueue(item.Preview);
         }
     }

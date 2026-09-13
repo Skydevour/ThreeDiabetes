@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 public static class YarnMatchLevelCatalog
 {
@@ -10,29 +9,16 @@ public static class YarnMatchLevelCatalog
     private const int InitialPoolCells = 48;
     private const int PoolCellsPerMilestone = 10;
     private static readonly Random RoundSeeds = new Random();
-    private static readonly Dictionary<int, YarnMatchLevelConfig> PreviewRounds = new Dictionary<int, YarnMatchLevelConfig>();
     private static readonly YarnMatchTemplateDeck TemplateDeck = new YarnMatchTemplateDeck();
 
-    public static YarnMatchLevelConfig Get(int level) => PrepareRound(level);
-    internal static YarnMatchLevelConfig PrepareRound(int level)
+    internal static YarnMatchLevelConfig Generate(int level)
     {
         level = Math.Max(1, level);
-        if (!PreviewRounds.TryGetValue(level, out YarnMatchLevelConfig round))
-        {
-            var difficulty = new YarnMatchLevelDifficulty(level);
-            int template = TemplateDeck.Draw(difficulty, RoundSeeds, out int width, out int height);
-            round = BuildLevel(level, RoundSeeds.Next(), template, width, height);
-            PreviewRounds.Add(level, round);
-        }
-        return round;
+        var difficulty = new YarnMatchLevelDifficulty(level);
+        int template = TemplateDeck.Draw(difficulty, RoundSeeds, out int width, out int height);
+        return BuildLevel(level, RoundSeeds.Next(), template, width, height);
     }
 
-    public static YarnMatchLevelConfig CreateRound(int level)
-    {
-        YarnMatchLevelConfig round = PrepareRound(level);
-        PreviewRounds.Remove(round.Number);
-        return round;
-    }
     public static int GetChapterIndex(int level) => (Math.Max(1, level) - 1) / LevelsPerChapter;
     public static int GetChapterStartLevel(int level) => GetChapterIndex(level) * LevelsPerChapter + 1;
     public static int GetChapterEndLevel(int level) => GetChapterStartLevel(level) + LevelsPerChapter - 1;
@@ -61,7 +47,7 @@ public static class YarnMatchLevelCatalog
         rows = (targetCells + columns - 1) / columns;
     }
 
-    public static YarnMatchLevelConfig CreateSpecialRound()
+    internal static YarnMatchLevelConfig GenerateSpecial()
     {
         int seed = RoundSeeds.Next();
         Random random = new Random(seed);
