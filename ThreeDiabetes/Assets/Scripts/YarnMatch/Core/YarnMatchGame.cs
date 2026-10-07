@@ -73,7 +73,7 @@ public sealed class YarnMatchGame : MonoBehaviour
             yield break;
         }
         RefreshDailyUnlockState();
-        _presentation.ShowLevelSelect(GetAvailableHighestLevel(), _dailyUnlockActive);
+        _presentation.ShowLevelSelect(GetAvailableHighestLevel(), _highestUnlockedLevel, _dailyUnlockActive);
     }
 
     private void StartSelectedLevel(int level)
@@ -106,8 +106,11 @@ public sealed class YarnMatchGame : MonoBehaviour
             return;
         }
         int nextLevel = _selectedLevel + 1;
-        _highestUnlockedLevel = Mathf.Max(_highestUnlockedLevel, nextLevel);
-        SaveProgress();
+        if (nextLevel > GetAvailableHighestLevel())
+        {
+            OpenLevelSelect();
+            return;
+        }
         StartSelectedLevel(nextLevel);
     }
 
@@ -564,7 +567,9 @@ public sealed class YarnMatchGame : MonoBehaviour
         }
 
         _state = won ? YarnMatchGameState.Won : YarnMatchGameState.Lost;
-        if (won && !_specialChallenge && _selectedLevel >= _highestUnlockedLevel)
+        // Only beating the current frontier advances permanent progress; clearing a
+        // daily-unlocked or replayed level must not skip the saved unlock frontier.
+        if (won && !_specialChallenge && _selectedLevel == _highestUnlockedLevel)
         {
             _highestUnlockedLevel = _selectedLevel + 1;
             SaveProgress();
@@ -620,8 +625,9 @@ public sealed class YarnMatchGame : MonoBehaviour
             return _highestUnlockedLevel;
         }
 
-        int chapterStart = YarnMatchLevelCatalog.GetChapterStartLevel(_highestUnlockedLevel);
-        return chapterStart + YarnMatchLevelCatalog.LevelsPerChapter - 1;
+        // The daily unlock opens every level the level list reveals for today,
+        // without writing permanent progress.
+        return Mathf.Max(_highestUnlockedLevel, YarnMatchLevelCatalog.RevealedLevelCount);
     }
 
     private void UnlockAllLevelsForToday()
@@ -638,7 +644,7 @@ public sealed class YarnMatchGame : MonoBehaviour
         PlayerPrefs.SetString(DailyUnlockDateKey, today);
         PlayerPrefs.SetInt(DailyUnlockEnabledKey, 1);
         PlayerPrefs.Save();
-        _presentation.ShowLevelSelect(GetAvailableHighestLevel(), true);
+        _presentation.ShowLevelSelect(GetAvailableHighestLevel(), _highestUnlockedLevel, true);
         _presentation.ShowToast("今天的关卡已经全部解锁", 1.5f);
     }
 

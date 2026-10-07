@@ -63,14 +63,14 @@ internal sealed class YarnMatchLevelList
         _scroll.onValueChanged.AddListener(_ => Refresh());
     }
 
-    internal void Show(int highest)
+    internal void Show(int highest, int lastLevel, int focusLevel)
     {
         _highest = Math.Max(1, highest);
-        _lastLevel = YarnMatchLevelCatalog.GetChapterEndLevel(_highest);
+        _lastLevel = Math.Max(_highest, lastLevel);
         int rowCount = (_lastLevel + Columns - 1) / Columns;
         _content.sizeDelta = new Vector2(0f, rowCount * RowHeight);
         _scroll.StopMovement();
-        float offset = Math.Min(((_highest - 1) / Columns) * RowHeight,
+        float offset = Math.Min((Math.Max(1, focusLevel) - 1) / Columns * RowHeight,
             Math.Max(0f, _content.sizeDelta.y - _scroll.viewport.rect.height));
         _content.anchoredPosition = new Vector2(0f, offset);
         _firstRow = -1;

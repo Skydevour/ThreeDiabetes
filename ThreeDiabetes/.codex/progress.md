@@ -1,5 +1,38 @@
 # Implementation Progress
 
+## 2026-10-07 Level Volume and Cell Contrast
+
+- User reported too few levels and white upper-board cells blending into the light
+  background. Private .cc-switch skills were left untouched; only project files changed.
+- YarnMatchLevelCatalog now reveals ten chapters (500 levels) in the four-column grid.
+  The grid still generates chapter snapshots lazily through thumbnail or round
+  requests, and startup only prepares the chapters up to the player's progress.
+- Daily unlock now opens every shown level for today, matching the documented rule.
+  FinishGame advances the saved frontier only when the exact frontier level is won,
+  and AdvanceToNextLevel no longer writes progress by itself, so replaying or
+  skipping ahead through daily-unlocked levels cannot skip the unlock frontier.
+- The shared knit pattern bakes a soft dark cell edge, and the board area gained a
+  light blue-grey backdrop panel, so white and cream cells stay readable.
+- Player compilation passed with zero warnings/errors; scoped diff check passed.
+  APK rebuilt for device testing (build/YarnMatch.apk, 38,601,079 bytes, dated
+  2026-10-07 21:40); no commit, test scripts or device profiling.
+
+## 2026-10-07 Board Fit and Spool Contrast
+
+- User reported that white and cream spools blended into the near-white background
+  and that tall boards zoomed past the screen, hiding the colors still to be
+  collected. Private .cc-switch skills were left untouched; only project files changed.
+- ConfigureBoardLayout now always fits the complete board (columns x initial rows)
+  into the 700 x 500 viewport. The old FitToViewport gate no longer lets tall normal
+  boards or the special challenge render at full cell size beyond the visible area.
+- YarnMatchVisualFactory.CreateSpoolTexture bakes a dark silhouette rim; colors with
+  luminance >= 0.72f receive a 3 px stroke instead of 2 px. Pool tiles, rack slots and
+  the capacity-badge edge were tinted and strengthened for contrast.
+- Player compilation passed with zero warnings/errors; scoped diff check passed.
+  Android APK built by batchmode (build/YarnMatch.apk, 38,603,437 bytes, dated
+  2026-10-07) for user device testing. No commit, test scripts or device profiling.
+  User owns gameplay verification.
+
 ## 2026-09-13 Global Shuffle and Saved Chapters
 
 - Refresh now shuffles visible and queued tokens in one pool, including frozen and

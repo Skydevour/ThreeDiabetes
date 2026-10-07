@@ -3,7 +3,9 @@ using System;
 public static class YarnMatchLevelCatalog
 {
     public const int LevelsPerChapter = 50;
+    public const int RevealedChapters = 10;
     public const int ReferencePatternLevel = 110;
+    public static int RevealedLevelCount => RevealedChapters * LevelsPerChapter;
     private const int MaximumPoolColumns = 12;
     private const int MaximumPoolRows = 8;
     private const int InitialPoolCells = 48;

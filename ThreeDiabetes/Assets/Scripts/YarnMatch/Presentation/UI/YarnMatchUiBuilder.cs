@@ -88,6 +88,11 @@ internal sealed class YarnMatchUiBuilder
         ui.BoardArea.sizeDelta = new Vector2(700f, 500f);
         ui.BoardArea.anchoredPosition = new Vector2(0f, 235f);
         ui.BoardArea.gameObject.AddComponent<RectMask2D>();
+        // The board sits on a lightly tinted panel so white cells never blend into
+        // the near-white screen background.
+        YarnMatchUiPrimitives.CreateImage("Board Backdrop", ui.BoardArea,
+            YarnMatchVisualFactory.GetPanelSprite(), new Color(0.90f, 0.94f, 0.99f),
+            new Vector2(700f, 500f), Vector2.zero, true);
         ui.BoardGridRoot = YarnMatchUiPrimitives.CreateChild("Board Grid", ui.BoardArea).transform;
         ui.BoardCellsRoot = YarnMatchUiPrimitives.CreateChild("Board Cells", ui.BoardArea).transform;
     }

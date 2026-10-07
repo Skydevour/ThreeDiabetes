@@ -17,7 +17,7 @@ Use Unity 6 and a portrait Game view at `750 x 1334`.
 
 1. Enter Play Mode from a cold editor state.
 2. Confirm the main menu renders Chinese copy with TextMeshPro and no missing-glyph warnings.
-3. Start a game and confirm the upper board is eight columns with the level-configured twelve-to-eighteen cell depth, while the first row of the level-configured lower pool is selectable.
+3. Start a game and confirm the complete upper board fits inside its viewport with the whole pattern visible, while the first row of the level-configured lower pool is selectable. Confirm white and cream spools keep a visible dark rim against the pool tiles and rack slots, including during flight.
 4. Select two spools quickly, including two of the same color, and confirm both source cells become empty immediately, both spools fly independently, and the rack uses two separate slots.
 5. Confirm four-direction neighbors unlock, diagonal cells do not, and the selection is not restricted to a single route.
 6. Confirm exposed board cells resolve from the front upward. Select a red and green spool in quick succession and verify each job keeps scanning after another job exposes a new matching cell.
@@ -38,9 +38,9 @@ Use Unity 6 and a portrait Game view at `750 x 1334`.
 ## Level and Pattern Checks
 
 - Open the main menu and confirm `开始游戏` opens `选择关卡` instead of starting a round immediately.
-- Confirm level buttons show Chinese labels, color count, board-token count, and lock state.
-- Select level 1 and confirm the board is a complete multi-color pattern with fewer cells than the final levels.
-- Complete or simulate a win and confirm only the next level becomes available; locked levels remain non-interactable.
+- Confirm the level grid shows the first ten chapters (500 items) with lock state, and that each thumbnail shows its board picture.
+- Select level 1 and confirm the board is a complete multi-color pattern with fewer cells than the final levels, and that white cells keep a visible dark edge on the tinted board panel.
+- Complete or simulate a win on the frontier level and confirm only the next level unlocks; replaying an earlier or daily-unlocked level leaves the saved frontier unchanged.
 - Compare level 1, a middle level, level 50, and level 51: the chapter seed changes, board depth and color/tunnel pressure progress, and the pool remains within the mobile layout budget, and the pool must progress from fewer rows to the full `8×6` layout.
 - Restart the same level twice and confirm the silhouette is stable while the color pattern seed changes.
 - Confirm empty pool sources remain empty, tunnel counts decrement, and tunnel emergence stays aligned with the configured pool row count.
@@ -49,4 +49,4 @@ Use Unity 6 and a portrait Game view at `750 x 1334`.
 - Confirm every live board cell and its backplate are square and use the same theme size; check the maximum 8 x 18 board for overlap.
 - During collection, confirm the cell X scale remains constant, the Y scale decreases from bottom to top, and all ten internal strands are positioned inside the square.
 - Use hint in a state with selectable tokens but no exposed matching color and confirm it reports no collectible move without mutating state.
-- Use today's full-level unlock once, confirm the current 50-level chapter is accessible and the button becomes unavailable, then simulate a date change and confirm ordinary progression remains while the daily button returns.
+- Use today's full-level unlock once, confirm every level shown in the grid is selectable and the button becomes unavailable, then simulate a date change and confirm ordinary progression remains while the daily button returns.

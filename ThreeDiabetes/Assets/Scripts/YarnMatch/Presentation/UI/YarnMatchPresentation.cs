@@ -84,9 +84,9 @@ public sealed class YarnMatchPresentation : MonoBehaviour
 
     public void SetLoading(bool visible) => _loadingOverlay.SetActive(visible);
 
-    public void ShowLevelSelect(int highestUnlockedLevel, bool dailyUnlockActive)
+    public void ShowLevelSelect(int highestUnlockedLevel, int focusLevel, bool dailyUnlockActive)
     {
-        _overlays.ShowLevelSelect(highestUnlockedLevel, dailyUnlockActive);
+        _overlays.ShowLevelSelect(highestUnlockedLevel, focusLevel, dailyUnlockActive);
     }
 
     public void SetLevel(int level)

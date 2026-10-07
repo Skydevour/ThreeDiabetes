@@ -211,6 +211,10 @@ public static class YarnMatchVisualFactory
     private static Texture2D CreateKnitPatternTexture()
     {
         const int size = 72;
+        // A baked edge keeps every cell readable on the light board backdrop,
+        // including white and cream yarn colors; the cell tint multiplies this pattern.
+        const int edgeWidth = 5;
+        Color edgeColor = new Color(0.24f, 0.28f, 0.36f);
         Texture2D texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
         Color[] pixels = new Color[size * size];
         for (int y = 0; y < size; y++)
@@ -219,6 +223,12 @@ public static class YarnMatchVisualFactory
             {
                 float wave = SoftWaveValue(x, y);
                 Color color = Color.Lerp(new Color(0.82f, 0.90f, 0.93f), Color.white, wave);
+                int edgeDistance = Mathf.Min(Mathf.Min(x, y), Mathf.Min(size - 1 - x, size - 1 - y));
+                if (edgeDistance < edgeWidth)
+                {
+                    float depth = 1f - edgeDistance / (float)edgeWidth;
+                    color = Color.Lerp(color, edgeColor, Mathf.Clamp01(depth * 1.2f));
+                }
                 pixels[y * size + x] = new Color(color.r, color.g, color.b, 1f);
             }
         }
@@ -281,6 +291,41 @@ public static class YarnMatchVisualFactory
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         Color[] pixels = new Color[width * height];
         Vector2 center = new Vector2(width * 0.5f, height * 0.5f);
+        // Pale yarn sits on near-white tiles, so every spool gets a baked dark rim.
+        // Light colors use a wider stroke to keep white and cream readable.
+        float luminance = baseColor.r * 0.2126f + baseColor.g * 0.7152f + baseColor.b * 0.0722f;
+        int rim = luminance >= 0.72f ? 3 : 2;
+        Color rimColor = new Color(0.16f, 0.19f, 0.28f, 1f);
+
+        bool Inside(int px, int py)
+        {
+            Vector2 point = new Vector2(px + 0.5f, py + 0.5f);
+            bool body = py > 18f && py < 75f && Mathf.Abs(point.x - center.x) <= 25f;
+            float topEllipse = ((point.x - center.x) * (point.x - center.x)) / (28f * 28f) + ((point.y - 18f) * (point.y - 18f)) / (10f * 10f);
+            float bottomEllipse = ((point.x - center.x) * (point.x - center.x)) / (28f * 28f) + ((point.y - 75f) * (point.y - 75f)) / (10f * 10f);
+            return body || topEllipse <= 1f || bottomEllipse <= 1f;
+        }
+
+        bool OnRim(int px, int py)
+        {
+            int radiusSquared = rim * rim;
+            for (int offsetY = -rim; offsetY <= rim; offsetY++)
+            {
+                for (int offsetX = -rim; offsetX <= rim; offsetX++)
+                {
+                    if (offsetX * offsetX + offsetY * offsetY > radiusSquared) continue;
+                    int sampleX = px + offsetX;
+                    int sampleY = py + offsetY;
+                    if (sampleX < 0 || sampleX >= width || sampleY < 0 || sampleY >= height
+                        || !Inside(sampleX, sampleY))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -292,6 +337,12 @@ public static class YarnMatchVisualFactory
                 if (!body && topEllipse > 1f && bottomEllipse > 1f)
                 {
                     pixels[y * width + x] = Color.clear;
+                    continue;
+                }
+
+                if (OnRim(x, y))
+                {
+                    pixels[y * width + x] = rimColor;
                     continue;
                 }
 

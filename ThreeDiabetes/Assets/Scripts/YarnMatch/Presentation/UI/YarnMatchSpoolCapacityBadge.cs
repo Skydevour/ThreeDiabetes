@@ -15,8 +15,8 @@ internal sealed class YarnMatchSpoolCapacityBadge
             "Capacity Badge", parent, YarnMatchVisualFactory.GetCircleSprite(), Color.white,
             new Vector2(diameter, diameter), new Vector2(inset, -inset), false);
         Outline edge = background.gameObject.AddComponent<Outline>();
-        edge.effectColor = new Color(0.20f, 0.24f, 0.28f, 0.35f);
-        edge.effectDistance = new Vector2(0.6f, -0.6f);
+        edge.effectColor = new Color(0.18f, 0.22f, 0.30f, 0.62f);
+        edge.effectDistance = new Vector2(0.9f, -0.9f);
         edge.useGraphicAlpha = true;
 
         _label = YarnMatchUiPrimitives.CreateText(

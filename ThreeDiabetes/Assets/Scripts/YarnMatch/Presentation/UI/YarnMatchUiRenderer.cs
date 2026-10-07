@@ -182,7 +182,7 @@ internal sealed class YarnMatchUiRenderer
         cellView.ShadowImage.enabled = lockedToken;
         cellView.SlotImage.color = lockedToken
             ? new Color(0.52f, 0.45f, 0.64f, 0.90f)
-            : new Color(0.96f, 0.98f, 1f);
+            : new Color(0.90f, 0.94f, 0.99f);
     }
 
     private void RemovePoolTokenViewsForButton(Button button, YarnMatchSpoolToken keep)
@@ -432,8 +432,10 @@ internal sealed class YarnMatchUiRenderer
         _boardRows = board.InitialRows;
 
         _isLargeBoard = true;
-        _fitBoardToViewport = board.FitToViewport;
-        _boardCellSize = YarnMatchUiTheme.BoardCellSizeFor(_boardColumns, _boardRows, _fitBoardToViewport);
+        // Always scale the complete subject into the board viewport so the whole
+        // picture and every remaining color are readable in one screen.
+        _fitBoardToViewport = true;
+        _boardCellSize = YarnMatchUiTheme.BoardCellSizeFor(_boardColumns, _boardRows, true);
     }
 
     private void BuildBoardViews(YarnMatchBoardModel board)
@@ -485,7 +487,7 @@ internal sealed class YarnMatchUiRenderer
             slotRect.sizeDelta = new Vector2(slotSize, 86f);
             slotRect.anchoredPosition = new Vector2(start + slot * step, -5f);
             YarnMatchUiPrimitives.CreateImage("Rack Slot Shadow", slotObject.transform, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.28f, 0.36f, 0.52f, 0.16f), new Vector2(slotSize + 6f, 86f), new Vector2(3f, -4f), true);
-            Image slotImage = YarnMatchUiPrimitives.CreateImage("Rack Slot", slotObject.transform, YarnMatchVisualFactory.GetPanelSprite(), slot < rack.UnlockedSlots ? new Color(0.96f, 0.98f, 1f) : new Color(0.78f, 0.82f, 0.90f), new Vector2(slotSize, 82f), Vector2.zero, true);
+            Image slotImage = YarnMatchUiPrimitives.CreateImage("Rack Slot", slotObject.transform, YarnMatchVisualFactory.GetPanelSprite(), slot < rack.UnlockedSlots ? new Color(0.92f, 0.95f, 0.99f) : new Color(0.78f, 0.82f, 0.90f), new Vector2(slotSize, 82f), Vector2.zero, true);
             TMP_Text label = YarnMatchUiPrimitives.CreateText("Slot Label", slotObject.transform, slot < rack.UnlockedSlots ? string.Empty : "锁定", 11, new Color(0.46f, 0.52f, 0.64f), TextAlignmentOptions.Center, new Vector2(0f, -17f), new Vector2(68f, 24f), FontStyles.Bold);
             _rackSlots.Add(slotObject);
             _rackSlotImages.Add(slotImage);
@@ -506,7 +508,7 @@ internal sealed class YarnMatchUiRenderer
             YarnMatchPoolCell cell = pool.Cells[index];
             Vector2 position = PoolSlotPosition(cell.Column, cell.Row);
             Image shadowImage = YarnMatchUiPrimitives.CreateImage("Pool Tile Shadow", _ui.PoolSlotsRoot, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.28f, 0.36f, 0.52f, 0.16f), new Vector2(cellSize + 4f, cellSize + 4f), position + new Vector2(cellSize * 0.05f, -cellSize * 0.07f), true);
-            Image slotImage = YarnMatchUiPrimitives.CreateImage("Pool Tile", _ui.PoolSlotsRoot, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.96f, 0.98f, 1f), new Vector2(cellSize, cellSize), position, true);
+            Image slotImage = YarnMatchUiPrimitives.CreateImage("Pool Tile", _ui.PoolSlotsRoot, YarnMatchVisualFactory.GetPanelSprite(), new Color(0.90f, 0.94f, 0.99f), new Vector2(cellSize, cellSize), position, true);
 
             Button button = YarnMatchUiPrimitives.CreateButton("Pool Spool", _ui.PoolButtonsRoot, string.Empty, position, new Vector2(cellSize + 8f, cellSize + 8f), Color.white, new Color(1f, 1f, 1f, 0f));
             YarnMatchPoolCell sourceCell = cell;
@@ -651,7 +653,7 @@ internal sealed class YarnMatchUiRenderer
         for (int slot = 0; slot < _rackSlotImages.Count; slot++)
         {
             bool unlocked = slot < rack.UnlockedSlots;
-            _rackSlotImages[slot].color = unlocked ? new Color(0.98f, 0.99f, 1f) : new Color(0.78f, 0.82f, 0.90f);
+            _rackSlotImages[slot].color = unlocked ? new Color(0.92f, 0.95f, 0.99f) : new Color(0.78f, 0.82f, 0.90f);
             _rackSlotLabels[slot].text = unlocked ? string.Empty : "锁定";
             _rackSlotLabels[slot].color = unlocked ? new Color(0.46f, 0.52f, 0.64f) : new Color(0.38f, 0.45f, 0.58f);
         }

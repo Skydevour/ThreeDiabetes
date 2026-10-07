@@ -70,6 +70,9 @@ The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implement
   artwork under .codex/tools/pattern-art exports PNGs and matching palette/mask
   data. No API dependency or runtime subject-art generation is required. Current
   review sheets and the resource manifest live in .codex/previews/local-patterns.
+- The upper board always scales the complete subject into the single board viewport
+  so the whole picture is readable in one screen. Tall patterns no longer scroll
+  into view as rows clear.
 - Actual per-color board counts determine spool counts and capacities, including
   capacity-1/2 tails. Each spool owns a separate concurrent rack job.
 - Visible lower positions grow from legal entrances. Four-direction selection access
@@ -80,8 +83,11 @@ The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implement
   cell, slot mechanic and individual queue length. It provides no guaranteed fill.
 - YarnMatchLevelStore owns persistentDataPath/YarnMatchLevels, atomic chapter writes
   and a two-chapter cache. Saved snapshots never share mutable tokens with live games.
-- Chapters append 50 thumbnails to a four-column reusable scrolling grid. Previous chapters remain
-  accessible. Special challenge does not consume normal level 110 or normal progress.
+- The four-column reusable scrolling grid always shows the first ten chapters
+  (500 levels); progress past 500 extends it, and previous chapters stay accessible.
+  Locked levels remain visible but non-interactable. The daily unlock opens every
+  shown level for today without granting permanent progress. Special challenge does
+  not consume normal level 110 or normal progress.
 - Independent local music loops through menus and rounds; toggle/volume are persisted.
 - Approved normal geometry caps: 50 x 50 square boards, 50 x 100 long boards,
   and 12 x 8 lower pools (including pipes). Later chapters retain high-tier
@@ -90,6 +96,11 @@ The authoritative rules are in [GAME_RULES.md](GAME_RULES.md). Current implement
 ## Presentation Contract
 
 - Keep the bright, clean, white mobile UI and strong color separation from the current reference direction. Do not introduce dark desktop panels or low-contrast placeholder colors.
+- Pale spool colors bake a dark silhouette rim into the spool sprite, and pool and
+  rack tiles keep a light blue tint, so white and cream spools stay readable against
+  the bright background in the pool, in flight and in the rack.
+- Board cells use the shared knit pattern with a baked dark edge and sit on a lightly
+  tinted board panel, so white and cream cells stay readable against the light screen.
 - Selection, source removal, tunnel emergence, board settling, collection, rack impact, completion, win, loss, restart, hint, and refresh each need visible feedback.
 - Selection flight and board collection run in parallel. Each selected spool owns an independent collection job. The scheduler repeatedly scans the current exposed front row, so a red job may collect, a green job may expose a new red cell, and the red job can continue without being restarted.
 - Each cell remains visible while its inner strands retract one by one along a soft curved path into the matching receiver. Do not replace this with a disappearing tile and a separate fake line.

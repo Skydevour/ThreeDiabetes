@@ -1,5 +1,28 @@
 # Runtime Level Generation Implementation
 
+## 2026-10-07 Level Volume and Cell Contrast
+
+- [complete] The level grid always shows the first ten chapters (500 levels);
+  progress past 500 extends it. Chapter snapshots still generate lazily when a
+  thumbnail or round requests them, and startup only prepares the progress chapters.
+- [complete] The daily unlock opens every shown level for today. Permanent progress
+  now advances only when the exact frontier level is beaten, so replaying or
+  skipping ahead through daily-unlocked levels no longer moves the saved frontier.
+- [complete] Board cells bake a dark edge into the shared knit pattern and sit on a
+  tinted board panel, so white and cream cells separate from the light background.
+- [complete] Player compilation passed (zero warnings/errors); scoped diff reviewed.
+  APK rebuilt for device testing. No commit or test scripts.
+
+## 2026-10-07 Board Fit and Spool Contrast
+
+- [complete] The complete upper board always scales into the single board viewport;
+  tall subjects and the special challenge no longer descend or crop.
+- [complete] Spool textures bake a dark silhouette rim (wider for light colors) and
+  pool/rack tiles are lightly tinted so white and cream spools stay readable.
+- [complete] Player compilation passed (zero warnings/errors); scoped diff reviewed.
+  Android APK built for user device testing (build/YarnMatch.apk). No test scripts
+  or commit. User owns gameplay/device verification.
+
 ## 2026-09-13 Global Shuffle and Persistent Chapters
 
 This decision supersedes the historical targeted-refresh and per-entry randomization

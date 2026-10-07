@@ -21,8 +21,9 @@
   Template eligibility uses the final no-pipe budget-limited width, never the
   nominal width followed by a second resize below the authored minimum.
   Crop explicit mask bounds and preserve the subject aspect ratio, up to 100 rows.
-  No random double-height padding. Subjects with height <= 1.25 x width fit fully;
-  taller subjects descend through the viewport. Cells remain square and opaque.
+  No random double-height padding. Every subject scales so the complete pattern
+  fits the board viewport in one screen; tall subjects no longer descend into view
+  as rows clear. Cells remain square and opaque.
 - Normal boards cap at 50 x 100 bounding positions (5,000 maximum occupied cells).
   Mask holes are not cells. Normal lower pools cap at 12 x 8 (96 slots including pipes).
   Before level 10, constrain image detail to the no-pipe spool budget; expand visible
@@ -130,8 +131,10 @@ or as a consumed token. Never copy a token to create assistance.
   Refresh waits for arrivals, collections, settling and pipe replenishment to finish,
   and remains unavailable when the rack is full or the round has ended.
 - Hint considers selectable spools with an exposed match and enough rack slots.
-- One four-column scrolling thumbnail grid contains all revealed chapters; old chapters remain visible.
-  Completing level 50 unlocks 51 and reveals 51-100, and so on.
+- One four-column scrolling thumbnail grid always shows the first ten chapters
+  (500 levels); progress past 500 extends the grid, and old chapters remain visible.
+  Completing a level advances the saved frontier by one, so the next chapter's levels
+  are already visible but stay locked until reached.
 - Items do not show level numbers. Their thumbnails use the exact saved board
   colors, dimensions and orientation, not a separate PNG or new random seed.
   Locked items retain their picture and a lock-state label. Only visible rows and
@@ -144,8 +147,9 @@ or as a consumed token. Never copy a token to create assistance.
   as chapter-NNNN.json and special.json. A completed chapter is written to a temporary
   file then renamed. Load errors are reported, not repaired by silently replacing
   saved layouts. No mid-round save is performed.
-- Daily unlock applies to all revealed chapter levels, expires on local date change,
-  and does not unlock infinitely many future chapters.
+- Daily unlock opens every level shown in the grid for today, expires on local date
+  change, and never writes permanent progress. Only beating the exact frontier level
+  advances the saved unlock frontier; replaying or skipping ahead does not.
 
 ## Presentation
 
@@ -157,6 +161,8 @@ Visible pool spools show their actual capacity (1/2/3) in a compact white circul
 badge at the lower right, including locked, frozen and chained spools. Badges stay
 within their cells and above mechanic artwork. Capacity follows the token through
 refresh, pipe refills and flight; it is not a prediction of immediately exposed matches.
+White and cream spools bake a dark silhouette rim and sit on lightly tinted pool and
+rack tiles, so pale yarn never blends into the bright background.
 Rack progress appears on arrival and is hidden before the completion animation.
 Continuous bottom-to-top strand collection preserves cell width and top edge.
 Flights and collection are concurrent. Completed spools pulse before leaving.

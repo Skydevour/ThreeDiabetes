@@ -31,14 +31,14 @@ internal sealed class YarnMatchOverlayController
         _ui.MainMenuOverlay.SetActive(true);
     }
 
-    internal void ShowLevelSelect(int highestUnlockedLevel, bool dailyUnlockActive)
+    internal void ShowLevelSelect(int highestUnlockedLevel, int focusLevel, bool dailyUnlockActive)
     {
         _ui.ResultOverlay.SetActive(false);
         _ui.MainMenuOverlay.SetActive(false);
         int safeHighestUnlockedLevel = Mathf.Max(1, highestUnlockedLevel);
         _ui.LevelSelectTitle.text = "选择关卡";
         _ui.LevelSelectSubtitle.text = "图案挑战";
-        _ui.LevelList.Show(safeHighestUnlockedLevel);
+        _ui.LevelList.Show(safeHighestUnlockedLevel, YarnMatchLevelCatalog.RevealedLevelCount, focusLevel);
         _ui.UnlockAllLevelsButton.interactable = !dailyUnlockActive;
         _ui.UnlockAllLevelsLabel.text = dailyUnlockActive ? "今日已全部解锁" : "今日全部解锁";
         _ui.LevelSelectOverlay.SetActive(true);
